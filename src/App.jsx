@@ -13,17 +13,17 @@ function MeeshoShippingRatesPage({ onRegister }) {
             {/* Hero Section */}
             <section style={{ padding: '4rem 5% 3.5rem 5%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                 <div style={{ background: 'rgba(37, 99, 235, 0.08)', border: '1px solid rgba(37, 99, 235, 0.18)', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 'bold', color: '#2563eb', marginBottom: '1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                    <span>⚡</span> All-In-One Meesho Supplier Growth & Utility Tool Suite
+                    <span>⚡</span> All-In-One Meesho Supplier Growth
                 </div>
                 <h1 style={{ 
                     fontFamily: 'Outfit', fontSize: '3.4rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.03em', 
                     background: 'linear-gradient(135deg, #0f172a 40%, #2563eb 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
                     maxWidth: '850px', margin: '0 auto 1.5rem auto' 
                 }}>
-                    Optimize Meesho Listing Images, Export PDF Labels & Audit P&L Profit Margins
+                    Optimize Meesho Listing Images & Export PDF Shipping Labels
                 </h1>
                 <p style={{ fontSize: '1.05rem', color: '#475569', maxWidth: '680px', lineHeight: '1.6', margin: '0 auto 2.25rem auto' }}>
-                    Bypass duplicate catalog image filters, qualify for lower shipping rate brackets (₹48, ₹56, ₹62), crop bulk thermal shipping labels by SKU in 2 minutes, and audit net supplier payouts.
+                    Bypass duplicate catalog image filters, qualify for lower shipping rate brackets (₹48, ₹56, ₹62), and crop bulk thermal shipping labels by SKU in under 2 minutes.
                 </p>
                 
                 <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '4rem' }}>
@@ -405,7 +405,7 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                         className={`nav-link ${activeTab === 'meesho-shipping-rates' ? 'active' : ''}`}
                         onClick={() => onTabChange('meesho-shipping-rates')}
                     >
-                        Shipping Rates & P&L
+                        Shipping Rates
                     </button>
                     <button 
                         className={`nav-link ${activeTab === 'meesho-image-generator' ? 'active' : ''}`}
