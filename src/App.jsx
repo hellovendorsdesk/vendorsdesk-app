@@ -13,17 +13,17 @@ function MeeshoShippingRatesPage({ onRegister }) {
             {/* Hero Section */}
             <section style={{ padding: '4rem 5% 3.5rem 5%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                 <div style={{ background: 'rgba(37, 99, 235, 0.08)', border: '1px solid rgba(37, 99, 235, 0.18)', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 'bold', color: '#2563eb', marginBottom: '1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                    <span>📢</span> Low-Cost Meesho E-commerce Shipping Optimization
+                    <span>⚡</span> All-In-One Meesho Supplier Growth & Utility Tool Suite
                 </div>
                 <h1 style={{ 
                     fontFamily: 'Outfit', fontSize: '3.4rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.03em', 
                     background: 'linear-gradient(135deg, #0f172a 40%, #2563eb 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
                     maxWidth: '850px', margin: '0 auto 1.5rem auto' 
                 }}>
-                    Audit Meesho Shipping Rates, Reconcile P&L & Check Weight Penalties
+                    Optimize Meesho Listing Images, Export PDF Labels & Audit P&L Profit Margins
                 </h1>
-                <p style={{ fontSize: '1.05rem', color: '#475569', maxWidth: '640px', lineHeight: '1.6', margin: '0 auto 2.25rem auto' }}>
-                    Maximize your store margins by instantly checking and auditing shipping rate leakages. Route rate checks dynamically through secure personal session keys.
+                <p style={{ fontSize: '1.05rem', color: '#475569', maxWidth: '680px', lineHeight: '1.6', margin: '0 auto 2.25rem auto' }}>
+                    Bypass duplicate catalog image filters, qualify for lower shipping rate brackets (₹48, ₹56, ₹62), crop bulk thermal shipping labels by SKU in 2 minutes, and audit net supplier payouts.
                 </p>
                 
                 <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '4rem' }}>
@@ -31,13 +31,13 @@ function MeeshoShippingRatesPage({ onRegister }) {
                         style={{ background: '#2563eb', border: 'none', color: '#ffffff', padding: '0.85rem 2rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 20px rgba(37, 99, 235, 0.25)' }}
                         onClick={onRegister}
                     >
-                        ⚡ Claim 3 Free Credits
+                        ⚡ Claim 3 Free Credits & Start
                     </button>
                     <a 
                         href="#performance-metrics" 
                         style={{ display: 'flex', alignItems: 'center', background: '#ffffff', border: '1px solid #cbd5e1', color: '#0f172a', padding: '0.85rem 2rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, textDecoration: 'none' }}
                     >
-                        Check Live Auditor
+                        Explore Supplier Tools
                     </a>
                 </div>
 
