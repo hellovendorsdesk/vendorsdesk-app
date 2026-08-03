@@ -1,0 +1,7 @@
+# VendorsDesk Robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://vendorsdesk.in/sitemap.xml
