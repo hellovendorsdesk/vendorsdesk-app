@@ -620,22 +620,21 @@ export default function App() {
         if (!currentUser) {
             window.scrollTo(0, 0);
             if (activeMarketingTab === 'meesho-shipping-rates') {
-                document.title = "Meesho Shipping Rates, P&L Audit & Logistics Calculator | VendorsDesk";
+                document.title = "Meesho Shipping Rate Calculator 2026 | Check Slabs & Charges | VendorsDesk";
                 const meta = document.querySelector('meta[name="description"]');
-                if (meta) meta.setAttribute('content', "Stop losing money on Meesho! Reconcile logistics weight discrepancies, RTO return penalties, and verify payout settlements in real-time.");
+                if (meta) meta.setAttribute('content', "Free Meesho shipping rate calculator for Indian suppliers. Check weight categories, shipping rate cards (₹48, ₹56, ₹62, ₹74), and reduce logistics costs.");
             } else if (activeMarketingTab === 'meesho-image-generator') {
                 document.title = "Meesho Listing Image Generator & Duplicate Bypass Optimizer | VendorsDesk";
                 const meta = document.querySelector('meta[name="description"]');
-                if (meta) meta.setAttribute('content', "Bypass image duplication restrictions on Meesho listings. Automatically generate Pink/Blue border variations and NDD badges to qualify for lower shipping rates.");
+                if (meta) meta.setAttribute('content', "Automated Meesho catalog image variation generator. Add pink/blue borders and NDD badges to bypass duplicate image filters and qualify for lower shipping slabs.");
             } else if (activeMarketingTab === 'meesho-label-exporter') {
-                document.title = "Meesho Bulk Shipping Label Exporter & PDF Crop Tool | VendorsDesk";
+                document.title = "Meesho Bulk Shipping Label Exporter & 4x6 PDF Crop Tool | VendorsDesk";
                 const meta = document.querySelector('meta[name="description"]');
-                if (meta) meta.setAttribute('content', "Sort and crop Meesho shipping label sheets in under 2 minutes. Group by SKU and courier channels (Shadowfax, Delhivery) for streamlined warehouse packing.");
-
+                if (meta) meta.setAttribute('content', "Crop and sort Meesho shipping label sheets in under 2 minutes. Auto-crop labels for 4x6 thermal printers, group by SKU combinations, and bundle by courier partner.");
             } else if (activeMarketingTab === 'pricing') {
-                document.title = "Pricing Tiers & Affiliate Referral Program | VendorsDesk";
+                document.title = "VendorsDesk Credit Pricing Plans & 33% Affiliate Referral Program | Start Free";
                 const meta = document.querySelector('meta[name="description"]');
-                if (meta) meta.setAttribute('content', "Choose the standard, gold, or premium plan to audit shipping weights. Earn 33% commission on referred e-commerce seller signups.");
+                if (meta) meta.setAttribute('content', "Affordable credit-based plans for Meesho suppliers starting at ₹99. Earn 33% lifetime recurring commission on referred seller subscriptions.");
             }
         }
     }, [activeMarketingTab, currentUser]);
