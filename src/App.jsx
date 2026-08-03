@@ -1072,6 +1072,24 @@ export default function App() {
         }
     };
 
+    // 1. If visiting main website domain (vendorsdesk.in / www.vendorsdesk.in): ALWAYS show Public Marketing Website!
+    if (!isAppDomain && window.location.hostname.includes('vendorsdesk.in')) {
+        return (
+            <>
+                <MarketingLandingPage 
+                    currentUser={currentUser}
+                    activeTab={activeMarketingTab} 
+                    onTabChange={setActiveMarketingTab} 
+                    onLogin={handleGoToAppLogin}
+                    onRegister={handleGoToAppSignup}
+                    onGoToDashboard={handleGoToAppDashboard}
+                />
+                {authModals}
+            </>
+        );
+    }
+
+    // 2. On app.vendorsdesk.in: If not logged in, ask for credentials (open auth modal)
     if (!currentUser) {
         return (
             <>
