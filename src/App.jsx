@@ -1,0 +1,1580 @@
+import React, { useState, useEffect } from 'react';
+import { secureFetch } from './utils/crypto';
+import HomeTab from './components/HomeTab';
+import OptimizerTab from './components/OptimizerTab';
+import LabelExporterTab from './components/LabelExporterTab';
+import CalculatorTab from './components/CalculatorTab';
+import MeeshoAnalyticsTab from './components/MeeshoAnalyticsTab';
+
+/* ── 1. MEESHO SHIPPING RATES & P&L HOME PAGE ─────────────────── */
+function MeeshoShippingRatesPage({ onRegister }) {
+    return (
+        <div>
+            {/* Hero Section */}
+            <section style={{ padding: '4rem 5% 3.5rem 5%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <div style={{ background: 'rgba(37, 99, 235, 0.08)', border: '1px solid rgba(37, 99, 235, 0.18)', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 'bold', color: '#2563eb', marginBottom: '1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <span>📢</span> Low-Cost Meesho E-commerce Shipping Optimization
+                </div>
+                <h1 style={{ 
+                    fontFamily: 'Outfit', fontSize: '3.4rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.03em', 
+                    background: 'linear-gradient(135deg, #0f172a 40%, #2563eb 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                    maxWidth: '850px', margin: '0 auto 1.5rem auto' 
+                }}>
+                    Audit Meesho Shipping Rates, Reconcile P&L & Check Weight Penalties
+                </h1>
+                <p style={{ fontSize: '1.05rem', color: '#475569', maxWidth: '640px', lineHeight: '1.6', margin: '0 auto 2.25rem auto' }}>
+                    Maximize your store margins by instantly checking and auditing shipping rate leakages. Route rate checks dynamically through secure personal session keys.
+                </p>
+                
+                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '4rem' }}>
+                    <button 
+                        style={{ background: '#2563eb', border: 'none', color: '#ffffff', padding: '0.85rem 2rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 20px rgba(37, 99, 235, 0.25)' }}
+                        onClick={onRegister}
+                    >
+                        ⚡ Claim 3 Free Credits
+                    </button>
+                    <a 
+                        href="#performance-metrics" 
+                        style={{ display: 'flex', alignItems: 'center', background: '#ffffff', border: '1px solid #cbd5e1', color: '#0f172a', padding: '0.85rem 2rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, textDecoration: 'none' }}
+                    >
+                        Check Live Auditor
+                    </a>
+                </div>
+
+                {/* Hero Dashboard Preview Mockup (Meesho Style) */}
+                <div style={{ width: '100%', maxWidth: '850px', background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.08)', padding: '1.25rem', textAlign: 'left', color: '#0f172a' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.85rem', marginBottom: '1.25rem' }}>
+                        <span style={{ width: '10px', height: '10px', background: '#ef4444', borderRadius: '50%' }}></span>
+                        <span style={{ width: '10px', height: '10px', background: '#eab308', borderRadius: '50%' }}></span>
+                        <span style={{ width: '10px', height: '10px', background: '#22c55e', borderRadius: '50%' }}></span>
+                        <span style={{ fontSize: '0.75rem', color: '#475569', marginLeft: '0.5rem', fontWeight: 600 }}>⚡ VendorsDesk Meesho Audit Panel (Connected: Store Alpha)</span>
+                    </div>
+
+                    <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '1rem 1.5rem', borderRadius: '8px', marginBottom: '1rem' }}>
+                        <h4 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#0f172a' }}>Welcome back, Store Alpha</h4>
+                        <p style={{ color: '#475569', fontSize: '0.75rem', marginTop: '0.15rem', margin: 0 }}>Manage and grow your business with Meesho</p>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem', marginBottom: '1rem' }}>
+                        <div style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '8px', padding: '0.75rem' }}>
+                            <div style={{ fontSize: '0.7rem', color: '#475569', fontWeight: 500 }}>Pending Orders</div>
+                            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#2563eb', marginTop: '0.15rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>0 <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>&gt;</span></div>
+                        </div>
+                        <div style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '8px', padding: '0.75rem' }}>
+                            <div style={{ fontSize: '0.7rem', color: '#475569', fontWeight: 500 }}>Download Labels</div>
+                            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#2563eb', marginTop: '0.15rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>0 <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>&gt;</span></div>
+                        </div>
+                        <div style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '8px', padding: '0.75rem' }}>
+                            <div style={{ fontSize: '0.7rem', color: '#475569', fontWeight: 500 }}>Out of Stock</div>
+                            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#dc2626', marginTop: '0.15rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>2 <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>&gt;</span></div>
+                        </div>
+                        <div style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '8px', padding: '0.75rem' }}>
+                            <div style={{ fontSize: '0.7rem', color: '#475569', fontWeight: 500 }}>Low Stock</div>
+                            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#d97706', marginTop: '0.15rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>0 <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>&gt;</span></div>
+                        </div>
+                    </div>
+
+                    <div style={{ border: '1px solid #e2e8f0', padding: '1rem', borderRadius: '8px', background: '#ffffff' }}>
+                        <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#dc2626', marginBottom: '0.5rem' }}>🚨 SKU-wise Return Risk Auditor</div>
+                        <div style={{ fontSize: '0.7rem', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.25rem', fontWeight: 'bold' }}>
+                            <span>SKU Name</span>
+                            <span>Return Rate</span>
+                            <span>Net Profit Status</span>
+                        </div>
+                        <div style={{ fontSize: '0.7rem', display: 'flex', justifyContent: 'space-between', paddingTop: '0.35rem', color: '#0f172a' }}>
+                            <span>FASHION-KURTI-PINK</span>
+                            <span style={{ color: '#dc2626', fontWeight: 'bold' }}>42.5%</span>
+                            <span style={{ color: '#dc2626', fontWeight: 'bold' }}>High Return Loss</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Live Auditor Performance Section */}
+            <section id="performance-metrics" style={{ padding: '5rem 5%', background: '#ffffff', borderTop: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '4rem', maxWidth: '1100px', margin: '0 auto', alignItems: 'center' }}>
+                    <div>
+                        <h2 style={{ fontFamily: 'Outfit', fontSize: '2.4rem', fontWeight: 800, marginBottom: '1.25rem', lineHeight: '1.2' }}>
+                            Verify Meesho Shipping Slabs & Detect Overcharges
+                        </h2>
+                        <p style={{ color: '#475569', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '1.25rem' }}>
+                            Many e-commerce suppliers are charged for higher weight tiers than the actual listing weight. Our system parses packaging details and matches them against standard logistics matrices.
+                        </p>
+                        <p style={{ color: '#475569', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '1.5rem' }}>
+                            We audit the entire payout ledger—deducting returned shipping, customer return penalties, and forward shipping charges—to output a clean net profit figure for your supplier panel.
+                        </p>
+                        <div style={{ display: 'flex', gap: '1.5rem' }}>
+                            <div>
+                                <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#059669', fontFamily: 'Outfit' }}>₹12,450</div>
+                                <div style={{ fontSize: '0.75rem', color: '#475569' }}>Avg. Monhtly Weight Discrepancy Audited</div>
+                            </div>
+                            <div>
+                                <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#2563eb', fontFamily: 'Outfit' }}>100%</div>
+                                <div style={{ fontSize: '0.75rem', color: '#475569' }}>Secure Session Compliance</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="panel-card" style={{ padding: '2rem' }}>
+                        <h4 style={{ fontSize: '1.05rem', fontFamily: 'Outfit', fontWeight: 700, marginBottom: '1rem', color: '#2563eb' }}>⚡ Reconciled Shipping Rate Audits</h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem' }}>
+                                <span style={{ color: '#475569' }}>Forward Shipping Fees</span>
+                                <span style={{ fontWeight: 'bold' }}>₹48.20 / order</span>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem' }}>
+                                <span style={{ color: '#475569' }}>RTO Return Penalty</span>
+                                <span style={{ fontWeight: 'bold' }}>₹0.00 (Standard Policy)</span>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem' }}>
+                                <span style={{ color: '#475569' }}>Customer Return shipping</span>
+                                <span style={{ fontWeight: 'bold', color: '#dc2626' }}>₹85.00 / return</span>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', paddingTop: '0.25rem' }}>
+                                <span style={{ color: '#475569', fontWeight: 600 }}>Verified Profit Margin</span>
+                                <span style={{ fontWeight: 'bold', color: '#059669' }}>+34.2% Net Margin</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+}
+
+/* ── 2. MEESHO IMAGE GENERATOR / OPTIMIZER PAGE ────────────── */
+function MeeshoImageGeneratorPage({ onRegister }) {
+    return (
+        <div style={{ padding: '4rem 5%' }}>
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                <div style={{ background: 'rgba(37, 99, 235, 0.08)', border: '1px solid rgba(37, 99, 235, 0.18)', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 'bold', color: '#2563eb', marginBottom: '1.25rem', display: 'inline-block' }}>
+                    🎨 Meesho Image Variation Creator
+                </div>
+                <h1 style={{ fontFamily: 'Outfit', fontSize: '3rem', fontWeight: 800, lineHeight: 1.2, maxWidth: '800px', margin: '0 auto 1.25rem auto' }}>
+                    Bypass Duplicate Image Blocks & Qualify for Lower Shipping Rates
+                </h1>
+                <p style={{ color: '#475569', fontSize: '1rem', maxWidth: '600px', margin: '0 auto 2rem auto', lineHeight: '1.6' }}>
+                    Meesho suppresses listings with duplicate catalog photos. Our automated optimizer generates distinct visual variations (borders, spacers, badges) to bypass checks and qualify for Next Day Dispatch (NDD) tiers.
+                </p>
+                <button 
+                    style={{ background: '#2563eb', border: 'none', color: '#ffffff', padding: '0.85rem 2rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 20px rgba(37, 99, 235, 0.25)' }}
+                    onClick={onRegister}
+                >
+                    Start Generating Variations
+                </button>
+            </div>
+
+            {/* Before / After Mockup Showcase */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', maxWidth: '900px', margin: '0 auto 4rem auto' }}>
+                <div className="panel-card" style={{ padding: '1.5rem', textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.8rem', color: '#dc2626', fontWeight: 'bold', marginBottom: '0.75rem' }}>❌ Duplicate Original Listing Photo (Higher Shipping Slab)</div>
+                    <div style={{ aspectRatio: '1', background: '#f8fafc', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #cbd5e1', overflow: 'hidden' }}>
+                        <span style={{ fontSize: '5rem' }}>👗</span>
+                    </div>
+                </div>
+
+                <div className="panel-card" style={{ padding: '1.5rem', textAlign: 'center', border: '1px solid #2563eb', boxShadow: '0 10px 30px rgba(37, 99, 235, 0.15)' }}>
+                    <div style={{ fontSize: '0.8rem', color: '#059669', fontWeight: 'bold', marginBottom: '0.75rem' }}>✅ Optimized Unique Variation (Lower Shipping Slabs & High CTR)</div>
+                    <div style={{ aspectRatio: '1', background: '#ffffff', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '8px solid #ff3f6c', position: 'relative', overflow: 'hidden' }}>
+                        <span style={{ fontSize: '5.2rem' }}>👗</span>
+                        <div style={{ position: 'absolute', bottom: '8px', right: '8px', background: '#ff3f6c', color: '#ffffff', fontSize: '0.55rem', fontWeight: 'bold', padding: '0.2rem 0.4rem', borderRadius: '3px' }}>
+                            BEST SELLER
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Educational Content for AEO */}
+            <div style={{ maxWidth: '800px', margin: '0 auto', lineHeight: '1.7', color: '#475569' }}>
+                <h3 style={{ color: '#0f172a', fontFamily: 'Outfit', fontSize: '1.6rem', marginBottom: '1rem' }}>How E-commerce Catalog Image Optimization Reduces Logistics Costs</h3>
+                <p style={{ marginBottom: '1.25rem' }}>
+                    Online marketplaces use computer vision algorithms to cluster and index product listings. If your product photo matches existing images, your catalog is categorized into standardized shipping rate grids.
+                </p>
+                <p>
+                    By adding a subtle pink/blue border frame, top/bottom vertical spacers, or a brand badge, the image file hash changes and visual contours are shifted. This bypasses automated duplicator filters, keeping your listings active and qualifying for optimal logistics tariffs.
+                </p>
+            </div>
+        </div>
+    );
+}
+
+/* ── 3. MEESHO SHIPPING LABEL EXPORTER PAGE ─────────────── */
+function MeeshoLabelExporterPage({ onRegister }) {
+    return (
+        <div style={{ padding: '4rem 5%' }}>
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                <div style={{ background: 'rgba(37, 99, 235, 0.08)', border: '1px solid rgba(37, 99, 235, 0.18)', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 'bold', color: '#2563eb', marginBottom: '1.25rem', display: 'inline-block' }}>
+                    🏷️ E-commerce Label Crop & PDF Compiler
+                </div>
+                <h1 style={{ fontFamily: 'Outfit', fontSize: '3rem', fontWeight: 800, lineHeight: 1.2, maxWidth: '850px', margin: '0 auto 1.25rem auto' }}>
+                    Sort & Export Meesho Shipping Labels by SKU in Under 2 Minutes
+                </h1>
+                <p style={{ color: '#475569', fontSize: '1rem', maxWidth: '600px', margin: '0 auto 2rem auto', lineHeight: '1.6' }}>
+                    Stop manually cutting sheets! Upload your bulk order PDF sheets, automatically crop labels, sort them by specific courier companies (Delhivery, Shadowfax, XpressBees), and export compact, print-ready layouts.
+                </p>
+                <button 
+                    style={{ background: '#2563eb', border: 'none', color: '#ffffff', padding: '0.85rem 2rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 20px rgba(37, 99, 235, 0.25)' }}
+                    onClick={onRegister}
+                >
+                    Upload Label PDF
+                </button>
+            </div>
+
+            {/* Label Exporter Visual Cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', maxWidth: '1000px', margin: '0 auto 4rem auto' }}>
+                <div className="panel-card" style={{ padding: '1.75rem' }}>
+                    <h4 style={{ fontSize: '1.1rem', fontFamily: 'Outfit', fontWeight: 700, marginBottom: '0.75rem', color: '#2563eb' }}>📦 Bulk Packing Grouping</h4>
+                    <p style={{ fontSize: '0.85rem', color: '#475569', lineHeight: '1.5' }}>
+                        Group labels by SKU variations automatically. Packers can pull 50 units of the same catalog SKU and pack them continuously, reducing warehouse processing errors by 95%.
+                    </p>
+                </div>
+                <div className="panel-card" style={{ padding: '1.75rem' }}>
+                    <h4 style={{ fontSize: '1.1rem', fontFamily: 'Outfit', fontWeight: 700, marginBottom: '0.75rem', color: '#2563eb' }}>🚚 Logistics Courier Sorting</h4>
+                    <p style={{ fontSize: '0.85rem', color: '#475569', lineHeight: '1.5' }}>
+                        Separate Delhivery, Shadowfax, and ExpressBees labels instantly into distinct piles. Hand over dispatch packages directly to individual logistics pickups without manual scanning.
+                    </p>
+                </div>
+                <div className="panel-card" style={{ padding: '1.75rem' }}>
+                    <h4 style={{ fontSize: '1.1rem', fontFamily: 'Outfit', fontWeight: 700, marginBottom: '0.75rem', color: '#2563eb' }}>🖨️ Thermal Printer Sizing</h4>
+                    <p style={{ fontSize: '0.85rem', color: '#475569', lineHeight: '1.5' }}>
+                        Crop standard multi-label A4 sheets into compact 3x5 or 4x6 sizes, ready to print on thermal rolls. Minimize printing ink costs and paper overheads.
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+
+/* ── 5. PRICING & AFFILIATE PAGE ────────────────────────────── */
+function PricingAffiliatePage({ onRegister }) {
+    return (
+        <div style={{ padding: '4rem 5%' }}>
+            
+            {/* Pricing Section */}
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                <h2 style={{ fontFamily: 'Outfit', fontSize: '2.8rem', fontWeight: 800, marginBottom: '0.75rem' }}>Simple, Credit-Based Plans</h2>
+                <p style={{ color: '#475569', fontSize: '0.95rem' }}>Acquire check query credits and start optimizing catalog variation rates.</p>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem', maxWidth: '1150px', margin: '0 auto 5rem auto' }}>
+                
+                {/* Starter Plan - ₹99 */}
+                <div className="panel-card" style={{ padding: '1.75rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '16px' }}>
+                    <div style={{ fontWeight: 'bold', fontSize: '1rem', color: '#64748b' }}>Starter</div>
+                    <div>
+                        <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'Outfit', color: '#0f172a' }}>₹99</div>
+                        <div style={{ color: '#475569', fontSize: '0.75rem' }}>For small sellers</div>
+                    </div>
+                    <hr style={{ opacity: 0.1, margin: 0 }} />
+                    <ul style={{ paddingLeft: '0', listStyle: 'none', fontSize: '0.8rem', color: '#475569', display: 'flex', flexDirection: 'column', gap: '0.6rem', margin: 0 }}>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> <strong>40 Credits</strong> (60% More!)</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> 30 Days Validity</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> Low Shipping Rate Engine</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> HD Badges & Borders</li>
+                    </ul>
+                    <button 
+                        style={{ width: '100%', padding: '0.65rem', background: '#ffffff', border: '1px solid #2563eb', color: '#2563eb', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', marginTop: 'auto' }}
+                        onClick={onRegister}
+                    >
+                        Buy Now
+                    </button>
+                </div>
+
+                {/* Growth Plan - ₹299 (Best Value) */}
+                <div className="panel-card" style={{ padding: '1.75rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', border: '2px solid #2563eb', position: 'relative', background: '#ffffff', boxShadow: '0 10px 30px rgba(37, 99, 235, 0.15)', borderRadius: '16px' }}>
+                    <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: '#2563eb', color: '#ffffff', fontSize: '0.65rem', fontWeight: 800, padding: '0.2rem 0.75rem', borderRadius: '20px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Best Value</div>
+                    <div style={{ fontWeight: 'bold', fontSize: '1rem', color: '#2563eb' }}>Growth</div>
+                    <div>
+                        <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'Outfit', color: '#0f172a' }}>₹299</div>
+                        <div style={{ color: '#475569', fontSize: '0.75rem' }}>For growing businesses</div>
+                    </div>
+                    <hr style={{ opacity: 0.1, margin: 0 }} />
+                    <ul style={{ paddingLeft: '0', listStyle: 'none', fontSize: '0.8rem', color: '#475569', display: 'flex', flexDirection: 'column', gap: '0.6rem', margin: 0 }}>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> <strong>150 Credits</strong> (50% More!)</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> 45 Days Validity</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> Low Shipping Rate Engine</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> Multi-Badge Combinations</li>
+                    </ul>
+                    <button 
+                        style={{ width: '100%', padding: '0.7rem', background: '#2563eb', border: 'none', color: '#ffffff', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', marginTop: 'auto', boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)' }}
+                        onClick={onRegister}
+                    >
+                        Buy Now
+                    </button>
+                </div>
+
+                {/* Pro Plan - ₹599 */}
+                <div className="panel-card" style={{ padding: '1.75rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '16px' }}>
+                    <div style={{ fontWeight: 'bold', fontSize: '1rem', color: '#64748b' }}>Pro</div>
+                    <div>
+                        <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'Outfit', color: '#0f172a' }}>₹599</div>
+                        <div style={{ color: '#475569', fontSize: '0.75rem' }}>For high volume</div>
+                    </div>
+                    <hr style={{ opacity: 0.1, margin: 0 }} />
+                    <ul style={{ paddingLeft: '0', listStyle: 'none', fontSize: '0.8rem', color: '#475569', display: 'flex', flexDirection: 'column', gap: '0.6rem', margin: 0 }}>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> <strong>350 Credits</strong></li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> 60 Days Validity</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> Low Shipping Rate Engine</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> Dual Seal Stamp Combo</li>
+                    </ul>
+                    <button 
+                        style={{ width: '100%', padding: '0.65rem', background: '#ffffff', border: '1px solid #2563eb', color: '#2563eb', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', marginTop: 'auto' }}
+                        onClick={onRegister}
+                    >
+                        Buy Now
+                    </button>
+                </div>
+
+                {/* Enterprise Plan - ₹999 */}
+                <div className="panel-card" style={{ padding: '1.75rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '16px' }}>
+                    <div style={{ fontWeight: 'bold', fontSize: '1rem', color: '#64748b' }}>Enterprise</div>
+                    <div>
+                        <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'Outfit', color: '#0f172a' }}>₹999</div>
+                        <div style={{ color: '#475569', fontSize: '0.75rem' }}>Best value for agencies</div>
+                    </div>
+                    <hr style={{ opacity: 0.1, margin: 0 }} />
+                    <ul style={{ paddingLeft: '0', listStyle: 'none', fontSize: '0.8rem', color: '#475569', display: 'flex', flexDirection: 'column', gap: '0.6rem', margin: 0 }}>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> <strong>750 Credits</strong> (50% More!)</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> 90 Days Validity</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> Low Shipping Rate Engine</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ color: '#2563eb', fontWeight: 'bold' }}>✓</span> 24/7 Priority Support</li>
+                    </ul>
+                    <button 
+                        style={{ width: '100%', padding: '0.65rem', background: '#ffffff', border: '1px solid #2563eb', color: '#2563eb', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', marginTop: 'auto' }}
+                        onClick={onRegister}
+                    >
+                        Buy Now
+                    </button>
+                </div>
+
+            </div>
+
+            {/* Affiliate Program Section */}
+            <div style={{ borderTop: '2px dashed #cbd5e1', paddingTop: '5rem', maxWidth: '1000px', margin: '0 auto' }}>
+                <div className="panel-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '3rem', padding: '2.5rem', background: '#ffffff', border: '1px solid #cbd5e1' }}>
+                    <div>
+                        <div style={{ color: '#2563eb', fontWeight: 'bold', fontSize: '0.8rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Affiliate Partnership</div>
+                        <h3 style={{ fontSize: '1.8rem', fontFamily: 'Outfit', fontWeight: 800, marginBottom: '0.75rem', color: '#0f172a' }}>
+                            Earn 33% Lifetime Commission on Referred Purchases
+                        </h3>
+                        <p style={{ color: '#475569', fontSize: '0.9rem', lineHeight: '1.6', margin: 0 }}>
+                            Share your unique link with e-commerce sellers. Earn standard query credits when they buy plans, and give them 5 extra credits upon signup.
+                        </p>
+                    </div>
+                    <button 
+                        style={{ background: '#2563eb', border: 'none', color: '#ffffff', padding: '0.85rem 2rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap', boxShadow: '0 4px 12px rgba(37, 99, 235, 0.2)' }}
+                        onClick={onRegister}
+                    >
+                        Join Affiliate Program
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    );
+}
+
+/* ── 6. COMPACT MARKETING LAYOUT WRAPPER ──────────────────── */
+function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, onRegister, onGoToDashboard }) {
+    const [faqOpen, setFaqOpen] = useState({});
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const toggleFaq = (idx) => {
+        setFaqOpen(prev => ({ ...prev, [idx]: !prev[idx] }));
+    };
+
+    return (
+        <div style={{ minHeight: '100vh', width: '100vw', background: 'var(--bg-gradient)', color: 'var(--text-primary)', overflowX: 'hidden' }}>
+            
+            {/* Header / Navbar */}
+            <header className="site-header">
+                <div 
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', cursor: 'pointer' }}
+                    onClick={() => { onTabChange('meesho-shipping-rates'); setMobileMenuOpen(false); }}
+                >
+                    <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '34px', width: 'auto', objectFit: 'contain' }} onError={(e) => { e.target.style.display = 'none'; }} />
+                    <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.4rem', letterSpacing: '-0.02em', color: '#0f172a' }}>
+                        VendorsDesk
+                    </span>
+                </div>
+                
+                {/* Desktop Navigation Links */}
+                <nav className="desktop-nav">
+                    <button 
+                        className={`nav-link ${activeTab === 'meesho-shipping-rates' ? 'active' : ''}`}
+                        onClick={() => onTabChange('meesho-shipping-rates')}
+                    >
+                        Shipping Rates & P&L
+                    </button>
+                    <button 
+                        className={`nav-link ${activeTab === 'meesho-image-generator' ? 'active' : ''}`}
+                        onClick={() => onTabChange('meesho-image-generator')}
+                    >
+                        Image Generator
+                    </button>
+                    <button 
+                        className={`nav-link ${activeTab === 'meesho-label-exporter' ? 'active' : ''}`}
+                        onClick={() => onTabChange('meesho-label-exporter')}
+                    >
+                        Label Exporter
+                    </button>
+                    <button 
+                        className={`nav-link ${activeTab === 'pricing' ? 'active' : ''}`}
+                        onClick={() => onTabChange('pricing')}
+                    >
+                        Pricing & Affiliate
+                    </button>
+                </nav>
+
+                {/* Desktop Action Buttons */}
+                <div className="desktop-actions">
+                    {currentUser ? (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                            <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>
+                                💎 {currentUser.credits} Credits
+                            </span>
+                            <button 
+                                className="btn-get-started" 
+                                style={{ padding: '0.65rem 1.25rem', background: 'linear-gradient(135deg, #2563eb, #7c3aed)', boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)' }} 
+                                onClick={onGoToDashboard}
+                            >
+                                ⚡ Go to App Dashboard
+                            </button>
+                        </div>
+                    ) : (
+                        <>
+                            <button className="btn-signin" onClick={onLogin}>
+                                Sign In
+                            </button>
+                            <button className="btn-get-started" onClick={onRegister}>
+                                Get Started
+                            </button>
+                        </>
+                    )}
+                </div>
+
+                {/* Mobile Hamburger Toggle Button */}
+                <button 
+                    className="mobile-hamburger-btn"
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    aria-label="Toggle Menu"
+                >
+                    {mobileMenuOpen ? '✕' : '☰'}
+                </button>
+
+                {/* Mobile Menu Drawer */}
+                {mobileMenuOpen && (
+                    <div className="mobile-menu-drawer">
+                        <button 
+                            className={`mobile-nav-link ${activeTab === 'meesho-shipping-rates' ? 'active' : ''}`}
+                            onClick={() => { onTabChange('meesho-shipping-rates'); setMobileMenuOpen(false); }}
+                        >
+                            📊 Shipping Rates & P&L
+                        </button>
+                        <button 
+                            className={`mobile-nav-link ${activeTab === 'meesho-image-generator' ? 'active' : ''}`}
+                            onClick={() => { onTabChange('meesho-image-generator'); setMobileMenuOpen(false); }}
+                        >
+                            🖼️ Image Generator
+                        </button>
+                        <button 
+                            className={`mobile-nav-link ${activeTab === 'meesho-label-exporter' ? 'active' : ''}`}
+                            onClick={() => { onTabChange('meesho-label-exporter'); setMobileMenuOpen(false); }}
+                        >
+                            🏷️ Label Exporter
+                        </button>
+                        <button 
+                            className={`mobile-nav-link ${activeTab === 'pricing' ? 'active' : ''}`}
+                            onClick={() => { onTabChange('pricing'); setMobileMenuOpen(false); }}
+                        >
+                            💎 Pricing & Affiliate
+                        </button>
+
+                        <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '0.4rem 0' }} />
+
+                        <button 
+                            className="btn-signin-mobile" 
+                            onClick={(e) => { 
+                                e.preventDefault();
+                                e.stopPropagation(); 
+                                onLogin(); 
+                                setTimeout(() => setMobileMenuOpen(false), 50); 
+                            }}
+                        >
+                            Sign In
+                        </button>
+                        <button 
+                            className="btn-get-started-mobile" 
+                            onClick={(e) => { 
+                                e.preventDefault();
+                                e.stopPropagation(); 
+                                onRegister(); 
+                                setTimeout(() => setMobileMenuOpen(false), 50); 
+                            }}
+                        >
+                            ⚡ Get Started (3 Free Credits)
+                        </button>
+                    </div>
+                )}
+            </header>
+
+            {/* Conditionally Render Subpages */}
+            {activeTab === 'meesho-shipping-rates' && <MeeshoShippingRatesPage onRegister={onRegister} />}
+            {activeTab === 'meesho-image-generator' && <MeeshoImageGeneratorPage onRegister={onRegister} />}
+            {activeTab === 'meesho-label-exporter' && <MeeshoLabelExporterPage onRegister={onRegister} />}
+            {activeTab === 'pricing' && <PricingAffiliatePage onRegister={onRegister} />}
+
+            {/* General FAQs Accordion Section */}
+            <section id="faqs" style={{ padding: '5rem 5% 6rem 5%', maxWidth: '800px', margin: '0 auto', borderTop: '1px solid #e2e8f0' }}>
+                <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+                    <h2 style={{ fontFamily: 'Outfit', fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.75rem', color: '#0f172a' }}>Frequently Asked Questions</h2>
+                    <p style={{ color: '#475569', fontSize: '0.95rem' }}>Answers to common e-commerce logistics and duplicate listing queries.</p>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {[
+                        {
+                            q: "What is VendorsDesk and how does it optimize Meesho shipping?",
+                            a: "VendorsDesk is an e-commerce auditing tool that cross-references actual product variation weights against the shipping rate matrixes logged by logistics partners on the Meesho Supplier Panel, flagging shipping charge leakages."
+                        },
+                        {
+                            q: "Is it secure to link my Meesho account or session keys?",
+                            a: "Absolutely. We do not store master logins or developer API keys. Everything is routed using secure personal session handshake configurations, ensuring full compliance and avoiding Cloudflare blocks."
+                        },
+                        {
+                            q: "How does the SKU-wise Return Risk Auditor work?",
+                            a: "Our SKU Return Risk Auditor pulls product payouts and matches them with RTO returns records, identifying listings that produce negative profits due to high return penalty charges."
+                        },
+                        {
+                            q: "How do I claim my 3 free query credits?",
+                            a: "Simply sign up with an email ID or Google login. 3 free credits will be credited instantly to your account balance, allowing you to test shipping checks immediately."
+                        }
+                    ].map((faq, idx) => {
+                        const isOpen = !!faqOpen[idx];
+                        return (
+                            <div key={idx} style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '1.25rem', cursor: 'pointer' }} onClick={() => toggleFaq(idx)}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <strong style={{ fontSize: '0.95rem', color: '#0f172a', fontWeight: 600 }}>{faq.q}</strong>
+                                    <span style={{ fontSize: '1rem', color: '#2563eb', fontWeight: 'bold' }}>{isOpen ? '−' : '+'}</span>
+                                </div>
+                                {isOpen && (
+                                    <div style={{ marginTop: '0.75rem', fontSize: '0.85rem', color: '#475569', lineHeight: '1.6', borderTop: '1px solid #cbd5e1', paddingTop: '0.75rem' }}>
+                                        {faq.a}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
+            </section>
+
+            {/* Footer */}
+            <footer style={{ padding: '4rem 5% 3rem 5%', background: '#ffffff', borderTop: '1px solid #e2e8f0', textAlign: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                    <span style={{ fontSize: '1.5rem' }}>⚡</span>
+                    <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.2rem', color: '#0f172a' }}>VendorsDesk</span>
+                </div>
+                
+                <p style={{ color: '#475569', fontSize: '0.8rem', maxWidth: '600px', margin: '0 auto 2rem auto', lineHeight: '1.5' }}>
+                    VendorsDesk is an independent SaaS optimization tool. We are not officially affiliated with Meesho Inc or logistics providers. All audits are derived dynamically via secure user tokens.
+                </p>
+
+                <div style={{ color: '#64748b', fontSize: '0.75rem', borderTop: '1px solid #e2e8f0', paddingTop: '1.5rem' }}>
+                    © 2026 VendorsDesk. All rights reserved. | Contact: support@vendorsdesk.io
+                </div>
+            </footer>
+
+        </div>
+    );
+}
+
+
+export default function App() {
+    const [currentUser, setCurrentUser] = useState(null);
+    const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+    const [activePage, setActivePage] = useState('home'); // 'home' | 'optimizer' | 'label-exporter' | 'calculator' | 'billing' | 'affiliate'
+    const [authModalOpen, setAuthModalOpen] = useState(false);
+    const [authMode, setAuthMode] = useState('login'); // 'login' | 'signup'
+    
+    // Auth Form State
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [referralCodeInput, setReferralCodeInput] = useState('');
+    const [authError, setAuthError] = useState('');
+
+    // Billing Upgrade State
+    const [selectedPlan, setSelectedPlan] = useState('tier_299');
+    const [couponCode, setCouponCode] = useState('');
+    const [couponMessage, setCouponMessage] = useState('');
+    const [couponError, setCouponError] = useState('');
+    const [billingError, setBillingError] = useState('');
+    const [billingSuccess, setBillingSuccess] = useState('');
+
+    // Copy link status
+    const [copiedText, setCopiedText] = useState('Copy');
+    const [activeMarketingTab, setActiveMarketingTab] = useState('meesho-shipping-rates');
+
+    useEffect(() => {
+        if (!currentUser) {
+            window.scrollTo(0, 0);
+            if (activeMarketingTab === 'meesho-shipping-rates') {
+                document.title = "Meesho Shipping Rates, P&L Audit & Logistics Calculator | VendorsDesk";
+                const meta = document.querySelector('meta[name="description"]');
+                if (meta) meta.setAttribute('content', "Stop losing money on Meesho! Reconcile logistics weight discrepancies, RTO return penalties, and verify payout settlements in real-time.");
+            } else if (activeMarketingTab === 'meesho-image-generator') {
+                document.title = "Meesho Listing Image Generator & Duplicate Bypass Optimizer | VendorsDesk";
+                const meta = document.querySelector('meta[name="description"]');
+                if (meta) meta.setAttribute('content', "Bypass image duplication restrictions on Meesho listings. Automatically generate Pink/Blue border variations and NDD badges to qualify for lower shipping rates.");
+            } else if (activeMarketingTab === 'meesho-label-exporter') {
+                document.title = "Meesho Bulk Shipping Label Exporter & PDF Crop Tool | VendorsDesk";
+                const meta = document.querySelector('meta[name="description"]');
+                if (meta) meta.setAttribute('content', "Sort and crop Meesho shipping label sheets in under 2 minutes. Group by SKU and courier channels (Shadowfax, Delhivery) for streamlined warehouse packing.");
+
+            } else if (activeMarketingTab === 'pricing') {
+                document.title = "Pricing Tiers & Affiliate Referral Program | VendorsDesk";
+                const meta = document.querySelector('meta[name="description"]');
+                if (meta) meta.setAttribute('content', "Choose the standard, gold, or premium plan to audit shipping weights. Earn 33% commission on referred e-commerce seller signups.");
+            }
+        }
+    }, [activeMarketingTab, currentUser]);
+
+
+    // Google hybrid credentials state
+    const [passwordSetupOpen, setPasswordSetupOpen] = useState(false);
+    const [googleEmail, setGoogleEmail] = useState('');
+    const [setupPassword, setSetupPassword] = useState('');
+    const [setupError, setSetupError] = useState('');
+    const [setupSuccess, setSetupSuccess] = useState('');
+
+    const isAppDomain = window.location.hostname === 'app.vendorsdesk.in' || window.location.hostname.startsWith('app.');
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const ref = urlParams.get('ref');
+        const tokenParam = urlParams.get('token');
+        const modeParam = urlParams.get('mode');
+
+        if (tokenParam) {
+            localStorage.setItem('vendorsdesk_token', tokenParam);
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
+        if (ref) {
+            setAuthMode('signup');
+            setReferralCodeInput(ref);
+            setAuthModalOpen(true);
+        } else if (modeParam === 'login' || modeParam === 'signup') {
+            setAuthMode(modeParam);
+            setAuthModalOpen(true);
+        }
+
+        checkUserAuth();
+    }, []);
+
+    const checkUserAuth = async () => {
+        setIsLoadingAuth(true);
+        const token = localStorage.getItem('vendorsdesk_token');
+        if (!token) {
+            setIsLoadingAuth(false);
+            if (isAppDomain) {
+                setAuthModalOpen(true);
+            }
+            return;
+        }
+
+        try {
+            const data = await secureFetch('/api/auth/me', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (data.success) {
+                setCurrentUser(data.user);
+                setAuthModalOpen(false);
+            } else {
+                localStorage.removeItem('vendorsdesk_token');
+                setCurrentUser(null);
+                if (isAppDomain) {
+                    setAuthModalOpen(true);
+                }
+            }
+        } catch (e) {
+            console.error('Auth check error:', e);
+            if (isAppDomain) {
+                setAuthModalOpen(true);
+            }
+        } finally {
+            setIsLoadingAuth(false);
+        }
+    };
+
+    // Google Sign-In button initialization
+    useEffect(() => {
+        if (authModalOpen) {
+            const timer = setTimeout(() => {
+                try {
+                    if (window.google) {
+                        google.accounts.id.initialize({
+                            client_id: "148360176717-1dpf5u3v99ckjhu5gruud4f9u17uqoc2.apps.googleusercontent.com",
+                            callback: handleGoogleCredentialResponse
+                        });
+                        google.accounts.id.renderButton(
+                            document.getElementById("google-signin-btn"),
+                            { theme: "outline", size: "large", width: 340 }
+                        );
+                    }
+                } catch (e) {
+                    console.error("Google script initialization failed:", e);
+                }
+            }, 400);
+            return () => clearTimeout(timer);
+        }
+    }, [authModalOpen]);
+
+    const handleGoogleCredentialResponse = async (response) => {
+        if (response && response.credential) {
+            await processGoogleLogin(response.credential);
+        }
+    };
+
+    const processGoogleLogin = async (googleToken) => {
+        setAuthError('');
+        try {
+            const data = await secureFetch('/api/auth/google', {
+                method: 'POST',
+                body: { token: googleToken }
+            });
+
+            if (data.success) {
+                localStorage.setItem('vendorsdesk_token', data.token);
+                if (data.isNewUser) {
+                    setGoogleEmail(data.email);
+                    setPasswordSetupOpen(true);
+                    setAuthModalOpen(false);
+                } else {
+                    await checkUserAuth();
+                    setAuthModalOpen(false);
+                }
+            } else {
+                setAuthError(data.error || 'Google login verification failed.');
+            }
+        } catch (err) {
+            setAuthError('Network communication failed.');
+        }
+    };
+
+    const handlePasswordSetupSubmit = async (e) => {
+        e.preventDefault();
+        setSetupError('');
+        setSetupSuccess('');
+
+        if (setupPassword.length < 6) {
+            setSetupError('Password must be at least 6 characters long.');
+            return;
+        }
+
+        const token = localStorage.getItem('vendorsdesk_token');
+        try {
+            const data = await secureFetch('/api/auth/set-password', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: { password: setupPassword }
+            });
+
+            if (data.success) {
+                setSetupSuccess('Password configured successfully! Redirecting...');
+                setTimeout(async () => {
+                    setPasswordSetupOpen(false);
+                    setSetupPassword('');
+                    await checkUserAuth();
+                }, 2000);
+            } else {
+                setSetupError(data.error || 'Could not configure password.');
+            }
+        } catch (err) {
+            setSetupError('Failed to establish connection.');
+        }
+    };
+
+    const handleAuthSubmit = async (e) => {
+        e.preventDefault();
+        setAuthError('');
+
+        const endpoint = authMode === 'login' ? '/api/auth/login' : '/api/auth/register';
+        const payload = authMode === 'login' 
+            ? { email, password } 
+            : { name, email, password, referralCode: referralCodeInput };
+
+        try {
+            const data = await secureFetch(endpoint, {
+                method: 'POST',
+                body: payload
+            });
+
+            if (data && data.success) {
+                localStorage.setItem('vendorsdesk_token', data.token);
+                setName('');
+                setEmail('');
+                setPassword('');
+                setReferralCodeInput('');
+                await checkUserAuth();
+            } else {
+                setAuthError(data && data.error ? data.error : 'Authentication failed. Please check your details.');
+            }
+        } catch (err) {
+            setAuthError(err && err.message ? err.message : 'Connection failed. Try again.');
+        }
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('vendorsdesk_token');
+        setCurrentUser(null);
+        setAuthModalOpen(true);
+        setActivePage('home');
+    };
+
+    const handleApplyCoupon = async () => {
+        setCouponError('');
+        setCouponMessage('');
+        if (!couponCode) return;
+
+        const token = localStorage.getItem('vendorsdesk_token');
+        try {
+            const data = await secureFetch('/api/billing/coupon/apply', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: { code: couponCode }
+            });
+
+            if (data.success) {
+                const discount = data.coupon.discountType === 'percentage' 
+                    ? `${data.coupon.discountValue}%` 
+                    : `₹${data.coupon.discountValue}`;
+                setCouponMessage(`Coupon Applied! Discount: ${discount}`);
+            } else {
+                setCouponError(data.error || 'Invalid coupon.');
+            }
+        } catch (e) {
+            setCouponError('Coupon validation error.');
+        }
+    };
+
+    const handleSubscribe = async () => {
+        setBillingError('');
+        setBillingSuccess('');
+        const token = localStorage.getItem('vendorsdesk_token');
+        
+        try {
+            const data = await secureFetch('/api/billing/subscribe', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: { plan: selectedPlan, couponCode }
+            });
+
+            if (data.success) {
+                setBillingSuccess(`Upgrade Successful! ${data.message}`);
+                setCouponCode('');
+                setCouponMessage('');
+                await checkUserAuth();
+                setTimeout(() => {
+                    setBillingSuccess('');
+                    setActivePage('home');
+                }, 2000);
+            } else {
+                setBillingError(data.error || 'Subscription failed.');
+            }
+        } catch (e) {
+            setBillingError('Network subscription failed.');
+        }
+    };
+
+    const copyReferralLink = () => {
+        if (!currentUser) return;
+        const refLink = `${window.location.origin}/index.html?ref=${currentUser.referralCode}`;
+        navigator.clipboard.writeText(refLink).then(() => {
+            setCopiedText('Copied!');
+            setTimeout(() => setCopiedText('Copy'), 2000);
+        });
+    };
+
+    // Auth + password-setup modals. Rendered in BOTH the logged-out and logged-in
+    // views so the login/signup modal actually appears when a visitor clicks
+    // "Sign In" on the marketing site.
+    const authModals = (
+        <>
+            {authModalOpen && (
+                <div className="auth-modal-overlay">
+                    <div className="auth-modal-card">
+                        {/* Close Modal Button */}
+                        <button 
+                            type="button"
+                            onClick={() => { setAuthModalOpen(false); setAuthError(''); }}
+                            style={{
+                                position: 'absolute', top: '1.2rem', right: '1.2rem',
+                                background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '50%',
+                                width: '32px', height: '32px', cursor: 'pointer',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                fontWeight: 'bold', color: '#64748b', fontSize: '0.9rem',
+                                transition: 'all 0.2s', zIndex: 10
+                            }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = '#e2e8f0'; e.currentTarget.style.color = '#0f172a'; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#64748b'; }}
+                            title="Close"
+                        >
+                            ✕
+                        </button>
+
+                        {/* Brand Icon Header */}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
+                            <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} onError={(e) => { e.target.style.display = 'none'; }} />
+                            <span style={{ fontSize: '1.35rem', fontWeight: 800, fontFamily: 'Outfit', color: '#0f172a', letterSpacing: '-0.02em' }}>VendorsDesk</span>
+                        </div>
+
+                        {/* Segmented Auth Mode Tabs */}
+                        <div style={{ display: 'flex', background: '#f1f5f9', borderRadius: '12px', padding: '0.25rem', border: '1px solid #e2e8f0' }}>
+                            <button className={`auth-tab-btn ${authMode === 'login' ? 'active' : ''}`} onClick={() => { setAuthMode('login'); setAuthError(''); }}>Sign In</button>
+                            <button className={`auth-tab-btn ${authMode === 'signup' ? 'active' : ''}`} onClick={() => { setAuthMode('signup'); setAuthError(''); }}>Sign Up</button>
+                        </div>
+
+                        <div style={{ textAlign: 'center' }}>
+                            <h3 style={{ fontSize: '1.35rem', fontFamily: 'Outfit', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.2rem' }}>
+                                {authMode === 'login' ? 'Welcome Back!' : 'Create your Account'}
+                            </h3>
+                            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                                {authMode === 'login' ? 'Sign in to access your shipping optimizer dashboard' : 'Register and get 3 free credits immediately'}
+                            </p>
+                        </div>
+
+                        <form onSubmit={handleAuthSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                            {authMode === 'signup' && (
+                                <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
+                                    <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Full Name</label>
+                                    <input type="text" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} required style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                                </div>
+                            )}
+                            <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
+                                <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Email Address</label>
+                                <input type="email" placeholder="john@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                            </div>
+                            <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
+                                <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Password</label>
+                                <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                            </div>
+                            {authMode === 'signup' && (
+                                <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
+                                    <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Referral Code (Optional)</label>
+                                    <input type="text" placeholder="REF123" value={referralCodeInput} onChange={(e) => setReferralCodeInput(e.target.value)} style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                                </div>
+                            )}
+
+                            {authError && <div style={{ color: 'var(--danger)', fontSize: '0.82rem', textAlign: 'center', background: 'rgba(220, 38, 38, 0.08)', padding: '0.5rem', borderRadius: '8px', border: '1px solid rgba(220, 38, 38, 0.2)' }}>{authError}</div>}
+                            <button className="btn-submit-form" type="submit" style={{ padding: '0.75rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, marginTop: '0.35rem', background: 'linear-gradient(135deg, #2563eb, #4f46e5)', boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)' }}>
+                                {authMode === 'login' ? 'Sign In to Account' : 'Create Free Account'}
+                            </button>
+                        </form>
+
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', margin: '0.2rem 0' }}>
+                            <hr style={{ width: '38%', opacity: 0.2 }} />
+                            <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600 }}>OR</span>
+                            <hr style={{ width: '38%', opacity: 0.2 }} />
+                        </div>
+
+                        {/* Google Sign In Wrapper */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', alignItems: 'center' }}>
+                            <div id="google-signin-btn"></div>
+                            <button 
+                                type="button" 
+                                className="btn-action btn-action-primary" 
+                                style={{ width: '100%', padding: '0.65rem 0', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 600 }}
+                                onClick={() => processGoogleLogin('mock-google-token')}
+                            >
+                                🧪 Quick Test Login (One-Click)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {passwordSetupOpen && (
+                <div style={{
+                    position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                    background: 'rgba(2, 6, 23, 0.85)', backdropFilter: 'blur(12px)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100
+                }}>
+                    <div className="panel-card" style={{ width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                        <h3 style={{ textAlign: 'center', fontSize: '1.35rem', fontFamily: 'Outfit', color: '#818cf8' }}>
+                            Setup Account Password
+                        </h3>
+                        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
+                            Configure a password for <strong>{googleEmail}</strong> to log in directly without Google in the future.
+                        </p>
+
+                        <form onSubmit={handlePasswordSetupSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                            <div className="form-group">
+                                <label>Create Password</label>
+                                <input
+                                    type="password"
+                                    placeholder="••••••••"
+                                    value={setupPassword}
+                                    onChange={(e) => setSetupPassword(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            {setupError && <div style={{ color: 'var(--danger)', fontSize: '0.8rem' }}>{setupError}</div>}
+                            {setupSuccess && <div style={{ color: 'var(--success)', fontSize: '0.8rem' }}>{setupSuccess}</div>}
+
+                            <button className="btn-submit-form" type="submit">
+                                Configure Password & Finish
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+
+
+    if (isLoadingAuth) {
+        return (
+            <div style={{ display: 'flex', minHeight: '100vh', width: '100vw', background: 'var(--bg-gradient)', alignItems: 'center', justifyContent: 'center', color: '#ffffff', fontFamily: 'Outfit', fontSize: '1.2rem', fontWeight: 600 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                    <span>Initializing VendorsDesk Audit Panel...</span>
+                </div>
+            </div>
+        );
+    }
+
+    const handleGoToAppLogin = () => {
+        if (window.location.hostname.includes('vendorsdesk.in') && !isAppDomain) {
+            window.location.href = 'https://app.vendorsdesk.in?mode=login';
+        } else {
+            setAuthMode('login');
+            setAuthModalOpen(true);
+        }
+    };
+
+    const handleGoToAppSignup = () => {
+        if (window.location.hostname.includes('vendorsdesk.in') && !isAppDomain) {
+            window.location.href = 'https://app.vendorsdesk.in?mode=signup';
+        } else {
+            setAuthMode('signup');
+            setAuthModalOpen(true);
+        }
+    };
+
+    const handleGoToAppDashboard = () => {
+        if (window.location.hostname.includes('vendorsdesk.in') && !isAppDomain) {
+            const token = localStorage.getItem('vendorsdesk_token');
+            window.location.href = token ? `https://app.vendorsdesk.in?token=${token}` : 'https://app.vendorsdesk.in?mode=login';
+        } else {
+            setActivePage('home');
+        }
+    };
+
+    if (!currentUser) {
+        return (
+            <>
+                <MarketingLandingPage 
+                    currentUser={null}
+                    activeTab={activeMarketingTab} 
+                    onTabChange={setActiveMarketingTab} 
+                    onLogin={handleGoToAppLogin}
+                    onRegister={handleGoToAppSignup}
+                    onGoToDashboard={handleGoToAppDashboard}
+                />
+                {authModals}
+            </>
+        );
+    }
+
+    if (activePage === 'website') {
+        return (
+            <>
+                <MarketingLandingPage 
+                    currentUser={currentUser}
+                    activeTab={activeMarketingTab} 
+                    onTabChange={setActiveMarketingTab} 
+                    onLogin={handleGoToAppLogin}
+                    onRegister={handleGoToAppSignup}
+                    onGoToDashboard={handleGoToAppDashboard}
+                />
+                {authModals}
+            </>
+        );
+    }
+    return (
+        <div style={{ display: 'flex', minHeight: '100vh', width: '100vw', background: 'var(--bg-gradient)', color: 'var(--text-primary)' }}>
+            
+            {/* Sidebar */}
+            <aside style={{
+                width: '260px',
+                background: '#ffffff',
+                borderRight: '1px solid #cbd5e1',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                padding: '2rem 1.25rem',
+                position: 'fixed',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                zIndex: 100
+            }}>
+                <div>
+                    {/* Brand */}
+                    <div 
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '2.5rem', cursor: 'pointer' }}
+                        onClick={() => setActivePage('home')}
+                    >
+                        <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} onError={(e) => { e.target.style.display = 'none'; }} />
+                        <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.35rem', letterSpacing: '-0.02em', color: '#0f172a' }}>
+                            VendorsDesk
+                        </span>
+                    </div>
+
+                    {/* Navigation Links */}
+                    <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                        <button 
+                            className={`sidebar-link ${activePage === 'home' ? 'active' : ''}`}
+                            onClick={() => setActivePage('home')}
+                        >
+                            🏠 Home Dashboard
+                        </button>
+                        <button 
+                            className={`sidebar-link ${activePage === 'optimizer' ? 'active' : ''}`}
+                            onClick={() => setActivePage('optimizer')}
+                        >
+                            ⚡ Image Generator
+                        </button>
+                        <button 
+                            className={`sidebar-link ${activePage === 'label-exporter' ? 'active' : ''}`}
+                            onClick={() => setActivePage('label-exporter')}
+                        >
+                            📋 Label Exporter
+                        </button>
+                        <button 
+                            className={`sidebar-link ${activePage === 'calculator' ? 'active' : ''}`}
+                            onClick={() => setActivePage('calculator')}
+                        >
+                            🧮 Profit Calculator
+                        </button>
+                        <button 
+                            className={`sidebar-link ${activePage === 'billing' ? 'active' : ''}`}
+                            onClick={() => setActivePage('billing')}
+                            style={{ position: 'relative' }}
+                        >
+                            💳 Purchase Plan
+                            {currentUser && currentUser.credits <= 0 && (
+                                <span style={{ marginLeft: 'auto', background: '#ef4444', color: '#ffffff', fontSize: '0.6rem', padding: '0.15rem 0.4rem', borderRadius: '6px', fontWeight: 800 }}>GET CREDITS</span>
+                            )}
+                        </button>
+                        <button 
+                            className={`sidebar-link ${activePage === 'affiliate' ? 'active' : ''}`}
+                            onClick={() => setActivePage('affiliate')}
+                        >
+                            👥 Affiliate Program
+                        </button>
+                        <button 
+                            className={`sidebar-link ${activePage === 'website' ? 'active' : ''}`}
+                            onClick={() => setActivePage('website')}
+                            style={{ marginTop: '0.5rem', background: 'rgba(37, 99, 235, 0.06)', border: '1px solid rgba(37, 99, 235, 0.2)', color: '#2563eb', fontWeight: 700 }}
+                        >
+                            🌐 View Website & Plans
+                        </button>
+                    </nav>
+                </div>
+
+                {/* Profile Section Footer */}
+                {currentUser && (
+                    <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        <div>
+                            <div style={{ fontWeight: 600, fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{currentUser.name}</div>
+                            <div style={{ fontSize: '0.75rem', color: currentUser.credits <= 0 ? '#ef4444' : 'var(--text-secondary)', fontWeight: currentUser.credits <= 0 ? 700 : 400 }}>
+                                💎 {currentUser.credits} Credits {currentUser.credits <= 0 && '(0 Remaining)'}
+                            </div>
+                            <div style={{ fontSize: '0.75rem', color: '#2563eb', textTransform: 'uppercase', fontWeight: 'bold', marginTop: '0.15rem' }}>Tier: {currentUser.tier}</div>
+                        </div>
+                        <button className="btn-action btn-action-danger" onClick={handleLogout} style={{ width: '100%' }}>Logout</button>
+                    </div>
+                )}
+            </aside>
+
+            {/* Main Area */}
+            <div style={{ marginLeft: '260px', flexGrow: 1, padding: '2.5rem', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ width: '100%', maxWidth: '100%' }}>
+                    
+                    {/* Top 0-Credits Banner Notice */}
+                    {currentUser && currentUser.credits <= 0 && currentUser.tier !== 'enterprise' && activePage !== 'billing' && activePage !== 'website' && (
+                        <div style={{
+                            background: 'linear-gradient(90deg, #eff6ff 0%, #dbeafe 100%)',
+                            border: '1px solid #bfdbfe',
+                            borderRadius: '14px',
+                            padding: '0.9rem 1.25rem',
+                            marginBottom: '1.75rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justify: 'space-between',
+                            gap: '1rem',
+                            boxShadow: '0 4px 15px rgba(37, 99, 235, 0.08)'
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                <span style={{ fontSize: '1.4rem' }}>⚠️</span>
+                                <div>
+                                    <strong style={{ fontSize: '0.9rem', color: '#1e40af', display: 'block' }}>You have 0 Credits remaining!</strong>
+                                    <span style={{ fontSize: '0.8rem', color: '#3b82f6' }}>If you want to generate image variations and check lower shipping rates, please purchase a plan.</span>
+                                </div>
+                            </div>
+                            <button 
+                                style={{
+                                    background: 'linear-gradient(135deg, #2563eb, #7c3aed)',
+                                    color: '#ffffff',
+                                    border: 'none',
+                                    padding: '0.65rem 1.25rem',
+                                    borderRadius: '10px',
+                                    fontSize: '0.85rem',
+                                    fontWeight: 700,
+                                    cursor: 'pointer',
+                                    whiteSpace: 'nowrap',
+                                    boxShadow: '0 4px 14px rgba(37, 99, 235, 0.25)'
+                                }}
+                                onClick={() => setActivePage('billing')}
+                            >
+                                💳 Purchase Plan Now
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Render active tabs/pages */}
+                    {activePage === 'home' && (
+                        <HomeTab onNavigate={(page) => setActivePage(page)} />
+                    )}
+
+                    {activePage === 'optimizer' && (
+                        <div className="main-container">
+                            <OptimizerTab 
+                                currentUser={currentUser}
+                                onCreditsChange={(cr) => setCurrentUser(prev => ({ ...prev, credits: cr }))} 
+                                onNavigateToBilling={() => setActivePage('billing')}
+                            />
+                        </div>
+                    )}
+
+                    {activePage === 'label-exporter' && (
+                        <LabelExporterTab 
+                            currentUser={currentUser} 
+                            onNavigateToBilling={() => setActivePage('billing')} 
+                        />
+                    )}
+
+                    {activePage === 'calculator' && (
+                        <CalculatorTab />
+                    )}
+
+                    {activePage === 'billing' && (
+                        <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            <h2 style={{ fontSize: '1.8rem', fontFamily: 'Outfit' }}>Account Upgrade Tiers</h2>
+                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Choose your plan to acquire query credits and start optimizing catalog variation rates.</p>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '0.5rem' }}>
+                                {/* Starter Plan - ₹99 */}
+                                <div 
+                                    className="plan-card" 
+                                    style={{
+                                        borderColor: selectedPlan === 'tier_99' ? '#2563eb' : '#cbd5e1',
+                                        background: selectedPlan === 'tier_99' ? 'rgba(37, 99, 235, 0.08)' : '#f8fafc',
+                                        borderRadius: '14px',
+                                        padding: '1.25rem',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: '0.5rem'
+                                    }}
+                                    onClick={() => setSelectedPlan('tier_99')}
+                                >
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <strong style={{ fontSize: '1rem', color: '#0f172a' }}>Starter</strong>
+                                        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#2563eb' }}>₹99</span>
+                                    </div>
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>⚡ Adds <strong>40 Credits</strong> (30 Days)</span>
+                                </div>
+
+                                {/* Growth Plan - ₹299 (Best Value) */}
+                                <div 
+                                    className="plan-card" 
+                                    style={{
+                                        borderColor: selectedPlan === 'tier_299' ? '#2563eb' : '#cbd5e1',
+                                        background: selectedPlan === 'tier_299' ? 'rgba(37, 99, 235, 0.08)' : '#f8fafc',
+                                        borderRadius: '14px',
+                                        padding: '1.25rem',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: '0.5rem',
+                                        position: 'relative'
+                                    }}
+                                    onClick={() => setSelectedPlan('tier_299')}
+                                >
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <strong style={{ fontSize: '1rem', color: '#0f172a' }}>Growth (Best Value)</strong>
+                                        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#2563eb' }}>₹299</span>
+                                    </div>
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>🔥 Adds <strong>150 Credits</strong> (45 Days)</span>
+                                </div>
+
+                                {/* Pro Plan - ₹599 */}
+                                <div 
+                                    className="plan-card" 
+                                    style={{
+                                        borderColor: selectedPlan === 'tier_599' ? '#2563eb' : '#cbd5e1',
+                                        background: selectedPlan === 'tier_599' ? 'rgba(37, 99, 235, 0.08)' : '#f8fafc',
+                                        borderRadius: '14px',
+                                        padding: '1.25rem',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: '0.5rem'
+                                    }}
+                                    onClick={() => setSelectedPlan('tier_599')}
+                                >
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <strong style={{ fontSize: '1rem', color: '#0f172a' }}>Pro</strong>
+                                        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#2563eb' }}>₹599</span>
+                                    </div>
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>🚀 Adds <strong>350 Credits</strong> (60 Days)</span>
+                                </div>
+
+                                {/* Enterprise Plan - ₹999 */}
+                                <div 
+                                    className="plan-card" 
+                                    style={{
+                                        borderColor: selectedPlan === 'tier_999' ? '#2563eb' : '#cbd5e1',
+                                        background: selectedPlan === 'tier_999' ? 'rgba(37, 99, 235, 0.08)' : '#f8fafc',
+                                        borderRadius: '14px',
+                                        padding: '1.25rem',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: '0.5rem'
+                                    }}
+                                    onClick={() => setSelectedPlan('tier_999')}
+                                >
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <strong style={{ fontSize: '1rem', color: '#0f172a' }}>Enterprise</strong>
+                                        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#2563eb' }}>₹999</span>
+                                    </div>
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>👑 Adds <strong>750 Credits</strong> (90 Days)</span>
+                                </div>
+                            </div>
+
+                            {/* Coupon Section */}
+                            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem' }}>
+                                <input 
+                                    type="text" 
+                                    placeholder="Enter Coupon (e.g. WELCOME50)" 
+                                    value={couponCode} 
+                                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                                    style={{ textTransform: 'uppercase' }}
+                                />
+                                <button className="btn-action btn-action-primary" style={{ padding: '0 1.5rem', whiteSpace: 'nowrap' }} onClick={handleApplyCoupon}>Apply Coupon</button>
+                            </div>
+                            {couponMessage && <div style={{ color: 'var(--success)', fontSize: '0.85rem' }}>{couponMessage}</div>}
+                            {couponError && <div style={{ color: 'var(--danger)', fontSize: '0.85rem' }}>{couponError}</div>}
+
+                            {billingError && <div style={{ color: 'var(--danger)', fontSize: '0.85rem', marginTop: '0.5rem' }}>{billingError}</div>}
+                            {billingSuccess && <div style={{ color: 'var(--success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>{billingSuccess}</div>}
+
+                            <button className="btn-submit-form" onClick={handleSubscribe} style={{ marginTop: '0.5rem' }}>
+                                Pay & Upgrade Subscription
+                            </button>
+                        </div>
+                    )}
+
+                    {activePage === 'affiliate' && currentUser && (
+                        <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            <h2 style={{ fontSize: '1.8rem', fontFamily: 'Outfit' }}>Affiliate Program</h2>
+                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Share your code with other sellers. Earn substantial credits when they make their first purchase!</p>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', margin: '0.5rem 0' }}>
+                                <div className="stat-card" style={{ background: '#f8fafc', border: '1px solid var(--card-border)', padding: '1.25rem' }}>
+                                    <span className="stat-label">Total Referrals</span>
+                                    <span className="stat-val" style={{ color: '#c084fc', fontSize: '2rem' }}>{currentUser.referralsCount || 0}</span>
+                                    <span className="stat-footer">Sellers signed up</span>
+                                </div>
+                                <div className="stat-card" style={{ background: '#f8fafc', border: '1px solid var(--card-border)', padding: '1.25rem' }}>
+                                    <span className="stat-label">Commission Rate</span>
+                                    <span className="stat-val" style={{ color: 'var(--success)', fontSize: '2rem' }}>33%</span>
+                                    <span className="stat-footer">1/3 of referee's first plan credits</span>
+                                </div>
+                            </div>
+
+                            <div className="form-group" style={{ background: '#f8fafc', border: '1px solid var(--card-border)', padding: '1.25rem', borderRadius: '12px' }}>
+                                <label style={{ marginBottom: '0.5rem', fontWeight: 600 }}>Your Referral Link</label>
+                                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <input 
+                                        type="text" 
+                                        readOnly 
+                                        value={`${window.location.origin}/index.html?ref=${currentUser.referralCode}`} 
+                                        style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--text-secondary)' }}
+                                    />
+                                    <button className="btn-action" style={{ padding: '0 1.5rem' }} onClick={copyReferralLink}>
+                                        {copiedText}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                                <strong style={{ color: 'var(--text-primary)', display: 'block', marginBottom: '0.5rem' }}>How it Works:</strong>
+                                <ol style={{ paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                                    <li>Copy your unique referral link and send it to other sellers.</li>
+                                    <li>When they sign up via your link, they receive **5 extra free credits** (total 8 free credits).</li>
+                                    <li>When they buy their first plan, **you receive 1/3 of their plan's credits** (e.g. they buy Standard 200 credits plan, you receive 66 credits commission).</li>
+                                    <li>Referral payouts are one-time per user and apply only on their first purchase.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+            </div>
+
+            {/* Auth Modal Overlay */}
+            {authModalOpen && (
+                <div className="auth-modal-overlay">
+                    <div className="auth-modal-card">
+                        {/* Close Modal Button */}
+                        <button 
+                            type="button"
+                            onClick={() => setAuthModalOpen(false)}
+                            style={{
+                                position: 'absolute', top: '1.2rem', right: '1.2rem',
+                                background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '50%',
+                                width: '32px', height: '32px', cursor: 'pointer',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                fontWeight: 'bold', color: '#64748b', fontSize: '0.9rem',
+                                transition: 'all 0.2s', zIndex: 10
+                            }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = '#e2e8f0'; e.currentTarget.style.color = '#0f172a'; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#64748b'; }}
+                            title="Close"
+                        >
+                            ✕
+                        </button>
+
+                        {/* Brand Icon Header */}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.2rem' }}>
+                            <div style={{
+                                width: '36px', height: '36px', borderRadius: '10px',
+                                background: 'linear-gradient(135deg, #2563eb, #4f46e5)',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                color: '#ffffff', fontWeight: 800, fontSize: '1.1rem'
+                            }}>⚡</div>
+                            <span style={{ fontSize: '1.2rem', fontWeight: 800, fontFamily: 'Outfit', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>VendorsDesk</span>
+                        </div>
+
+                        {/* Segmented Auth Mode Tabs */}
+                        <div style={{ display: 'flex', background: '#f1f5f9', borderRadius: '12px', padding: '0.25rem', border: '1px solid #e2e8f0' }}>
+                            <button className={`auth-tab-btn ${authMode === 'login' ? 'active' : ''}`} onClick={() => { setAuthMode('login'); setAuthError(''); }}>Sign In</button>
+                            <button className={`auth-tab-btn ${authMode === 'signup' ? 'active' : ''}`} onClick={() => { setAuthMode('signup'); setAuthError(''); }}>Sign Up</button>
+                        </div>
+
+                        <div style={{ textAlign: 'center' }}>
+                            <h3 style={{ fontSize: '1.35rem', fontFamily: 'Outfit', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.2rem' }}>
+                                {authMode === 'login' ? 'Welcome Back!' : 'Create your Account'}
+                            </h3>
+                            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                                {authMode === 'login' ? 'Sign in to access your shipping optimizer dashboard' : 'Register and get 3 free credits immediately'}
+                            </p>
+                        </div>
+
+                        <form onSubmit={handleAuthSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                            {authMode === 'signup' && (
+                                <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
+                                    <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Full Name</label>
+                                    <input type="text" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} required style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                                </div>
+                            )}
+                            <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
+                                <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Email Address</label>
+                                <input type="email" placeholder="john@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                            </div>
+                            <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
+                                <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Password</label>
+                                <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                            </div>
+                            {authMode === 'signup' && (
+                                <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
+                                    <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Referral Code (Optional)</label>
+                                    <input type="text" placeholder="REF123" value={referralCodeInput} onChange={(e) => setReferralCodeInput(e.target.value)} style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                                </div>
+                            )}
+
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginTop: '0.25rem', fontSize: '0.78rem', color: '#64748b' }}>
+                                <input 
+                                    type="checkbox" 
+                                    id="webTermsCheck"
+                                    defaultChecked={true} 
+                                    style={{ width: '15px', height: '15px', marginTop: '2px', accentColor: '#2563eb', cursor: 'pointer' }}
+                                />
+                                <label htmlFor="webTermsCheck" style={{ cursor: 'pointer', userSelect: 'none', lineHeight: '1.4' }}>
+                                    I agree to the <a href="#" onClick={(e) => { e.preventDefault(); alert('Terms & Conditions:\n\n1. Usage is subject to platform terms.\n2. Do not misuse API credits.\n3. Account data is confidential.'); }} style={{ color: '#2563eb', textDecoration: 'underline' }}>Terms & Conditions</a> and <a href="#" onClick={(e) => { e.preventDefault(); alert('Privacy Policy:\n\n1. Your credentials and store data are encrypted.\n2. We do not sell user data to third parties.'); }} style={{ color: '#2563eb', textDecoration: 'underline' }}>Privacy Policy</a>.
+                                </label>
+                            </div>
+
+                            {authError && <div style={{ color: 'var(--danger)', fontSize: '0.82rem', textAlign: 'center', background: 'rgba(220, 38, 38, 0.08)', padding: '0.5rem', borderRadius: '8px', border: '1px solid rgba(220, 38, 38, 0.2)' }}>{authError}</div>}
+                            <button className="btn-submit-form" type="submit" style={{ padding: '0.75rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, marginTop: '0.35rem', background: 'linear-gradient(135deg, #2563eb, #4f46e5)', boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)' }}>
+                                {authMode === 'login' ? 'Sign In to Account' : 'Create Free Account'}
+                            </button>
+                        </form>
+
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', margin: '0.2rem 0' }}>
+                            <hr style={{ width: '38%', opacity: 0.2 }} />
+                            <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600 }}>OR</span>
+                            <hr style={{ width: '38%', opacity: 0.2 }} />
+                        </div>
+
+                        {/* Google Sign In Wrapper */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', alignItems: 'center' }}>
+                            <div id="google-signin-btn"></div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Password Configuration Setup Modal */}
+            {passwordSetupOpen && (
+                <div className="auth-modal-overlay">
+                    <div className="auth-modal-card" style={{ maxWidth: '380px' }}>
+                        <h3 style={{ textAlign: 'center', fontSize: '1.25rem', fontFamily: 'Outfit', color: '#6366f1', fontWeight: 700 }}>
+                            Setup Account Password
+                        </h3>
+                        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
+                            Configure a password for <strong>{googleEmail}</strong> to log in directly without Google in the future.
+                        </p>
+
+                        <form onSubmit={handlePasswordSetupSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                            <div className="form-group" style={{ marginBottom: 0, gap: '0.3rem' }}>
+                                <label style={{ fontWeight: 600, fontSize: '0.78rem' }}>Create Password</label>
+                                <input 
+                                    type="password" 
+                                    placeholder="••••••••" 
+                                    value={setupPassword} 
+                                    onChange={(e) => setSetupPassword(e.target.value)} 
+                                    required 
+                                    style={{ padding: '0.55rem 0.75rem', fontSize: '0.85rem' }}
+                                />
+                            </div>
+
+                            {setupError && <div style={{ color: 'var(--danger)', fontSize: '0.78rem', textAlign: 'center' }}>{setupError}</div>}
+                            {setupSuccess && <div style={{ color: 'var(--success)', fontSize: '0.78rem', textAlign: 'center' }}>{setupSuccess}</div>}
+
+                            <button className="btn-submit-form" type="submit" style={{ padding: '0.65rem', borderRadius: '8px' }}>
+                                Configure Password & Finish
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
