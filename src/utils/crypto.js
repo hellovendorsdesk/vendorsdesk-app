@@ -2,6 +2,8 @@ import CryptoJS from 'crypto-js';
 
 const ENCRYPTION_KEY = 'vendorsdesk-secure-payload-key-2026';
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL || (window.location.hostname.includes('vendorsdesk.in') ? 'https://backend.vendorsdesk.in' : '');
+
 export function fileToBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -12,6 +14,8 @@ export function fileToBase64(file) {
 }
 
 export async function secureFetch(url, options = {}) {
+    const fullUrl = url.startsWith('/') && API_BASE ? `${API_BASE}${url}` : url;
+
     if (!options.headers) options.headers = {};
     if (!options.headers['Content-Type'] && options.body) {
         options.headers['Content-Type'] = 'application/json';
@@ -23,7 +27,7 @@ export async function secureFetch(url, options = {}) {
         options.body = JSON.stringify({ payload: encrypted, ...options.body });
     }
 
-    const response = await fetch(url, options);
+    const response = await fetch(fullUrl, options);
     const contentType = response.headers.get('content-type');
 
     if (contentType && contentType.includes('application/json')) {
