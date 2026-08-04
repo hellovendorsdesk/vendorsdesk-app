@@ -818,7 +818,14 @@ export default function App() {
                 setReferralCodeInput('');
                 await checkUserAuth();
             } else {
-                setAuthError(data && data.error ? data.error : 'Authentication failed. Please check your details.');
+                const errMsg = data && data.error ? data.error : 'Authentication failed. Please check your details.';
+                setAuthError(errMsg);
+                if (authMode === 'signup' && (errMsg.includes('already registered') || errMsg.includes('already exists'))) {
+                    setTimeout(() => {
+                        setAuthMode('login');
+                        setAuthError('An account with this email already exists. Please sign in below!');
+                    }, 1200);
+                }
             }
         } catch (err) {
             setAuthError(err && err.message ? err.message : 'Connection failed. Try again.');
