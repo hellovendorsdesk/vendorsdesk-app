@@ -11,6 +11,8 @@ const STATUS_COLORS = {
     'Return': '#ef4444'
 };
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL || (typeof window !== 'undefined' && window.location.hostname.includes('vendorsdesk.in') ? 'https://backend.vendorsdesk.in' : '');
+
 export default function PnLCalculatorTab() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [fileName, setFileName] = useState('');
@@ -42,7 +44,10 @@ export default function PnLCalculatorTab() {
 
     const fetchSavedPrices = async () => {
         try {
-            const res = await fetch('/api/pnl/get_purchase_prices');
+            const token = localStorage.getItem('vendorsdesk_token');
+            const res = await fetch(`${API_BASE}/api/pnl/get_purchase_prices`, {
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+            });
             const data = await res.json();
             if (data.success && data.prices) {
                 setSkuPrices(data.prices);
@@ -72,7 +77,12 @@ export default function PnLCalculatorTab() {
         formData.append('excel_file', selectedFile);
 
         try {
-            const res = await fetch('/api/pnl/date_range', { method: 'POST', body: formData });
+            const token = localStorage.getItem('vendorsdesk_token');
+            const res = await fetch(`${API_BASE}/api/pnl/date_range`, { 
+                method: 'POST', 
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                body: formData 
+            });
             const data = await res.json();
             if (data.min_date && data.max_date) {
                 setMinDate(data.min_date);
@@ -104,7 +114,12 @@ export default function PnLCalculatorTab() {
         if (toDate) formData.append('to_date', toDate);
 
         try {
-            const res = await fetch('/api/pnl/dashboard_data_count', { method: 'POST', body: formData });
+            const token = localStorage.getItem('vendorsdesk_token');
+            const res = await fetch(`${API_BASE}/api/pnl/dashboard_data_count`, { 
+                method: 'POST', 
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                body: formData 
+            });
             const data = await res.json();
             if (data.data) {
                 setDashboardData(data);
@@ -125,9 +140,13 @@ export default function PnLCalculatorTab() {
         setSkuPrices(prev => ({ ...prev, [sku]: numPrice }));
 
         try {
-            const res = await fetch('/api/pnl/save_purchase_price', {
+            const token = localStorage.getItem('vendorsdesk_token');
+            const res = await fetch(`${API_BASE}/api/pnl/save_purchase_price`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                },
                 body: JSON.stringify({ sku, price: numPrice })
             });
             const data = await res.json();
