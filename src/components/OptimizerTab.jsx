@@ -243,22 +243,58 @@ export default function OptimizerTab({ currentUser, onCreditsChange, onNavigateT
 
     const downloadVariation = async (v) => {
         const id = v.id || v._id;
-        if (!id || !v.imageUrl) return;
-        setDownloadingId(id);
+        if (!v || !v.imageUrl) return;
+        setDownloadingId(id || 'temp');
         try {
-            const res = await fetch(`/api/variations/${id}/download`, { headers: authHeaders() });
-            if (!res.ok) throw new Error('download failed');
-            const blob = await res.blob();
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `vendorsdesk_${(v.label || 'variation').replace(/[^a-z0-9]+/gi, '_').toLowerCase()}.jpg`;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            URL.revokeObjectURL(url);
+            const fileName = `vendorsdesk_${(v.label || 'variation').replace(/[^a-z0-9]+/gi, '_').toLowerCase()}.jpg`;
+            
+            // Fast Path: Direct base64 data URL download on client-side (Instant < 1ms!)
+            if (v.imageUrl && v.imageUrl.startsWith('data:image')) {
+                const a = document.createElement('a');
+                a.href = v.imageUrl;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                return;
+            }
+
+            // Proxy Download route if ID is present
+            if (id) {
+                const res = await fetch(`/api/variations/${id}/download`, { headers: authHeaders() });
+                if (res.ok) {
+                    const blob = await res.blob();
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    URL.revokeObjectURL(url);
+                    return;
+                }
+            }
+
+            // Fallback: Direct CDN link download
+            if (v.imageUrl) {
+                const a = document.createElement('a');
+                a.href = v.imageUrl;
+                a.target = '_blank';
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            } else {
+                alert('Could not download this image.');
+            }
         } catch (e) {
-            alert('Could not download this image.');
+            console.error('Download error:', e);
+            if (v.imageUrl) {
+                window.open(v.imageUrl, '_blank');
+            } else {
+                alert('Could not download this image.');
+            }
         } finally {
             setDownloadingId(null);
         }
