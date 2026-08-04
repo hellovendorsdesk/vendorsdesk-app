@@ -5,6 +5,8 @@ import OptimizerTab from './components/OptimizerTab';
 import LabelExporterTab from './components/LabelExporterTab';
 import CalculatorTab from './components/CalculatorTab';
 import MeeshoAnalyticsTab from './components/MeeshoAnalyticsTab';
+import FreeImageGeneratorTab from './components/FreeImageGeneratorTab';
+import PnLCalculatorTab from './components/PnLCalculatorTab';
 
 /* ── 1. MEESHO SHIPPING RATES & P&L HOME PAGE ─────────────────── */
 function MeeshoShippingRatesPage({ onRegister }) {
@@ -402,28 +404,34 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                 {/* Desktop Navigation Links */}
                 <nav className="desktop-nav">
                     <button 
+                        className={`nav-link ${activeTab === 'free-image-generator' ? 'active' : ''}`}
+                        onClick={() => onTabChange('free-image-generator')}
+                    >
+                        🆓 Free Image Generator
+                    </button>
+                    <button 
                         className={`nav-link ${activeTab === 'meesho-shipping-rates' ? 'active' : ''}`}
                         onClick={() => onTabChange('meesho-shipping-rates')}
                     >
-                        Shipping Rates
+                        ⚡ Rate Optimizer
                     </button>
                     <button 
-                        className={`nav-link ${activeTab === 'meesho-image-generator' ? 'active' : ''}`}
-                        onClick={() => onTabChange('meesho-image-generator')}
+                        className={`nav-link ${activeTab === 'pnl-calculator' ? 'active' : ''}`}
+                        onClick={() => onTabChange('pnl-calculator')}
                     >
-                        Image Generator
+                        📊 Excel P&L Calculator
                     </button>
                     <button 
                         className={`nav-link ${activeTab === 'meesho-label-exporter' ? 'active' : ''}`}
                         onClick={() => onTabChange('meesho-label-exporter')}
                     >
-                        Label Exporter
+                        📋 Label Exporter
                     </button>
                     <button 
                         className={`nav-link ${activeTab === 'pricing' ? 'active' : ''}`}
                         onClick={() => onTabChange('pricing')}
                     >
-                        Pricing & Affiliate
+                        💎 Pricing & Affiliate
                     </button>
                 </nav>
 
@@ -520,7 +528,9 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
             </header>
 
             {/* Conditionally Render Subpages */}
+            {activeTab === 'free-image-generator' && <div style={{ padding: '2.5rem 5%' }}><FreeImageGeneratorTab onRegister={onRegister} /></div>}
             {activeTab === 'meesho-shipping-rates' && <MeeshoShippingRatesPage onRegister={onRegister} />}
+            {activeTab === 'pnl-calculator' && <div style={{ padding: '2.5rem 5%' }}><PnLCalculatorTab /></div>}
             {activeTab === 'meesho-image-generator' && <MeeshoImageGeneratorPage onRegister={onRegister} />}
             {activeTab === 'meesho-label-exporter' && <MeeshoLabelExporterPage onRegister={onRegister} />}
             {activeTab === 'pricing' && <PricingAffiliatePage onRegister={onRegister} />}
@@ -1166,10 +1176,22 @@ export default function App() {
                             🏠 Home Dashboard
                         </button>
                         <button 
+                            className={`sidebar-link ${activePage === 'free-image-generator' ? 'active' : ''}`}
+                            onClick={() => setActivePage('free-image-generator')}
+                        >
+                            🆓 Free Image Generator
+                        </button>
+                        <button 
                             className={`sidebar-link ${activePage === 'optimizer' ? 'active' : ''}`}
                             onClick={() => setActivePage('optimizer')}
                         >
-                            ⚡ Image Generator
+                            ⚡ Rate Optimizer
+                        </button>
+                        <button 
+                            className={`sidebar-link ${activePage === 'pnl-calculator' ? 'active' : ''}`}
+                            onClick={() => setActivePage('pnl-calculator')}
+                        >
+                            📊 Excel P&L Calculator
                         </button>
                         <button 
                             className={`sidebar-link ${activePage === 'label-exporter' ? 'active' : ''}`}
@@ -1181,7 +1203,7 @@ export default function App() {
                             className={`sidebar-link ${activePage === 'calculator' ? 'active' : ''}`}
                             onClick={() => setActivePage('calculator')}
                         >
-                            🧮 Profit Calculator
+                            🧮 Margin Calculator
                         </button>
                         <button 
                             className={`sidebar-link ${activePage === 'billing' ? 'active' : ''}`}
@@ -1274,6 +1296,10 @@ export default function App() {
                         <HomeTab onNavigate={(page) => setActivePage(page)} />
                     )}
 
+                    {activePage === 'free-image-generator' && (
+                        <FreeImageGeneratorTab onRegister={handleGoToAppSignup} />
+                    )}
+
                     {activePage === 'optimizer' && (
                         <div className="main-container">
                             <OptimizerTab 
@@ -1282,6 +1308,10 @@ export default function App() {
                                 onNavigateToBilling={() => setActivePage('billing')}
                             />
                         </div>
+                    )}
+
+                    {activePage === 'pnl-calculator' && (
+                        <PnLCalculatorTab />
                     )}
 
                     {activePage === 'label-exporter' && (
