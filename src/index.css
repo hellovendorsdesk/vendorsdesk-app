@@ -50,6 +50,11 @@
     font-weight: 600;
 }
 
+.tool-dropdown-item:hover {
+    background: rgba(37, 99, 235, 0.08) !important;
+    transform: translateX(3px);
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
