@@ -407,6 +407,140 @@ function PricingAffiliatePage({ onRegister }) {
     );
 }
 
+/* ── 5.1 LEGAL & POLICY PAGES ────────────────────────────── */
+function PrivacyPolicyPage() {
+    return (
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '3.5rem 5%', background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 10px 30px rgba(15, 23, 42, 0.04)', marginTop: '2rem', marginBottom: '4rem' }}>
+            <h1 style={{ fontFamily: 'Outfit', fontSize: '2.4rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>Privacy Policy</h1>
+            <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '2rem' }}>Last Updated: August 2026</p>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', color: '#334155', lineHeight: '1.7', fontSize: '0.95rem' }}>
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>1. Introduction</h2>
+                    <p>At VendorsDesk (vendorsdesk.in), protecting your privacy and business confidentiality is our highest priority. This policy details how we handle user data when using our catalog variation generator, rate optimizer, P&L settlement calculator, and label cropper tools.</p>
+                </section>
+
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>2. Data We Collect</h2>
+                    <ul style={{ paddingLeft: '1.25rem', marginTop: '0.35rem' }}>
+                        <li><strong>Account Details:</strong> Name, Email Address, and encrypted authentication tokens.</li>
+                        <li><strong>Usage & Tool Metadata:</strong> Query history, uploaded Excel P&L settlement files, and catalog variation parameters.</li>
+                        <li><strong>Payment Logs:</strong> Transaction timestamps and payment IDs processed via Cashfree Payments (we do NOT store credit card details or bank PINs).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>3. Data Confidentiality & Encryption</h2>
+                    <p>All payload communications are encrypted using SSL/TLS 256-bit protocols. We never share, sell, or disclose your supplier catalog credentials, revenue figures, or SKU margin details to third parties.</p>
+                </section>
+
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>4. Contact Us</h2>
+                    <p>If you have any privacy inquiries, reach out to our privacy compliance team at <strong>support@vendorsdesk.in</strong>.</p>
+                </section>
+            </div>
+        </div>
+    );
+}
+
+function RefundPolicyPage() {
+    return (
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '3.5rem 5%', background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 10px 30px rgba(15, 23, 42, 0.04)', marginTop: '2rem', marginBottom: '4rem' }}>
+            <h1 style={{ fontFamily: 'Outfit', fontSize: '2.4rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>Refund & Cancellation Policy</h1>
+            <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '2rem' }}>Last Updated: August 2026</p>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', color: '#334155', lineHeight: '1.7', fontSize: '0.95rem' }}>
+                
+                {/* Highlight Box: No Refunds */}
+                <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '12px', padding: '1.25rem', color: '#991b1b' }}>
+                    <strong style={{ fontSize: '1.05rem', display: 'block', marginBottom: '0.35rem' }}>🚫 No Monetary Refunds Policy</strong>
+                    <span>Once a digital service plan, subscription upgrade, or query credit package is picked and purchased on VendorsDesk, all transactions are final. We do NOT issue monetary, cash, or bank gateway refunds once a service plan is picked.</span>
+                </div>
+
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>1. Credit Restoration & Loss Compensation Policy</h2>
+                    <p>We guarantee the reliability of our system. If you experience credit loss due to a verified server issue, system error, or technical outage during calculation, the following credit compensation policy applies:</p>
+                    
+                    <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '12px', padding: '1.25rem', marginTop: '0.75rem', color: '#1e40af' }}>
+                        <strong style={{ fontSize: '0.95rem', display: 'block', marginBottom: '0.35rem' }}>⚡ Technical Error Credit Restoration Procedure:</strong>
+                        <ul style={{ paddingLeft: '1.25rem', marginTop: '0.35rem', color: '#1e3a8a', fontSize: '0.9rem' }}>
+                            <li>If a server failure, calculation error, or technical outage causes an accidental loss of query credits without outputting your audit result, you can email us immediately at <strong>support@vendorsdesk.in</strong>.</li>
+                            <li>Please include your registered email ID, transaction timestamp, and the tool name.</li>
+                            <li>Our engineering team will audit server logs within 24–48 hours. Upon verification of the server failure or credit loss, <strong>the exact number of lost credits will be restored and credited back directly to your account balance</strong>.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>2. Cancellation Policy</h2>
+                    <p>Users may stop purchasing future credit packages at any time. Activated query credits remain available in your account until their specified validity period expires.</p>
+                </section>
+
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>3. How to Submit a Support Claim</h2>
+                    <p>To request a credit restoration audit for lost credits, send an email to <strong>support@vendorsdesk.in</strong> with the subject line <code>Credit Audit Request - [Your Registered Email]</code>.</p>
+                </section>
+
+            </div>
+        </div>
+    );
+}
+
+function TermsOfServicePage() {
+    return (
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '3.5rem 5%', background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 10px 30px rgba(15, 23, 42, 0.04)', marginTop: '2rem', marginBottom: '4rem' }}>
+            <h1 style={{ fontFamily: 'Outfit', fontSize: '2.4rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>Terms of Service</h1>
+            <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '2rem' }}>Last Updated: August 2026</p>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', color: '#334155', lineHeight: '1.7', fontSize: '0.95rem' }}>
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>1. Acceptance of Terms</h2>
+                    <p>By accessing or using VendorsDesk (vendorsdesk.in), you agree to be bound by these Terms of Service. If you do not agree, please discontinue using our tools and services.</p>
+                </section>
+
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>2. Description of Service</h2>
+                    <p>VendorsDesk provides catalog image variation tools, shipping rate optimization auditors, Excel P&L settlement calculators, and thermal label processing tools for online e-commerce sellers.</p>
+                </section>
+
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>3. Fair Usage & Restrictions</h2>
+                    <p>Users must not engage in automated scraping, reverse engineering, or exploiting free tier credits using disposable email accounts. Accounts violating fair use rules may be suspended.</p>
+                </section>
+
+                <section>
+                    <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>4. Contact</h2>
+                    <p>For questions regarding terms and conditions, contact <strong>support@vendorsdesk.in</strong>.</p>
+                </section>
+            </div>
+        </div>
+    );
+}
+
+function ContactUsPage() {
+    return (
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '3.5rem 5%', background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 10px 30px rgba(15, 23, 42, 0.04)', marginTop: '2rem', marginBottom: '4rem' }}>
+            <h1 style={{ fontFamily: 'Outfit', fontSize: '2.4rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>Contact Support</h1>
+            <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '2rem' }}>We are here to help you resolve technical, billing, and credit audit queries.</p>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '1.5rem', borderRadius: '14px' }}>
+                    <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>✉️</div>
+                    <strong style={{ fontSize: '1rem', color: '#0f172a', display: 'block' }}>Email Support</strong>
+                    <span style={{ fontSize: '0.85rem', color: '#475569', display: 'block', marginTop: '0.25rem' }}>support@vendorsdesk.in</span>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.5rem', display: 'block' }}>Response time: 24 - 48 Hours</span>
+                </div>
+
+                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '1.5rem', borderRadius: '14px' }}>
+                    <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>🔄</div>
+                    <strong style={{ fontSize: '1rem', color: '#0f172a', display: 'block' }}>Credit Loss & Server Audit</strong>
+                    <span style={{ fontSize: '0.85rem', color: '#475569', display: 'block', marginTop: '0.25rem' }}>If you faced server errors during a calculation, email your account ID for instant credit restoration.</span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 /* ── 6. COMPACT MARKETING LAYOUT WRAPPER ──────────────────── */
 function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, onRegister, onGoToDashboard }) {
     const [faqOpen, setFaqOpen] = useState({});
@@ -695,50 +829,56 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
             {activeTab === 'meesho-image-generator' && <MeeshoImageGeneratorPage onRegister={onRegister} />}
             {activeTab === 'meesho-label-exporter' && <MeeshoLabelExporterPage onRegister={onRegister} />}
             {activeTab === 'pricing' && <PricingAffiliatePage onRegister={onRegister} />}
+            {activeTab === 'privacy-policy' && <PrivacyPolicyPage />}
+            {activeTab === 'refund-policy' && <RefundPolicyPage />}
+            {activeTab === 'terms-of-service' && <TermsOfServicePage />}
+            {activeTab === 'contact-us' && <ContactUsPage />}
 
             {/* General FAQs Accordion Section */}
-            <section id="faqs" style={{ padding: '5rem 5% 6rem 5%', maxWidth: '800px', margin: '0 auto', borderTop: '1px solid #e2e8f0' }}>
-                <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-                    <h2 style={{ fontFamily: 'Outfit', fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.75rem', color: '#0f172a' }}>Frequently Asked Questions</h2>
-                    <p style={{ color: '#475569', fontSize: '0.95rem' }}>Answers to common e-commerce logistics and duplicate listing queries.</p>
-                </div>
+            {activeTab === 'meesho-shipping-rates' && (
+                <section id="faqs" style={{ padding: '5rem 5% 6rem 5%', maxWidth: '800px', margin: '0 auto', borderTop: '1px solid #e2e8f0' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+                        <h2 style={{ fontFamily: 'Outfit', fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.75rem', color: '#0f172a' }}>Frequently Asked Questions</h2>
+                        <p style={{ color: '#475569', fontSize: '0.95rem' }}>Answers to common e-commerce logistics and duplicate listing queries.</p>
+                    </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    {[
-                        {
-                            q: "What is VendorsDesk and how does it optimize Meesho shipping?",
-                            a: "VendorsDesk is an e-commerce auditing tool that cross-references actual product variation weights against the shipping rate matrixes logged by logistics partners on the Meesho Supplier Panel, flagging shipping charge leakages."
-                        },
-                        {
-                            q: "Is it secure to link my Meesho account or session keys?",
-                            a: "Absolutely. We do not store master logins or developer API keys. Everything is routed using secure personal session handshake configurations, ensuring full compliance and avoiding Cloudflare blocks."
-                        },
-                        {
-                            q: "How does the SKU-wise Return Risk Auditor work?",
-                            a: "Our SKU Return Risk Auditor pulls product payouts and matches them with RTO returns records, identifying listings that produce negative profits due to high return penalty charges."
-                        },
-                        {
-                            q: "How do I claim my 3 free query credits?",
-                            a: "Simply sign up with an email ID or Google login. 3 free credits will be credited instantly to your account balance, allowing you to test shipping checks immediately."
-                        }
-                    ].map((faq, idx) => {
-                        const isOpen = !!faqOpen[idx];
-                        return (
-                            <div key={idx} style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '1.25rem', cursor: 'pointer' }} onClick={() => toggleFaq(idx)}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <strong style={{ fontSize: '0.95rem', color: '#0f172a', fontWeight: 600 }}>{faq.q}</strong>
-                                    <span style={{ fontSize: '1rem', color: '#2563eb', fontWeight: 'bold' }}>{isOpen ? '−' : '+'}</span>
-                                </div>
-                                {isOpen && (
-                                    <div style={{ marginTop: '0.75rem', fontSize: '0.85rem', color: '#475569', lineHeight: '1.6', borderTop: '1px solid #cbd5e1', paddingTop: '0.75rem' }}>
-                                        {faq.a}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        {[
+                            {
+                                q: "What is VendorsDesk and how does it optimize Meesho shipping?",
+                                a: "VendorsDesk is an e-commerce auditing tool that cross-references actual product variation weights against the shipping rate matrixes logged by logistics partners on the Meesho Supplier Panel, flagging shipping charge leakages."
+                            },
+                            {
+                                q: "Is it secure to link my Meesho account or session keys?",
+                                a: "Absolutely. We do not store master logins or developer API keys. Everything is routed using secure personal session handshake configurations, ensuring full compliance and avoiding Cloudflare blocks."
+                            },
+                            {
+                                q: "How does the SKU-wise Return Risk Auditor work?",
+                                a: "Our SKU Return Risk Auditor pulls product payouts and matches them with RTO returns records, identifying listings that produce negative profits due to high return penalty charges."
+                            },
+                            {
+                                q: "How do I claim my 3 free query credits?",
+                                a: "Simply sign up with an email ID or Google login. 3 free credits will be credited instantly to your account balance, allowing you to test shipping checks immediately."
+                            }
+                        ].map((faq, idx) => {
+                            const isOpen = !!faqOpen[idx];
+                            return (
+                                <div key={idx} style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '1.25rem', cursor: 'pointer' }} onClick={() => toggleFaq(idx)}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <strong style={{ fontSize: '0.95rem', color: '#0f172a', fontWeight: 600 }}>{faq.q}</strong>
+                                        <span style={{ fontSize: '1rem', color: '#2563eb', fontWeight: 'bold' }}>{isOpen ? '−' : '+'}</span>
                                     </div>
-                                )}
-                            </div>
-                        );
-                    })}
-                </div>
-            </section>
+                                    {isOpen && (
+                                        <div style={{ marginTop: '0.75rem', fontSize: '0.85rem', color: '#475569', lineHeight: '1.6', borderTop: '1px solid #cbd5e1', paddingTop: '0.75rem' }}>
+                                            {faq.a}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </section>
+            )}
 
             {/* Footer */}
             <footer style={{ padding: '4rem 5% 3rem 5%', background: '#ffffff', borderTop: '1px solid #e2e8f0', textAlign: 'center' }}>
@@ -747,12 +887,40 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                     <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.2rem', color: '#0f172a' }}>VendorsDesk</span>
                 </div>
                 
-                <p style={{ color: '#475569', fontSize: '0.8rem', maxWidth: '600px', margin: '0 auto 2rem auto', lineHeight: '1.5' }}>
+                <p style={{ color: '#475569', fontSize: '0.8rem', maxWidth: '600px', margin: '0 auto 1.5rem auto', lineHeight: '1.5' }}>
                     VendorsDesk is an independent SaaS optimization tool. We are not officially affiliated with Meesho Inc or logistics providers. All audits are derived dynamically via secure user tokens.
                 </p>
 
+                {/* Footer Legal & Policy Links */}
+                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '2rem', fontSize: '0.85rem' }}>
+                    <button 
+                        onClick={() => { onTabChange('privacy-policy'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                        style={{ background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontWeight: 600 }}
+                    >
+                        🔒 Privacy Policy
+                    </button>
+                    <button 
+                        onClick={() => { onTabChange('refund-policy'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                        style={{ background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontWeight: 600 }}
+                    >
+                        🔄 Refund & Cancellation Policy
+                    </button>
+                    <button 
+                        onClick={() => { onTabChange('terms-of-service'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                        style={{ background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontWeight: 600 }}
+                    >
+                        📜 Terms of Service
+                    </button>
+                    <button 
+                        onClick={() => { onTabChange('contact-us'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                        style={{ background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontWeight: 600 }}
+                    >
+                        ✉️ Contact Support
+                    </button>
+                </div>
+
                 <div style={{ color: '#64748b', fontSize: '0.75rem', borderTop: '1px solid #e2e8f0', paddingTop: '1.5rem' }}>
-                    © 2026 VendorsDesk. All rights reserved. | Contact: support@vendorsdesk.io
+                    © 2026 VendorsDesk. All rights reserved. | Official Support: support@vendorsdesk.in
                 </div>
             </footer>
 
