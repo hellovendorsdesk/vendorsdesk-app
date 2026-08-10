@@ -100,7 +100,7 @@ function MeeshoShippingRatesPage({ onRegister }) {
                             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
                                 <span style={{ fontSize: '0.65rem', background: '#059669', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>NET PAYOUT</span>
                                 <span style={{ fontSize: '0.65rem', background: '#dc2626', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>RTO AUDIT</span>
-                                <span style={{ fontSize: '0.65rem', background: '#d97706', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight 700 }}>ADS DEDUCTION</span>
+                                <span style={{ fontSize: '0.65rem', background: '#d97706', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>ADS DEDUCTION</span>
                             </div>
                         </div>
 
@@ -113,8 +113,8 @@ function MeeshoShippingRatesPage({ onRegister }) {
                             <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Bulk PDF Label Crop & SKU Sorter</h4>
                             <p style={{ fontSize: '0.75rem', color: '#475569', margin: 0 }}>Crops bulk shipping label PDF sheets into 4x6 thermal printer format and auto-sorts by SKU & courier partner.</p>
                             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
-                                <span style={{ fontSize: '0.65rem', background: '#7c3aed', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight 700 }}>4x6 CROP</span>
-                                <span style={{ fontSize: '0.65rem', background: '#2563eb', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight 700 }}>SKU SORT</span>
+                                <span style={{ fontSize: '0.65rem', background: '#7c3aed', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>4x6 CROP</span>
+                                <span style={{ fontSize: '0.65rem', background: '#2563eb', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>SKU SORT</span>
                             </div>
                         </div>
 
