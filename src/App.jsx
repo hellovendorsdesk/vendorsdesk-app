@@ -1436,14 +1436,6 @@ export default function App() {
                         {/* Google Sign In Wrapper */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', alignItems: 'center' }}>
                             <div id="google-signin-btn"></div>
-                            <button 
-                                type="button" 
-                                className="btn-action btn-action-primary" 
-                                style={{ width: '100%', padding: '0.65rem 0', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 600 }}
-                                onClick={() => processGoogleLogin('mock-google-token')}
-                            >
-                                🧪 Quick Test Login (One-Click)
-                            </button>
                         </div>
                     </div>
                 </div>
