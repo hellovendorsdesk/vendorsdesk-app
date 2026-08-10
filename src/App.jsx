@@ -411,6 +411,7 @@ function PricingAffiliatePage({ onRegister }) {
 function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, onRegister, onGoToDashboard }) {
     const [faqOpen, setFaqOpen] = useState({});
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isToolsDropdownOpen, setIsToolsDropdownOpen] = useState(false);
 
     const toggleFaq = (idx) => {
         setFaqOpen(prev => ({ ...prev, [idx]: !prev[idx] }));
@@ -433,23 +434,144 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                 
                 {/* Desktop Navigation Links */}
                 <nav className="desktop-nav">
+                    {/* 🧰 Free Tools Dropdown */}
+                    <div 
+                        className="nav-dropdown-wrapper"
+                        onMouseEnter={() => setIsToolsDropdownOpen(true)}
+                        onMouseLeave={() => setIsToolsDropdownOpen(false)}
+                        style={{ position: 'relative' }}
+                    >
+                        <button 
+                            className={`nav-link ${['free-image-generator', 'meesho-shipping-rates', 'pnl-calculator', 'meesho-label-exporter'].includes(activeTab) ? 'active' : ''}`}
+                            onClick={() => setIsToolsDropdownOpen(!isToolsDropdownOpen)}
+                            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 700 }}
+                        >
+                            <span>🧰 Free Tools</span>
+                            <span style={{ fontSize: '0.55rem', background: '#10b981', color: '#ffffff', padding: '0.1rem 0.35rem', borderRadius: '4px', fontWeight: 800 }}>4 SUITE</span>
+                            <span style={{ fontSize: '0.7rem', transition: 'transform 0.2s', transform: isToolsDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
+                        </button>
+
+                        {isToolsDropdownOpen && (
+                            <div style={{
+                                position: 'absolute',
+                                top: '100%',
+                                left: 0,
+                                width: '330px',
+                                background: '#ffffff',
+                                border: '1px solid #e2e8f0',
+                                borderRadius: '16px',
+                                boxShadow: '0 20px 40px rgba(15, 23, 42, 0.14)',
+                                padding: '0.65rem',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '0.35rem',
+                                zIndex: 1000,
+                            }}>
+                                {/* Tool 1: Free Catalog Image Generator */}
+                                <div 
+                                    onClick={() => { onTabChange('free-image-generator'); setIsToolsDropdownOpen(false); }}
+                                    style={{
+                                        padding: '0.65rem 0.75rem',
+                                        borderRadius: '10px',
+                                        cursor: 'pointer',
+                                        background: activeTab === 'free-image-generator' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: '0.75rem',
+                                        transition: 'all 0.15s ease'
+                                    }}
+                                    className="tool-dropdown-item"
+                                >
+                                    <span style={{ fontSize: '1.3rem' }}>🖼️</span>
+                                    <div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                            Free Image Generator
+                                            <span style={{ fontSize: '0.55rem', background: '#ec4899', color: '#ffffff', padding: '0.05rem 0.3rem', borderRadius: '4px', fontWeight: 800 }}>FREE</span>
+                                        </div>
+                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Generate Pink/Blue borders & NDD fast stamps.</div>
+                                    </div>
+                                </div>
+
+                                {/* Tool 2: Shipping Rate Optimizer */}
+                                <div 
+                                    onClick={() => { onTabChange('meesho-shipping-rates'); setIsToolsDropdownOpen(false); }}
+                                    style={{
+                                        padding: '0.65rem 0.75rem',
+                                        borderRadius: '10px',
+                                        cursor: 'pointer',
+                                        background: activeTab === 'meesho-shipping-rates' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: '0.75rem',
+                                        transition: 'all 0.15s ease'
+                                    }}
+                                    className="tool-dropdown-item"
+                                >
+                                    <span style={{ fontSize: '1.3rem' }}>⚡</span>
+                                    <div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>Rate & Shipping Optimizer</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Audit ₹48, ₹56, ₹62 freight slabs & token pools.</div>
+                                    </div>
+                                </div>
+
+                                {/* Tool 3: Excel P&L Settlement Calculator */}
+                                <div 
+                                    onClick={() => { onTabChange('pnl-calculator'); setIsToolsDropdownOpen(false); }}
+                                    style={{
+                                        padding: '0.65rem 0.75rem',
+                                        borderRadius: '10px',
+                                        cursor: 'pointer',
+                                        background: activeTab === 'pnl-calculator' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: '0.75rem',
+                                        transition: 'all 0.15s ease'
+                                    }}
+                                    className="tool-dropdown-item"
+                                >
+                                    <span style={{ fontSize: '1.3rem' }}>📊</span>
+                                    <div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>Excel P&L Settlement Calculator</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Reconcile payouts, ads spend & RTO return penalties.</div>
+                                    </div>
+                                </div>
+
+                                {/* Tool 4: Label Exporter */}
+                                <div 
+                                    onClick={() => { onTabChange('meesho-label-exporter'); setIsToolsDropdownOpen(false); }}
+                                    style={{
+                                        padding: '0.65rem 0.75rem',
+                                        borderRadius: '10px',
+                                        cursor: 'pointer',
+                                        background: activeTab === 'meesho-label-exporter' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: '0.75rem',
+                                        transition: 'all 0.15s ease'
+                                    }}
+                                    className="tool-dropdown-item"
+                                >
+                                    <span style={{ fontSize: '1.3rem' }}>📋</span>
+                                    <div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>Bulk Thermal Label Exporter</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Crop shipping label PDFs into 4x6 thermal printer format.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
                     <button 
                         className={`nav-link ${activeTab === 'free-image-generator' ? 'active' : ''}`}
                         onClick={() => onTabChange('free-image-generator')}
                     >
-                        🆓 Free Image Generator
-                    </button>
-                    <button 
-                        className={`nav-link ${activeTab === 'meesho-shipping-rates' ? 'active' : ''}`}
-                        onClick={() => onTabChange('meesho-shipping-rates')}
-                    >
-                        ⚡ Rate Optimizer
+                        🆓 Image Generator
                     </button>
                     <button 
                         className={`nav-link ${activeTab === 'pnl-calculator' ? 'active' : ''}`}
                         onClick={() => onTabChange('pnl-calculator')}
                     >
-                        📊 Excel P&L Calculator
+                        📊 P&L Calculator
                     </button>
                     <button 
                         className={`nav-link ${activeTab === 'meesho-label-exporter' ? 'active' : ''}`}
@@ -504,23 +626,32 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                 {/* Mobile Menu Drawer */}
                 {mobileMenuOpen && (
                     <div className="mobile-menu-drawer">
+                        <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0.4rem 0.75rem' }}>
+                            🧰 FREE SUPPLIER TOOLS
+                        </div>
+                        <button 
+                            className={`mobile-nav-link ${activeTab === 'free-image-generator' ? 'active' : ''}`}
+                            onClick={() => { onTabChange('free-image-generator'); setMobileMenuOpen(false); }}
+                        >
+                            🖼️ Free Image Variation Generator (100% Free)
+                        </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'meesho-shipping-rates' ? 'active' : ''}`}
                             onClick={() => { onTabChange('meesho-shipping-rates'); setMobileMenuOpen(false); }}
                         >
-                            📊 Shipping Rates & P&L
+                            ⚡ Rate & Freight Optimizer
                         </button>
                         <button 
-                            className={`mobile-nav-link ${activeTab === 'meesho-image-generator' ? 'active' : ''}`}
-                            onClick={() => { onTabChange('meesho-image-generator'); setMobileMenuOpen(false); }}
+                            className={`mobile-nav-link ${activeTab === 'pnl-calculator' ? 'active' : ''}`}
+                            onClick={() => { onTabChange('pnl-calculator'); setMobileMenuOpen(false); }}
                         >
-                            🖼️ Image Generator
+                            📊 Excel P&L Settlement Calculator
                         </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'meesho-label-exporter' ? 'active' : ''}`}
                             onClick={() => { onTabChange('meesho-label-exporter'); setMobileMenuOpen(false); }}
                         >
-                            🏷️ Label Exporter
+                            📋 Bulk Thermal Label Exporter (4x6 Crop)
                         </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'pricing' ? 'active' : ''}`}
