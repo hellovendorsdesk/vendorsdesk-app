@@ -1,20 +1,20 @@
 {
-  "redirects": [
+  "version": 2,
+  "routes": [
     {
-      "source": "/sitemaps.xml",
-      "destination": "/sitemap.xml",
-      "permanent": true
+      "src": "^/sitemaps.xml$",
+      "dest": "/sitemap.xml"
     },
     {
-      "source": "/sitemaps",
-      "destination": "/sitemap.xml",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
+      "src": "^/sitemaps$",
+      "dest": "/sitemap.xml"
+    },
     {
-      "source": "/((?!api/|sitemap.xml|robots.txt|llms.txt|logo-|.*\\..*).*)",
-      "destination": "/index.html"
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
