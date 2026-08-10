@@ -968,6 +968,8 @@ export default function App() {
     const [couponError, setCouponError] = useState('');
     const [billingError, setBillingError] = useState('');
     const [billingSuccess, setBillingSuccess] = useState('');
+    const [submittingPlanId, setSubmittingPlanId] = useState(null);
+    const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
 
     // Copy link status
     const [copiedText, setCopiedText] = useState('Copy');
@@ -1233,6 +1235,7 @@ export default function App() {
         setCouponError('');
         setCouponMessage('');
         if (!couponCode) return;
+        setIsApplyingCoupon(true);
 
         const token = localStorage.getItem('vendorsdesk_token');
         try {
@@ -1252,20 +1255,31 @@ export default function App() {
             }
         } catch (e) {
             setCouponError('Coupon validation error.');
+        } finally {
+            setIsApplyingCoupon(false);
         }
     };
 
-    const handleSubscribe = async () => {
+    const handleSubscribe = async (planToSubscribe) => {
+        const targetPlan = planToSubscribe || selectedPlan;
         setBillingError('');
         setBillingSuccess('');
+        setSubmittingPlanId(targetPlan);
         const token = localStorage.getItem('vendorsdesk_token');
+
+        if (!token) {
+            setAuthModalOpen(true);
+            setAuthError('Please sign in to purchase or upgrade your plan.');
+            setSubmittingPlanId(null);
+            return;
+        }
         
         try {
             // First try Cashfree Payment Gateway order creation
             const data = await secureFetch('/api/billing/cashfree/create-order', {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
-                body: { plan: selectedPlan, couponCode }
+                body: { plan: targetPlan, couponCode }
             });
 
             if (data.success && data.paymentSessionId) {
@@ -1295,7 +1309,7 @@ export default function App() {
             const fallbackData = await secureFetch('/api/billing/subscribe', {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
-                body: { plan: selectedPlan, couponCode }
+                body: { plan: targetPlan, couponCode }
             });
 
             if (fallbackData.success) {
@@ -1313,6 +1327,8 @@ export default function App() {
         } catch (e) {
             console.error('Subscription Error:', e);
             setBillingError('Network subscription failed.');
+        } finally {
+            setSubmittingPlanId(null);
         }
     };
 
@@ -1920,9 +1936,17 @@ export default function App() {
                                     placeholder="Enter Coupon (e.g. WELCOME50)" 
                                     value={couponCode} 
                                     onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                                    disabled={isApplyingCoupon || !!submittingPlanId}
                                     style={{ textTransform: 'uppercase' }}
                                 />
-                                <button className="btn-action btn-action-primary" style={{ padding: '0 1.5rem', whiteSpace: 'nowrap' }} onClick={handleApplyCoupon}>Apply Coupon</button>
+                                <button 
+                                    className="btn-action btn-action-primary" 
+                                    disabled={isApplyingCoupon || !!submittingPlanId || !couponCode}
+                                    style={{ padding: '0 1.5rem', whiteSpace: 'nowrap', opacity: (isApplyingCoupon || !!submittingPlanId || !couponCode) ? 0.6 : 1 }} 
+                                    onClick={handleApplyCoupon}
+                                >
+                                    {isApplyingCoupon ? 'Applying...' : 'Apply Coupon'}
+                                </button>
                             </div>
                             {couponMessage && <div style={{ color: 'var(--success)', fontSize: '0.85rem' }}>{couponMessage}</div>}
                             {couponError && <div style={{ color: 'var(--danger)', fontSize: '0.85rem' }}>{couponError}</div>}
@@ -1930,8 +1954,28 @@ export default function App() {
                             {billingError && <div style={{ color: 'var(--danger)', fontSize: '0.85rem', marginTop: '0.5rem' }}>{billingError}</div>}
                             {billingSuccess && <div style={{ color: 'var(--success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>{billingSuccess}</div>}
 
-                            <button className="btn-submit-form" onClick={handleSubscribe} style={{ marginTop: '0.5rem' }}>
-                                Pay & Upgrade Subscription
+                            <button 
+                                className="btn-submit-form" 
+                                disabled={!!submittingPlanId}
+                                onClick={() => handleSubscribe()} 
+                                style={{ 
+                                    marginTop: '0.5rem',
+                                    opacity: submittingPlanId ? 0.75 : 1,
+                                    cursor: submittingPlanId ? 'not-allowed' : 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '0.5rem'
+                                }}
+                            >
+                                {submittingPlanId ? (
+                                    <>
+                                        <span style={{ width: '16px', height: '16px', border: '2px solid #ffffff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                                        Connecting to Cashfree Gateway...
+                                    </>
+                                ) : (
+                                    'Pay & Upgrade Subscription'
+                                )}
                             </button>
                         </div>
                     )}
