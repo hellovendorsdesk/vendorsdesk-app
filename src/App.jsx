@@ -695,10 +695,17 @@ export default function App() {
         const ref = urlParams.get('ref');
         const tokenParam = urlParams.get('token');
         const modeParam = urlParams.get('mode');
+        const cashfreeOrderId = urlParams.get('cashfree_order_id');
 
         if (tokenParam) {
             localStorage.setItem('vendorsdesk_token', tokenParam);
             window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
+        // Cashfree Payment Return Auto-Verification
+        if (cashfreeOrderId) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+            verifyCashfreePayment(cashfreeOrderId);
         }
 
         if (ref) {
@@ -712,6 +719,29 @@ export default function App() {
 
         checkUserAuth();
     }, []);
+
+    const verifyCashfreePayment = async (orderId) => {
+        setBillingError('');
+        setBillingSuccess('Verifying Cashfree payment & updating balance...');
+        try {
+            const token = localStorage.getItem('vendorsdesk_token');
+            const data = await secureFetch('/api/billing/cashfree/verify', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: { orderId }
+            });
+            if (data.success) {
+                setBillingSuccess(data.message || 'Payment verified! Credits added.');
+                await checkUserAuth();
+                setTimeout(() => setBillingSuccess(''), 4000);
+            } else {
+                setBillingError(data.error || 'Payment verification failed.');
+            }
+        } catch (e) {
+            console.error('Cashfree verify error:', e);
+            setBillingError('Could not verify Cashfree payment.');
+        }
+    };
 
     const checkUserAuth = async () => {
         setIsLoadingAuth(true);
@@ -915,14 +945,45 @@ export default function App() {
         const token = localStorage.getItem('vendorsdesk_token');
         
         try {
-            const data = await secureFetch('/api/billing/subscribe', {
+            // First try Cashfree Payment Gateway order creation
+            const data = await secureFetch('/api/billing/cashfree/create-order', {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: { plan: selectedPlan, couponCode }
             });
 
-            if (data.success) {
-                setBillingSuccess(`Upgrade Successful! ${data.message}`);
+            if (data.success && data.paymentSessionId) {
+                setBillingSuccess('Redirecting to Cashfree Secure Payment Gateway...');
+                
+                // Dynamically load Cashfree V3 SDK script if not loaded
+                const triggerCheckout = () => {
+                    const cashfree = window.Cashfree({ mode: data.cfEnv === 'PRODUCTION' ? 'production' : 'sandbox' });
+                    cashfree.checkout({
+                        paymentSessionId: data.paymentSessionId,
+                        redirectTarget: '_self'
+                    });
+                };
+
+                if (!window.Cashfree) {
+                    const script = document.createElement('script');
+                    script.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
+                    script.onload = triggerCheckout;
+                    document.body.appendChild(script);
+                } else {
+                    triggerCheckout();
+                }
+                return;
+            }
+
+            // Fallback for dev mode / testing if Cashfree is not yet configured
+            const fallbackData = await secureFetch('/api/billing/subscribe', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: { plan: selectedPlan, couponCode }
+            });
+
+            if (fallbackData.success) {
+                setBillingSuccess(`Upgrade Successful! ${fallbackData.message}`);
                 setCouponCode('');
                 setCouponMessage('');
                 await checkUserAuth();
@@ -931,9 +992,10 @@ export default function App() {
                     setActivePage('home');
                 }, 2000);
             } else {
-                setBillingError(data.error || 'Subscription failed.');
+                setBillingError(data.error || fallbackData.error || 'Subscription failed.');
             }
         } catch (e) {
+            console.error('Subscription Error:', e);
             setBillingError('Network subscription failed.');
         }
     };
