@@ -834,6 +834,23 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
             {activeTab === 'terms-of-service' && <TermsOfServicePage />}
             {activeTab === 'contact-us' && <ContactUsPage />}
 
+            {/* Custom 404 Not Found Page */}
+            {!['free-image-generator', 'meesho-shipping-rates', 'pnl-calculator', 'meesho-image-generator', 'meesho-label-exporter', 'pricing', 'privacy-policy', 'refund-policy', 'terms-of-service', 'contact-us'].includes(activeTab) && (
+                <div style={{ maxWidth: '600px', margin: '4rem auto', textAlign: 'center', padding: '3.5rem 2rem', background: '#ffffff', borderRadius: '20px', border: '1px solid #e2e8f0', boxShadow: '0 20px 40px rgba(15, 23, 42, 0.08)' }}>
+                    <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🔍 404</div>
+                    <h1 style={{ fontFamily: 'Outfit', fontSize: '2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.75rem' }}>Page Not Found</h1>
+                    <p style={{ color: '#64748b', fontSize: '0.95rem', marginBottom: '2rem', lineHeight: '1.6' }}>
+                        The page or URL you are looking for does not exist or has been moved.
+                    </p>
+                    <button 
+                        onClick={() => onTabChange('meesho-shipping-rates')}
+                        style={{ padding: '0.85rem 1.8rem', background: 'linear-gradient(135deg, #2563eb, #7c3aed)', color: '#ffffff', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', fontSize: '0.95rem', boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)' }}
+                    >
+                        🏠 Return to VendorsDesk Home
+                    </button>
+                </div>
+            )}
+
             {/* General FAQs Accordion Section */}
             {activeTab === 'meesho-shipping-rates' && (
                 <section id="faqs" style={{ padding: '5rem 5% 6rem 5%', maxWidth: '800px', margin: '0 auto', borderTop: '1px solid #e2e8f0' }}>
