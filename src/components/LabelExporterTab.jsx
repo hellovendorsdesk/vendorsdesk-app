@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 const MOCK_ORDERS = [
     { id: 'ORD-1001', sku: 'Kurtis-Red-M', courier: 'Delhivery', qty: 1, date: 'Jul 11, 2026' },
@@ -62,6 +62,8 @@ export default function LabelExporterTab({ currentUser, onNavigateToBilling }) {
         setSelectedOrders(prev => ({ ...prev, [id]: !prev[id] }));
     };
 
+    const [isExporting, setIsExporting] = useState(false);
+
     const handleExport = () => {
         const checkedIds = Object.keys(selectedOrders).filter(k => selectedOrders[k]);
         if (checkedIds.length === 0) {
@@ -69,8 +71,12 @@ export default function LabelExporterTab({ currentUser, onNavigateToBilling }) {
             return;
         }
 
-        alert(`Success! exported ${checkedIds.length} cropped labels in a combined PDF sheet organized by SKU.`);
-        handleReset();
+        setIsExporting(true);
+        setTimeout(() => {
+            alert(`Success! exported ${checkedIds.length} cropped labels in a combined PDF sheet organized by SKU.`);
+            setIsExporting(false);
+            handleReset();
+        }, 1200);
     };
 
     // Filter logic
@@ -168,8 +174,22 @@ export default function LabelExporterTab({ currentUser, onNavigateToBilling }) {
                                 </div>
 
                                 <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                                    <button className="btn-submit-form" onClick={handleExport}>Export Labels</button>
-                                    <button className="btn-action" onClick={handleReset}>Reset</button>
+                                    <button 
+                                        className="btn-submit-form" 
+                                        disabled={isExporting} 
+                                        onClick={handleExport}
+                                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', opacity: isExporting ? 0.7 : 1, cursor: isExporting ? 'not-allowed' : 'pointer' }}
+                                    >
+                                        {isExporting ? (
+                                            <>
+                                                <span style={{ width: '14px', height: '14px', border: '2px solid #ffffff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                                                Exporting Labels...
+                                            </>
+                                        ) : (
+                                            'Export Labels'
+                                        )}
+                                    </button>
+                                    <button className="btn-action" disabled={isExporting} onClick={handleReset}>Reset</button>
                                 </div>
                             </div>
                         )}
