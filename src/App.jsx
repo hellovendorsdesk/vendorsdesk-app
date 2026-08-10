@@ -436,7 +436,7 @@ function PrivacyPolicyPage() {
 
                 <section>
                     <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>4. Contact Us</h2>
-                    <p>If you have any privacy inquiries, reach out to our privacy compliance team at <strong>support@vendorsdesk.in</strong>.</p>
+                    <p>If you have any privacy inquiries, reach out to our privacy compliance team at <strong>hellovendorsdesk@gmail.com</strong>.</p>
                 </section>
             </div>
         </div>
@@ -464,7 +464,7 @@ function RefundPolicyPage() {
                     <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '12px', padding: '1.25rem', marginTop: '0.75rem', color: '#1e40af' }}>
                         <strong style={{ fontSize: '0.95rem', display: 'block', marginBottom: '0.35rem' }}>⚡ Technical Error Credit Restoration Procedure:</strong>
                         <ul style={{ paddingLeft: '1.25rem', marginTop: '0.35rem', color: '#1e3a8a', fontSize: '0.9rem' }}>
-                            <li>If a server failure, calculation error, or technical outage causes an accidental loss of query credits without outputting your audit result, you can email us immediately at <strong>support@vendorsdesk.in</strong>.</li>
+                            <li>If a server failure, calculation error, or technical outage causes an accidental loss of query credits without outputting your audit result, you can email us immediately at <strong>hellovendorsdesk@gmail.com</strong>.</li>
                             <li>Please include your registered email ID, transaction timestamp, and the tool name.</li>
                             <li>Our engineering team will audit server logs within 24–48 hours. Upon verification of the server failure or credit loss, <strong>the exact number of lost credits will be restored and credited back directly to your account balance</strong>.</li>
                         </ul>
@@ -478,7 +478,7 @@ function RefundPolicyPage() {
 
                 <section>
                     <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>3. How to Submit a Support Claim</h2>
-                    <p>To request a credit restoration audit for lost credits, send an email to <strong>support@vendorsdesk.in</strong> with the subject line <code>Credit Audit Request - [Your Registered Email]</code>.</p>
+                    <p>To request a credit restoration audit for lost credits, send an email to <strong>hellovendorsdesk@gmail.com</strong> with the subject line <code>Credit Audit Request - [Your Registered Email]</code>.</p>
                 </section>
 
             </div>
@@ -510,7 +510,7 @@ function TermsOfServicePage() {
 
                 <section>
                     <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>4. Contact</h2>
-                    <p>For questions regarding terms and conditions, contact <strong>support@vendorsdesk.in</strong>.</p>
+                    <p>For questions regarding terms and conditions, contact <strong>hellovendorsdesk@gmail.com</strong>.</p>
                 </section>
             </div>
         </div>
@@ -527,7 +527,7 @@ function ContactUsPage() {
                 <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '1.5rem', borderRadius: '14px' }}>
                     <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>✉️</div>
                     <strong style={{ fontSize: '1rem', color: '#0f172a', display: 'block' }}>Email Support</strong>
-                    <span style={{ fontSize: '0.85rem', color: '#475569', display: 'block', marginTop: '0.25rem' }}>support@vendorsdesk.in</span>
+                    <span style={{ fontSize: '0.85rem', color: '#475569', display: 'block', marginTop: '0.25rem' }}>hellovendorsdesk@gmail.com</span>
                     <span style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.5rem', display: 'block' }}>Response time: 24 - 48 Hours</span>
                 </div>
 
@@ -920,7 +920,7 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                 </div>
 
                 <div style={{ color: '#64748b', fontSize: '0.75rem', borderTop: '1px solid #e2e8f0', paddingTop: '1.5rem' }}>
-                    © 2026 VendorsDesk. All rights reserved. | Official Support: support@vendorsdesk.in
+                    © 2026 VendorsDesk. All rights reserved. | Official Support: hellovendorsdesk@gmail.com
                 </div>
             </footer>
 
