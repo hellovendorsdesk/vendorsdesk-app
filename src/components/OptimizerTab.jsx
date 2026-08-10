@@ -356,8 +356,15 @@ export default function OptimizerTab({ currentUser, onCreditsChange, onNavigateT
                         </div>
 
                         <button className="btn-submit-form" disabled={!selectedCategory || !imageFile || isOptimizing} onClick={startOptimization}
-                            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '1rem', opacity: (!selectedCategory || !imageFile || isOptimizing) ? 0.6 : 1 }}>
-                            <span>Generate Variations & Check Rates</span>
+                            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '1rem', opacity: (!selectedCategory || !imageFile || isOptimizing) ? 0.6 : 1, cursor: isOptimizing ? 'not-allowed' : 'pointer' }}>
+                            {isOptimizing ? (
+                                <>
+                                    <span style={{ width: '16px', height: '16px', border: '2px solid #ffffff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                                    <span>Generating Variations & Checking Rates...</span>
+                                </>
+                            ) : (
+                                <span>Generate Variations & Check Rates</span>
+                            )}
                         </button>
                         {errorMsg && <div style={{ color: 'var(--danger)', fontSize: '0.8rem' }}>{errorMsg}</div>}
                     </div>
