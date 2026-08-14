@@ -1,60 +1,67 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-// Cross-browser Polyfill for CanvasRenderingContext2D.roundRect
-if (typeof window !== 'undefined' && typeof CanvasRenderingContext2D !== 'undefined') {
-    if (!CanvasRenderingContext2D.prototype.roundRect) {
-        CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, radii) {
-            let r = typeof radii === 'number' ? radii : (Array.isArray(radii) ? radii[0] : 0);
-            if (r > w / 2) r = w / 2;
-            if (r > h / 2) r = h / 2;
-            this.beginPath();
-            this.moveTo(x + r, y);
-            this.arcTo(x + w, y, x + w, y + h, r);
-            this.arcTo(x + w, y + h, x, y + h, r);
-            this.arcTo(x, y + h, x, y, r);
-            this.arcTo(x, y, x + w, y, r);
-            this.closePath();
-            return this;
-        };
-    }
-}
+// List of All 19 Graphic PNG Badge Image Files from Backend Assets
+const GRAPHIC_BADGE_ASSETS = [
+    { id: 'pink_bestseller', name: '🔥 Pink Best Seller Scallop Badge', file: 'badge_pink_bestseller.png', category: 'bestseller' },
+    { id: 'red_star_bestseller', name: '⭐ Red Best Seller Starburst Stamp', file: 'stamp_red_bestseller_star.png', category: 'bestseller' },
+    { id: 'red_vintage_seal', name: '🏆 Red Vintage Best Seller Seal', file: 'stamp_red_bestseller_seal.png', category: 'bestseller' },
+    { id: 'red_circle_bestseller', name: '⭕ Red Circular Best Seller Stamp', file: 'stamp_red_bestseller_circle.png', category: 'bestseller' },
+    { id: 'red_ribbon_bestseller', name: '🎗️ Red Ribbon Sunburst Stamp', file: 'stamp_red_bestseller_ribbon.png', category: 'bestseller' },
+    
+    { id: 'gold_premium_hex', name: '👑 Gold Premium Quality Hex Badge', file: 'badge_gold_premium.png', category: 'quality' },
+    { id: 'gold_circle_seal', name: '🌟 Gold Circle Premium Quality Stamp', file: 'badge_gold_circle.png', category: 'quality' },
+    { id: 'red_original_seal', name: '🛡️ Red 100% Original Guaranteed Stamp', file: 'stamp_red_original.png', category: 'quality' },
+    { id: 'authorized_dealer', name: '📜 Authorized Dealer Stamp', file: 'stamp_authorized_dealer.png', category: 'quality' },
+    { id: 'licensed_stamp', name: '⚖️ Licensed Quality Seal Stamp', file: 'stamp_licensed.png', category: 'quality' },
+    { id: 'trusted_brand_ribbon', name: '💎 Trusted Brand Ribbon Tag', file: 'stamp_trusted_brand.png', category: 'quality' },
+    { id: 'trusted_circle', name: '✨ Trusted Brand Circle Stamp', file: 'stamp_trusted_circle.png', category: 'quality' },
 
-// Preset Batches for Continuous "Generate More" Combinations
-const VARIATION_BATCHES = [
-    // Batch 1 (Initial 8 Variations)
+    { id: 'free_delivery_truck', name: '🚚 Free Delivery Truck Graphic', file: 'badge_free_delivery_truck.png', category: 'shipping' },
+    { id: 'free_shipping_speed', name: '⚡ Fast Speed Free Shipping Badge', file: 'badge_free_shipping_speed.png', category: 'shipping' },
+    { id: 'free_shipping_ribbon', name: '🚩 Red Free Shipping Truck Ribbon Banner', file: 'badge_free_shipping_ribbon.png', category: 'shipping' },
+    { id: 'fast_delivery_speedo', name: '⏱️ Fast Delivery Speedometer Badge', file: 'badge_fast_delivery_speedometer.png', category: 'shipping' },
+    { id: 'free_shipping_navy', name: '🔷 Navy Motion Free Shipping Tag', file: 'badge_free_shipping_navy.png', category: 'shipping' },
+
+    { id: 'new_arrival_circle', name: '💥 Red Circular New Arrival Stamp', file: 'stamp_red_new_arrival_circle.png', category: 'new' },
+    { id: 'new_arrival_yellow', name: '🏷️ Yellow Arrow New Arrival Tag', file: 'badge_new_arrival_yellow_tag.png', category: 'new' }
+];
+
+// Preset Batches utilizing Real Graphic PNG Badges & Stamps
+const GRAPHIC_VARIATION_BATCHES = [
+    // Batch 1 (Initial 8 Real Image Graphic Variations)
     [
-        { id: 'pink_bestseller', label: 'Pink Frame + Best Seller Badge', color: '#ec4899', badgeText: '🔥 BEST SELLER', borderWidth: 28, cornerRadius: 24 },
-        { id: 'blue_ndd', label: 'Blue Frame + Next-Day Dispatch', color: '#2563eb', badgeText: '⚡ NEXT-DAY DISPATCH', borderWidth: 28, cornerRadius: 24 },
-        { id: 'green_delivery', label: 'Green Frame + Free Shipping Stamp', color: '#10b981', badgeText: '🚚 FREE DELIVERY', borderWidth: 28, cornerRadius: 24 },
-        { id: 'gold_premium', label: 'Gold Frame + Top Right Premium Seal', color: '#eab308', sealText: 'PREMIUM\nQUALITY', sealColor: '#eab308', borderWidth: 28, cornerRadius: 24 },
-        { id: 'purple_dealer', label: 'Purple Frame + Dual Badge Combo', color: '#8b5cf6', badgeText: '🛡️ AUTHORIZED DEALER', sealText: '100%\nGENUINE', sealColor: '#8b5cf6', borderWidth: 28, cornerRadius: 24 },
-        { id: 'red_toprated', label: 'Red Frame + Top Rated Badge', color: '#ef4444', badgeText: '⭐ TOP RATED', borderWidth: 28, cornerRadius: 24 },
-        { id: 'teal_original', label: 'Teal Frame + 100% Original Seal', color: '#06b6d4', sealText: '100%\nORIGINAL', sealColor: '#06b6d4', borderWidth: 28, cornerRadius: 24 },
-        { id: 'orange_bottom_banner', label: 'Orange Frame + Bottom Free COD Banner', color: '#f97316', bannerText: '🚚 FREE SHIPPING & CASH ON DELIVERY', borderWidth: 28, cornerRadius: 24 }
+        { id: 'pink_bestseller_topleft', label: 'Pink Frame + Graphic Pink Best Seller Badge', color: '#ff3f6c', badgeFile: 'badge_pink_bestseller.png', position: 'top_left' },
+        { id: 'blue_star_bestseller', label: 'Blue Frame + Graphic Red Starburst Best Seller Stamp', color: '#0099ff', badgeFile: 'stamp_red_bestseller_star.png', position: 'top_right' },
+        { id: 'green_delivery_truck', label: 'Green Frame + Graphic Free Delivery Truck', color: '#2ecc71', badgeFile: 'badge_free_delivery_truck.png', position: 'bottom_right' },
+        { id: 'gold_premium_hex', label: 'Gold Frame + Graphic Gold Premium Quality Hex Badge', color: '#f1c40f', badgeFile: 'badge_gold_premium.png', position: 'top_left' },
+        { id: 'purple_authorized_dealer', label: 'Purple Frame + Graphic Authorized Dealer Stamp', color: '#9b59b6', badgeFile: 'stamp_authorized_dealer.png', position: 'top_right' },
+        { id: 'red_original_seal', label: 'Red Frame + Graphic Red 100% Original Stamp', color: '#ef4444', badgeFile: 'stamp_red_original.png', position: 'top_left' },
+        { id: 'teal_trusted_brand', label: 'Teal Frame + Graphic Trusted Brand Ribbon', color: '#1abc9c', badgeFile: 'stamp_trusted_brand.png', position: 'bottom_right' },
+        { id: 'orange_shipping_ribbon', label: 'Orange Frame + Graphic Free Shipping Ribbon Banner', color: '#e67e22', badgeFile: 'badge_free_shipping_ribbon.png', position: 'top_center' }
     ],
 
     // Batch 2 ("Generate More" Click #1)
     [
-        { id: 'pink_dual', label: 'Magenta Pink Frame + Dual Best Seller & Quality Seal', color: '#db2777', badgeText: '🔥 BEST SELLER', sealText: 'HIGH\nRATED', sealColor: '#db2777', doubleBorder: true, borderWidth: 24, cornerRadius: 20 },
-        { id: 'royal_blue_ndd_seal', label: 'Royal Blue Frame + Fast Packing Seal', color: '#1d4ed8', badgeText: '⚡ FAST DISPATCH', sealText: 'SAFE\nPACKING', sealColor: '#1d4ed8', borderWidth: 28, cornerRadius: 24 },
-        { id: 'mint_green_trending', label: 'Emerald Green Frame + Trending #1 Badge', color: '#059669', badgeText: '🏆 TRENDING #1', borderWidth: 28, cornerRadius: 24 },
-        { id: 'amber_gold_festive', label: 'Gold Frame + Bottom Festive Offer Banner', color: '#d97706', bannerText: '✨ SPECIAL FESTIVE OFFER', badgeText: '👑 TOP QUALITY', borderWidth: 28, cornerRadius: 24 },
-        { id: 'violet_hotdeal', label: 'Violet Frame + Hot Deal Badge', color: '#7c3aed', badgeText: '💥 HOT DEAL 50% OFF', borderWidth: 28, cornerRadius: 24 },
-        { id: 'crimson_ready_ship', label: 'Crimson Red Frame + Ready to Ship Tag', color: '#dc2626', badgeText: '📦 READY TO SHIP', sealText: 'VERIFIED\nSUPPLIER', sealColor: '#dc2626', borderWidth: 28, cornerRadius: 24 },
-        { id: 'cyan_fast_delivery', label: 'Cyan Frame + 24-Hr Dispatch Seal', color: '#0891b2', sealText: '24-HR\nDISPATCH', sealColor: '#0891b2', borderWidth: 28, cornerRadius: 24 },
-        { id: 'dark_slate_verified', label: 'Dark Slate Frame + Verified Meesho Seller', color: '#1e293b', bannerText: '🔥 MEESHO VERIFIED SUPPLIER', borderWidth: 28, cornerRadius: 24 }
+        { id: 'magenta_dual_badges', label: 'Magenta Frame + Dual Badges (Best Seller + Gold Seal)', color: '#ec4899', badgeFile: 'badge_pink_bestseller.png', position: 'top_left', secondBadgeFile: 'badge_gold_circle.png', secondPosition: 'bottom_right' },
+        { id: 'navy_speed_shipping', label: 'Navy Blue Frame + Fast Speed Free Shipping Badge', color: '#1e3a8a', badgeFile: 'badge_free_shipping_speed.png', position: 'top_left' },
+        { id: 'mint_trusted_circle', label: 'Mint Green Frame + Trusted Circle Stamp', color: '#10b981', badgeFile: 'stamp_trusted_circle.png', position: 'bottom_left' },
+        { id: 'amber_gold_circle', label: 'Amber Gold Frame + Gold Circle Premium Stamp', color: '#eab308', badgeFile: 'badge_gold_circle.png', position: 'top_right' },
+        { id: 'crimson_red_circle_bestseller', label: 'Crimson Red Frame + Circular Best Seller Seal', color: '#dc2626', badgeFile: 'stamp_red_bestseller_circle.png', position: 'top_right' },
+        { id: 'violet_licensed_stamp', label: 'Violet Frame + Licensed Quality Seal Stamp', color: '#7c3aed', badgeFile: 'stamp_licensed.png', position: 'top_left' },
+        { id: 'cyan_speedometer_delivery', label: 'Cyan Frame + Speedometer Fast Delivery Badge', color: '#06b6d4', badgeFile: 'badge_fast_delivery_speedometer.png', position: 'bottom_right' },
+        { id: 'dark_slate_navy_tag', label: 'Dark Slate Frame + Navy Motion Free Shipping Tag', color: '#1e293b', badgeFile: 'badge_free_shipping_navy.png', position: 'bottom_right' }
     ],
 
     // Batch 3 ("Generate More" Click #2)
     [
-        { id: 'rose_limited', label: 'Rose Pink Frame + Limited Stock Badge', color: '#e11d48', badgeText: '⏳ LIMITED STOCK', borderWidth: 28, cornerRadius: 24 },
-        { id: 'indigo_super_saver', label: 'Indigo Blue Frame + Super Saver Deal', color: '#4338ca', badgeText: '💰 SUPER SAVER DEAL', borderWidth: 28, cornerRadius: 24 },
-        { id: 'forest_green_return', label: 'Forest Green Frame + Free Easy Returns', color: '#15803d', bannerText: '🔄 EASY 7-DAY FREE RETURNS', borderWidth: 28, cornerRadius: 24 },
-        { id: 'gold_double_seal', label: 'Gold Double Frame + 100% Quality Seal', color: '#ca8a04', sealText: '100%\nQUALITY', sealColor: '#ca8a04', doubleBorder: true, borderWidth: 24, cornerRadius: 20 },
-        { id: 'purple_exclusive', label: 'Deep Purple Frame + Exclusive Launch', color: '#6b21a8', badgeText: '✨ EXCLUSIVE LAUNCH', borderWidth: 28, cornerRadius: 24 },
-        { id: 'red_lowest_price', label: 'Bright Red Frame + Lowest Price Banner', color: '#b91c1c', bannerText: '🏷️ LOWEST PRICE GUARANTEED', borderWidth: 28, cornerRadius: 24 },
-        { id: 'coral_top_choice', label: 'Coral Orange Frame + Buyer\'s Top Choice', color: '#ea580c', badgeText: '⭐ BUYER\'S TOP CHOICE', borderWidth: 28, cornerRadius: 24 },
-        { id: 'black_gold_vip', label: 'Midnight Black Frame + VIP Seller Stamp', color: '#09090b', badgeText: '👑 VIP SELLER CHOICE', sealText: 'PREMIUM\nPACKING', sealColor: '#eab308', borderWidth: 28, cornerRadius: 24 }
+        { id: 'rose_red_bestseller_ribbon', label: 'Rose Frame + Red Ribbon Sunburst Best Seller Stamp', color: '#e11d48', badgeFile: 'stamp_red_bestseller_ribbon.png', position: 'top_left' },
+        { id: 'indigo_bestseller_seal', label: 'Indigo Frame + Red Vintage Best Seller Seal', color: '#4338ca', badgeFile: 'stamp_red_bestseller_seal.png', position: 'bottom_left' },
+        { id: 'forest_free_truck', label: 'Forest Green Frame + Free Delivery Truck Badge', color: '#15803d', badgeFile: 'badge_free_delivery_truck.png', position: 'top_right' },
+        { id: 'gold_new_arrival_yellow', label: 'Gold Frame + Yellow Arrow New Arrival Tag', color: '#ca8a04', badgeFile: 'badge_new_arrival_yellow_tag.png', position: 'bottom_left' },
+        { id: 'ruby_red_new_arrival_circle', label: 'Ruby Red Frame + Red Circular New Arrival Stamp', color: '#b91c1c', badgeFile: 'stamp_red_new_arrival_circle.png', position: 'top_left' },
+        { id: 'coral_dual_original_trusted', label: 'Deep Coral Frame + Dual Badges (100% Original + Trusted)', color: '#ea580c', badgeFile: 'stamp_red_original.png', position: 'top_left', secondBadgeFile: 'stamp_trusted_brand.png', secondPosition: 'bottom_right' },
+        { id: 'purple_gold_premium_hex', label: 'Deep Purple Frame + Gold Premium Hex Badge', color: '#6b21a8', badgeFile: 'badge_gold_premium.png', position: 'top_right' },
+        { id: 'black_authorized_dealer', label: 'Midnight Black Frame + Authorized Dealer Stamp', color: '#09090b', badgeFile: 'stamp_authorized_dealer.png', position: 'top_left' }
     ]
 ];
 
@@ -66,11 +73,34 @@ export default function FreeImageGeneratorTab() {
     const [isGeneratingMore, setIsGeneratingMore] = useState(false);
     const [currentBatchIndex, setCurrentBatchIndex] = useState(0);
 
-    // Custom Badge Controls
-    const [customText, setCustomText] = useState('🔥 BEST SELLER');
-    const [customColor, setCustomColor] = useState('#ec4899');
+    // Selected Custom Graphic Badge
+    const [selectedBadgeAsset, setSelectedBadgeAsset] = useState(GRAPHIC_BADGE_ASSETS[0]);
+    const [selectedBadgeColor, setSelectedBadgeColor] = useState('#ff3f6c');
+    const [selectedBadgePosition, setSelectedBadgePosition] = useState('top_left');
 
     const fileInputRef = useRef(null);
+    const badgeImageCache = useRef(new Map());
+
+    // Preload PNG Badge Asset Image
+    const loadBadgeImage = (filename) => {
+        return new Promise((resolve) => {
+            if (badgeImageCache.current.has(filename)) {
+                resolve(badgeImageCache.current.get(filename));
+                return;
+            }
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.src = `/badges/${filename}`;
+            img.onload = () => {
+                badgeImageCache.current.set(filename, img);
+                resolve(img);
+            };
+            img.onerror = () => {
+                console.error(`Failed to load graphic badge image: /badges/${filename}`);
+                resolve(null);
+            };
+        });
+    };
 
     const handleFile = (file) => {
         if (!file || !file.type.startsWith('image/')) return;
@@ -84,14 +114,14 @@ export default function FreeImageGeneratorTab() {
             img.onload = () => {
                 setLoadedImageObj(img);
                 setCurrentBatchIndex(0);
-                generateBatch(img, 0, []);
+                generateGraphicBatch(img, 0, []);
             };
         };
         reader.readAsDataURL(file);
     };
 
-    // Render Canvas Function for Single Variation Configuration
-    const renderCanvasVariation = (img, config) => {
+    // Render Canvas with Product Photo + Outer Rounded Border + Graphic PNG Badge Overlay
+    const renderCanvasWithGraphicBadge = async (productImg, config) => {
         const canvas = document.createElement('canvas');
         const size = 1000; // 1000x1000 High Resolution Canvas
         canvas.width = size;
@@ -102,210 +132,163 @@ export default function FreeImageGeneratorTab() {
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, size, size);
 
-        // 2. Padding Calculations
-        const outerBorderWidth = config.borderWidth || 28;
-        const innerPadding = config.innerPadding || 36;
+        // 2. Border & Padding Dimensions
+        const outerBorderWidth = 28;
+        const innerPadding = 36;
         const drawX = outerBorderWidth + innerPadding;
         const drawY = outerBorderWidth + innerPadding;
         const drawSize = size - (drawX * 2);
-        const cornerRadius = config.cornerRadius || 20;
+        const cornerRadius = 24;
 
-        // Clip Product Photo inside Rounded Rectangle
+        // Clip Product Photo inside Rounded Rectangle Container
         ctx.save();
         ctx.beginPath();
-        ctx.roundRect(drawX, drawY, drawSize, drawSize, cornerRadius);
+        if (ctx.roundRect) {
+            ctx.roundRect(drawX, drawY, drawSize, drawSize, cornerRadius);
+        } else {
+            ctx.rect(drawX, drawY, drawSize, drawSize);
+        }
         ctx.clip();
-        ctx.drawImage(img, drawX, drawY, drawSize, drawSize);
+        ctx.drawImage(productImg, drawX, drawY, drawSize, drawSize);
         ctx.restore();
 
         // 3. Draw Outer Border Frame
         ctx.lineWidth = outerBorderWidth;
-        ctx.strokeStyle = config.color;
+        ctx.strokeStyle = config.color || '#ff3f6c';
         ctx.beginPath();
-        ctx.roundRect(outerBorderWidth / 2, outerBorderWidth / 2, size - outerBorderWidth, size - outerBorderWidth, cornerRadius + 8);
+        if (ctx.roundRect) {
+            ctx.roundRect(outerBorderWidth / 2, outerBorderWidth / 2, size - outerBorderWidth, size - outerBorderWidth, cornerRadius + 8);
+        } else {
+            ctx.strokeRect(outerBorderWidth / 2, outerBorderWidth / 2, size - outerBorderWidth, size - outerBorderWidth);
+        }
         ctx.stroke();
 
-        // Double Inner Accent Line (optional)
-        if (config.doubleBorder) {
-            ctx.lineWidth = 4;
-            ctx.strokeStyle = config.color;
-            ctx.beginPath();
-            ctx.roundRect(outerBorderWidth + 10, outerBorderWidth + 10, size - (outerBorderWidth + 10) * 2, size - (outerBorderWidth + 10) * 2, cornerRadius);
-            ctx.stroke();
-        }
-
-        // 4. Draw Badges & Overlays
-        const badgeMargin = drawX + 16;
-
-        // Top-Left Pill Ribbon Badge
-        if (config.badgeText) {
-            ctx.save();
-            ctx.font = 'bold 26px Outfit, sans-serif';
-            const textMetrics = ctx.measureText(config.badgeText);
-            const badgeW = textMetrics.width + 48;
-            const badgeH = 64;
-            const badgeX = badgeMargin;
-            const badgeY = badgeMargin;
-
-            // Pill Shape Background
-            ctx.fillStyle = config.badgeColor || config.color;
-            ctx.beginPath();
-            ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 18);
-            ctx.fill();
-
-            // Crisp White Outline
-            ctx.lineWidth = 3;
-            ctx.strokeStyle = '#ffffff';
-            ctx.stroke();
-
-            // Badge Text
-            ctx.fillStyle = '#ffffff';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(config.badgeText, badgeX + 24, badgeY + (badgeH / 2));
-            ctx.restore();
-        }
-
-        // Top-Right Circular Seal
-        if (config.sealText) {
-            ctx.save();
-            const sealRadius = 54;
-            const sealX = size - badgeMargin - sealRadius;
-            const sealY = badgeMargin + sealRadius;
-
-            // Circle Fill
-            ctx.fillStyle = config.sealColor || config.color;
-            ctx.beginPath();
-            ctx.arc(sealX, sealY, sealRadius, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.lineWidth = 3;
-            ctx.strokeStyle = '#ffffff';
-            ctx.stroke();
-
-            // Inner Dashed Ring
-            ctx.lineWidth = 2;
-            ctx.setLineDash([4, 4]);
-            ctx.beginPath();
-            ctx.arc(sealX, sealY, sealRadius - 6, 0, Math.PI * 2);
-            ctx.stroke();
-
-            // Seal Text Lines
-            ctx.setLineDash([]);
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 15px Outfit, sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            const lines = config.sealText.split('\n');
-            if (lines.length > 1) {
-                ctx.fillText(lines[0], sealX, sealY - 10);
-                ctx.fillText(lines[1], sealX, sealY + 10);
-            } else {
-                ctx.fillText(config.sealText, sealX, sealY);
+        // 4. Draw Primary Graphic PNG Badge Overlay
+        if (config.badgeFile) {
+            const badgeImg = await loadBadgeImage(config.badgeFile);
+            if (badgeImg) {
+                drawGraphicBadgeOverlay(ctx, badgeImg, config.position || 'top_left', size, outerBorderWidth);
             }
-            ctx.restore();
         }
 
-        // Bottom Banner Strip
-        if (config.bannerText) {
-            ctx.save();
-            const bannerH = 54;
-            const bannerY = size - badgeMargin - bannerH;
-            const bannerW = size - (badgeMargin * 2);
-
-            ctx.fillStyle = config.bannerColor || config.color;
-            ctx.beginPath();
-            ctx.roundRect(badgeMargin, bannerY, bannerW, bannerH, 14);
-            ctx.fill();
-
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#ffffff';
-            ctx.stroke();
-
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 22px Outfit, sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(config.bannerText, size / 2, bannerY + (bannerH / 2));
-            ctx.restore();
+        // 5. Draw Optional Secondary Graphic Badge (Dual Badge Combo)
+        if (config.secondBadgeFile) {
+            const secondBadgeImg = await loadBadgeImage(config.secondBadgeFile);
+            if (secondBadgeImg) {
+                drawGraphicBadgeOverlay(ctx, secondBadgeImg, config.secondPosition || 'bottom_right', size, outerBorderWidth);
+            }
         }
 
         return canvas.toDataURL('image/jpeg', 0.92);
     };
 
-    // Generate a Batch of Variations
-    const generateBatch = (img, batchIdx, existingList = []) => {
+    // Draw PNG Graphic Badge onto Canvas with Drop Shadow & Scaled Position
+    const drawGraphicBadgeOverlay = (ctx, badgeImg, position, canvasSize, outerBorderWidth) => {
+        const margin = outerBorderWidth + 24;
+        
+        let badgeWidth = 230;
+        let badgeHeight = (badgeImg.height / badgeImg.width) * badgeWidth;
+
+        let x = margin;
+        let y = margin;
+
+        if (position === 'top_right') {
+            x = canvasSize - margin - badgeWidth;
+            y = margin;
+        } else if (position === 'bottom_left') {
+            x = margin;
+            y = canvasSize - margin - badgeHeight;
+        } else if (position === 'bottom_right') {
+            x = canvasSize - margin - badgeWidth;
+            y = canvasSize - margin - badgeHeight;
+        } else if (position === 'top_center') {
+            x = (canvasSize - badgeWidth) / 2;
+            y = margin;
+        } else if (position === 'bottom_center') {
+            x = (canvasSize - badgeWidth) / 2;
+            y = canvasSize - margin - badgeHeight;
+        }
+
+        ctx.save();
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.22)';
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 4;
+        ctx.drawImage(badgeImg, x, y, badgeWidth, badgeHeight);
+        ctx.restore();
+    };
+
+    // Generate Batch of Variations
+    const generateGraphicBatch = async (img, batchIdx, existingList = []) => {
         setIsGenerating(true);
 
-        setTimeout(() => {
-            let configsToRender = [];
+        let configsToRender = [];
 
-            if (batchIdx < VARIATION_BATCHES.length) {
-                configsToRender = VARIATION_BATCHES[batchIdx];
-            } else {
-                // Batch 4+ Dynamic Random Combination Generator
-                const randomColors = ['#ec4899', '#2563eb', '#10b981', '#eab308', '#8b5cf6', '#ef4444', '#06b6d4', '#f97316', '#10b981'];
-                const randomBadges = ['🔥 BEST SELLER', '⚡ FAST DISPATCH', '🚚 FREE DELIVERY', '⭐ TOP RATED', '🏆 TRENDING #1', '💥 HOT DEAL', '📦 READY TO SHIP', '✨ NEW ARRIVAL'];
-                const randomSeals = ['100%\nORIGINAL', 'PREMIUM\nQUALITY', 'SAFE\nPACKING', '24-HR\nDISPATCH', 'HIGH\nRATED'];
+        if (batchIdx < GRAPHIC_VARIATION_BATCHES.length) {
+            configsToRender = GRAPHIC_VARIATION_BATCHES[batchIdx];
+        } else {
+            // Batch 4+ Dynamic Random Graphic Badge Generator
+            const colors = ['#ff3f6c', '#0099ff', '#2ecc71', '#f1c40f', '#9b59b6', '#ef4444', '#1abc9c', '#e67e22', '#ec4899', '#34495e'];
+            const positions = ['top_left', 'top_right', 'bottom_left', 'bottom_right', 'top_center'];
 
-                for (let i = 0; i < 8; i++) {
-                    const color = randomColors[i % randomColors.length];
-                    const badge = randomBadges[(i + batchIdx) % randomBadges.length];
-                    const seal = (i % 2 === 0) ? randomSeals[(i + batchIdx) % randomSeals.length] : null;
+            for (let i = 0; i < 8; i++) {
+                const badgeAsset = GRAPHIC_BADGE_ASSETS[(i + batchIdx * 3) % GRAPHIC_BADGE_ASSETS.length];
+                const color = colors[(i + batchIdx) % colors.length];
+                const pos = positions[(i + batchIdx) % positions.length];
 
-                    configsToRender.push({
-                        id: `dynamic_${batchIdx}_${i}`,
-                        label: `${badge.replace(/[^\w\s]/gi, '').trim()} (${color})`,
-                        color,
-                        badgeText: badge,
-                        sealText: seal,
-                        sealColor: color,
-                        borderWidth: 28,
-                        cornerRadius: 24
-                    });
-                }
+                configsToRender.push({
+                    id: `dynamic_graphic_${batchIdx}_${i}`,
+                    label: `${badgeAsset.name} (${color})`,
+                    color,
+                    badgeFile: badgeAsset.file,
+                    position: pos
+                });
             }
+        }
 
-            const newList = configsToRender.map((config) => ({
+        const newList = [];
+        for (const config of configsToRender) {
+            const dataUrl = await renderCanvasWithGraphicBadge(img, config);
+            newList.push({
                 id: `${config.id}_${Date.now()}`,
                 label: config.label,
                 color: config.color,
-                dataUrl: renderCanvasVariation(img, config)
-            }));
+                dataUrl
+            });
+        }
 
-            setGeneratedVariations([...existingList, ...newList]);
-            setIsGenerating(false);
-            setIsGeneratingMore(false);
-        }, 300);
+        setGeneratedVariations([...existingList, ...newList]);
+        setIsGenerating(false);
+        setIsGeneratingMore(false);
     };
 
-    // Handle "Generate More Variations" Click
+    // Handle "Generate More Variations" Button Click
     const handleGenerateMore = () => {
         if (!loadedImageObj || isGeneratingMore) return;
         setIsGeneratingMore(true);
         const nextBatchIdx = currentBatchIndex + 1;
         setCurrentBatchIndex(nextBatchIdx);
-        generateBatch(loadedImageObj, nextBatchIdx, generatedVariations);
+        generateGraphicBatch(loadedImageObj, nextBatchIdx, generatedVariations);
     };
 
-    // Generate Custom User Variation
-    const handleGenerateCustom = () => {
-        if (!loadedImageObj || !customText.trim()) return;
+    // Handle User Picked Graphic Badge Add
+    const handleAddSelectedGraphicBadge = async () => {
+        if (!loadedImageObj || !selectedBadgeAsset) return;
 
         const customConfig = {
-            id: `custom_${Date.now()}`,
-            label: `Custom: ${customText}`,
-            color: customColor,
-            badgeText: customText,
-            borderWidth: 28,
-            cornerRadius: 24
+            id: `user_graphic_${Date.now()}`,
+            label: `Graphic Badge: ${selectedBadgeAsset.name}`,
+            color: selectedBadgeColor,
+            badgeFile: selectedBadgeAsset.file,
+            position: selectedBadgePosition
         };
 
-        const customDataUrl = renderCanvasVariation(loadedImageObj, customConfig);
+        const dataUrl = await renderCanvasWithGraphicBadge(loadedImageObj, customConfig);
         const newVariation = {
             id: customConfig.id,
             label: customConfig.label,
             color: customConfig.color,
-            dataUrl: customDataUrl
+            dataUrl
         };
 
         setGeneratedVariations([newVariation, ...generatedVariations]);
@@ -314,7 +297,7 @@ export default function FreeImageGeneratorTab() {
     const downloadImage = (dataUrl, label) => {
         const a = document.createElement('a');
         a.href = dataUrl;
-        a.download = `vendorsdesk_catalog_${label.replace(/[^a-z0-9]+/gi, '_').toLowerCase()}.jpg`;
+        a.download = `vendorsdesk_graphic_catalog_${label.replace(/[^a-z0-9]+/gi, '_').toLowerCase()}.jpg`;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -323,16 +306,16 @@ export default function FreeImageGeneratorTab() {
     return (
         <div style={{ width: '100%', maxWidth: '1150px', margin: '0 auto' }}>
             
-            {/* Header & Upload Section */}
+            {/* Header & Upload Card */}
             <div className="panel-card" style={{ marginBottom: '2rem', textAlign: 'center', background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(236, 72, 153, 0.05))', border: '1px solid rgba(37, 99, 235, 0.15)' }}>
                 <div style={{ background: 'rgba(37, 99, 235, 0.1)', color: '#2563eb', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 700, display: 'inline-block', marginBottom: '0.85rem' }}>
-                    🆓 100% FREE UNLIMITED TOOL
+                    🆓 100% FREE UNLIMITED GRAPHIC BADGE GENERATOR
                 </div>
                 <h2 style={{ fontFamily: 'Outfit', fontSize: '2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>
-                    Meesho Catalog Image Variation & Badge Generator
+                    Meesho Catalog Image Graphic Badge Generator
                 </h2>
-                <p style={{ color: '#475569', fontSize: '0.95rem', maxWidth: '680px', margin: '0 auto 1.5rem auto', lineHeight: '1.6' }}>
-                    Bypass Meesho duplicate listing filters instantly! Generate HD catalog variations with Pink/Blue border frames, NDD badges, Best Seller ribbons, and Quality seals. Click <strong>"Generate More Variations"</strong> continuously to create unlimited combinations for free!
+                <p style={{ color: '#475569', fontSize: '0.95rem', maxWidth: '720px', margin: '0 auto 1.5rem auto', lineHeight: '1.6' }}>
+                    Bypass Meesho duplicate listing filters with <strong>19 Real Graphic PNG Badges & Stamps</strong> (Best Seller, Premium Quality, 100% Original, Free Delivery, Fast Shipping). Click <strong>"Generate More Variations"</strong> continuously to unlock unlimited combinations for free!
                 </p>
 
                 {!imagePreview ? (
@@ -343,7 +326,7 @@ export default function FreeImageGeneratorTab() {
                         <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Supports PNG, JPG (Click or Drag & Drop)</div>
                     </div>
                 ) : (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'center' }}>
                         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', alignItems: 'center' }}>
                             <button className="btn-submit-form" onClick={() => fileInputRef.current.click()} style={{ padding: '0.65rem 1.25rem', fontSize: '0.85rem' }}>
                                 🔄 Upload Different Photo
@@ -351,29 +334,49 @@ export default function FreeImageGeneratorTab() {
                             <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" onChange={(e) => handleFile(e.target.files[0])} />
                         </div>
 
-                        {/* Custom Badge Input Builder */}
-                        <div style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '0.85rem 1.25rem', borderRadius: '14px', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', width: '100%', maxWidth: '650px', marginTop: '0.5rem' }}>
-                            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Custom Badge:</span>
-                            <input
-                                type="text"
-                                value={customText}
-                                onChange={(e) => setCustomText(e.target.value)}
-                                placeholder="e.g. 🔥 50% OFF"
-                                style={{ flexGrow: 1, padding: '0.45rem 0.75rem', fontSize: '0.85rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}
-                            />
+                        {/* Interactive Graphic Badge Selector Builder */}
+                        <div style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '1rem 1.25rem', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap', width: '100%', maxWidth: '780px', boxShadow: '0 4px 14px rgba(0,0,0,0.04)' }}>
+                            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', whiteSpace: 'nowrap' }}>Choose Graphic Badge:</div>
+                            
+                            <select
+                                value={selectedBadgeAsset.id}
+                                onChange={(e) => {
+                                    const asset = GRAPHIC_BADGE_ASSETS.find(b => b.id === e.target.value);
+                                    if (asset) setSelectedBadgeAsset(asset);
+                                }}
+                                style={{ flexGrow: 1, padding: '0.5rem 0.75rem', fontSize: '0.85rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 600 }}
+                            >
+                                {GRAPHIC_BADGE_ASSETS.map((b) => (
+                                    <option key={b.id} value={b.id}>{b.name}</option>
+                                ))}
+                            </select>
+
+                            <select
+                                value={selectedBadgePosition}
+                                onChange={(e) => setSelectedBadgePosition(e.target.value)}
+                                style={{ padding: '0.5rem 0.75rem', fontSize: '0.85rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 600 }}
+                            >
+                                <option value="top_left">Top-Left</option>
+                                <option value="top_right">Top-Right</option>
+                                <option value="bottom_left">Bottom-Left</option>
+                                <option value="bottom_right">Bottom-Right</option>
+                                <option value="top_center">Top-Center</option>
+                            </select>
+
                             <input
                                 type="color"
-                                value={customColor}
-                                onChange={(e) => setCustomColor(e.target.value)}
-                                style={{ width: '38px', height: '34px', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+                                value={selectedBadgeColor}
+                                onChange={(e) => setSelectedBadgeColor(e.target.value)}
+                                style={{ width: '38px', height: '36px', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
                                 title="Choose Border Color"
                             />
+
                             <button
                                 className="btn-action btn-action-primary"
-                                onClick={handleGenerateCustom}
-                                style={{ padding: '0.45rem 1rem', fontSize: '0.8rem', fontWeight: 700 }}
+                                onClick={handleAddSelectedGraphicBadge}
+                                style={{ padding: '0.5rem 1.1rem', fontSize: '0.8rem', fontWeight: 700, whiteSpace: 'nowrap' }}
                             >
-                                ✨ Add Custom Badge
+                                🎨 Apply Badge
                             </button>
                         </div>
                     </div>
@@ -385,7 +388,7 @@ export default function FreeImageGeneratorTab() {
                 <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
                         <h3 style={{ fontFamily: 'Outfit', fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
-                            ✨ Generated Catalog Variations ({generatedVariations.length})
+                            ✨ Generated Graphic Catalog Variations ({generatedVariations.length})
                         </h3>
                         <div style={{ fontSize: '0.8rem', color: '#059669', fontWeight: 700, background: 'rgba(16, 185, 129, 0.1)', padding: '0.35rem 0.85rem', borderRadius: '12px' }}>
                             ⚡ Free Unlimited Download
@@ -435,7 +438,7 @@ export default function FreeImageGeneratorTab() {
                                 gap: '0.65rem'
                             }}
                         >
-                            {isGeneratingMore ? (
+                            {isGeneratingMore || isGenerating ? (
                                 <>
                                     <span style={{ width: '18px', height: '18px', border: '2px solid #ffffff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
                                     Generating More Combinations...
