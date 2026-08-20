@@ -624,7 +624,6 @@ function ContactUsPage() {
     );
 }
 
-/* ── 6. COMPACT MARKETING LAYOUT WRAPPER ──────────────────── */
 function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, onRegister, onGoToDashboard }) {
     const [faqOpen, setFaqOpen] = useState({});
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -638,19 +637,45 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
         <div style={{ minHeight: '100vh', width: '100vw', background: 'var(--bg-gradient)', color: 'var(--text-primary)', overflowX: 'hidden' }}>
             
             {/* Header / Navbar */}
-            <header className="site-header">
+            <header className="site-header" style={{
+                background: 'rgba(255, 255, 255, 0.88)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
+                boxShadow: '0 4px 25px rgba(15, 23, 42, 0.05)',
+                padding: '0.75rem 3%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                position: 'sticky',
+                top: 0,
+                zIndex: 990
+            }}>
+                {/* Left Brand Logo */}
                 <div 
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', cursor: 'pointer' }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}
                     onClick={() => { onTabChange('meesho-shipping-rates'); setMobileMenuOpen(false); }}
                 >
-                    <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '34px', width: 'auto', objectFit: 'contain' }} onError={(e) => { e.target.style.display = 'none'; }} />
-                    <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.4rem', letterSpacing: '-0.02em', color: '#0f172a' }}>
+                    <div style={{
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '10px',
+                        background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
+                    }}>
+                        <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '24px', width: 'auto', objectFit: 'contain' }} onError={(e) => { e.target.style.display = 'none'; }} />
+                        <span style={{ color: '#ffffff', fontWeight: 900, fontSize: '1.2rem' }}>✓</span>
+                    </div>
+                    <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.45rem', letterSpacing: '-0.02em', color: '#0f172a' }}>
                         VendorsDesk
                     </span>
                 </div>
                 
-                {/* Desktop Navigation Links */}
-                <nav className="desktop-nav">
+                {/* Desktop Navigation Links (Center) */}
+                <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                     {/* 🧰 Free Tools Dropdown */}
                     <div 
                         className="nav-dropdown-wrapper"
@@ -661,10 +686,21 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                         <button 
                             className={`nav-link ${['free-image-generator', 'meesho-shipping-rates', 'pnl-calculator', 'meesho-label-exporter'].includes(activeTab) ? 'active' : ''}`}
                             onClick={() => setIsToolsDropdownOpen(!isToolsDropdownOpen)}
-                            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 700 }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.4rem',
+                                fontWeight: 800,
+                                fontSize: '0.85rem',
+                                padding: '0.55rem 0.85rem',
+                                borderRadius: '12px',
+                                background: 'rgba(37, 99, 235, 0.06)',
+                                border: '1px solid rgba(37, 99, 235, 0.15)',
+                                color: '#2563eb'
+                            }}
                         >
                             <span>🧰 Free Tools</span>
-                            <span style={{ fontSize: '0.55rem', background: '#10b981', color: '#ffffff', padding: '0.1rem 0.35rem', borderRadius: '4px', fontWeight: 800 }}>4 SUITE</span>
+                            <span style={{ fontSize: '0.6rem', background: '#10b981', color: '#ffffff', padding: '0.12rem 0.4rem', borderRadius: '6px', fontWeight: 800 }}>5 SUITE</span>
                             <span style={{ fontSize: '0.7rem', transition: 'transform 0.2s', transform: isToolsDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
                         </button>
 
@@ -673,154 +709,159 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                                 position: 'absolute',
                                 top: '100%',
                                 left: 0,
-                                width: '330px',
+                                width: '340px',
                                 background: '#ffffff',
-                                border: '1px solid #e2e8f0',
-                                borderRadius: '16px',
-                                boxShadow: '0 20px 40px rgba(15, 23, 42, 0.14)',
-                                padding: '0.65rem',
+                                border: '1px solid #cbd5e1',
+                                borderRadius: '18px',
+                                boxShadow: '0 25px 50px -12px rgba(15, 23, 42, 0.18)',
+                                padding: '0.75rem',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: '0.35rem',
+                                gap: '0.4rem',
                                 zIndex: 1000,
                             }}>
-                                {/* Tool 1: Free Catalog Image Generator */}
+                                {/* Tool 1: Background Remover & Live Studio */}
+                                <div 
+                                    style={{
+                                        padding: '0.65rem 0.85rem',
+                                        borderRadius: '12px',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: '0.75rem'
+                                    }}
+                                    className="tool-dropdown-item"
+                                >
+                                    <span style={{ fontSize: '1.4rem' }}>🖼️</span>
+                                    <div>
+                                        <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                            Background Remover & Studio
+                                            <span style={{ fontSize: '0.55rem', background: '#ec4899', color: '#ffffff', padding: '0.08rem 0.35rem', borderRadius: '4px', fontWeight: 800 }}>NEW V2</span>
+                                        </div>
+                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Remove background & change live studio scenes.</div>
+                                    </div>
+                                </div>
+
+                                {/* Tool 2: Free Catalog Image Generator */}
                                 <div 
                                     onClick={() => { onTabChange('free-image-generator'); setIsToolsDropdownOpen(false); }}
                                     style={{
-                                        padding: '0.65rem 0.75rem',
-                                        borderRadius: '10px',
+                                        padding: '0.65rem 0.85rem',
+                                        borderRadius: '12px',
                                         cursor: 'pointer',
                                         background: activeTab === 'free-image-generator' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
                                         display: 'flex',
                                         alignItems: 'flex-start',
-                                        gap: '0.75rem',
-                                        transition: 'all 0.15s ease'
+                                        gap: '0.75rem'
                                     }}
                                     className="tool-dropdown-item"
                                 >
-                                    <span style={{ fontSize: '1.3rem' }}>🖼️</span>
+                                    <span style={{ fontSize: '1.4rem' }}>🆓</span>
                                     <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                        <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                                             Free Image Generator
-                                            <span style={{ fontSize: '0.55rem', background: '#ec4899', color: '#ffffff', padding: '0.05rem 0.3rem', borderRadius: '4px', fontWeight: 800 }}>FREE</span>
+                                            <span style={{ fontSize: '0.55rem', background: '#10b981', color: '#ffffff', padding: '0.08rem 0.35rem', borderRadius: '4px', fontWeight: 800 }}>FREE</span>
                                         </div>
                                         <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Generate Pink/Blue borders & NDD fast stamps.</div>
                                     </div>
                                 </div>
 
-                                {/* Tool 2: Shipping Rate Optimizer */}
+                                {/* Tool 3: Shipping Rate Optimizer */}
                                 <div 
                                     onClick={() => { onTabChange('meesho-shipping-rates'); setIsToolsDropdownOpen(false); }}
                                     style={{
-                                        padding: '0.65rem 0.75rem',
-                                        borderRadius: '10px',
+                                        padding: '0.65rem 0.85rem',
+                                        borderRadius: '12px',
                                         cursor: 'pointer',
                                         background: activeTab === 'meesho-shipping-rates' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
                                         display: 'flex',
                                         alignItems: 'flex-start',
-                                        gap: '0.75rem',
-                                        transition: 'all 0.15s ease'
+                                        gap: '0.75rem'
                                     }}
                                     className="tool-dropdown-item"
                                 >
-                                    <span style={{ fontSize: '1.3rem' }}>⚡</span>
+                                    <span style={{ fontSize: '1.4rem' }}>⚡</span>
                                     <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>Rate & Shipping Optimizer</div>
+                                        <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a' }}>Rate & Shipping Optimizer</div>
                                         <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Audit ₹48, ₹56, ₹62 freight slabs & token pools.</div>
                                     </div>
                                 </div>
 
-                                {/* Tool 3: Excel P&L Settlement Calculator */}
+                                {/* Tool 4: Excel P&L Settlement Calculator */}
                                 <div 
                                     onClick={() => { onTabChange('pnl-calculator'); setIsToolsDropdownOpen(false); }}
                                     style={{
-                                        padding: '0.65rem 0.75rem',
-                                        borderRadius: '10px',
+                                        padding: '0.65rem 0.85rem',
+                                        borderRadius: '12px',
                                         cursor: 'pointer',
                                         background: activeTab === 'pnl-calculator' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
                                         display: 'flex',
                                         alignItems: 'flex-start',
-                                        gap: '0.75rem',
-                                        transition: 'all 0.15s ease'
+                                        gap: '0.75rem'
                                     }}
                                     className="tool-dropdown-item"
                                 >
-                                    <span style={{ fontSize: '1.3rem' }}>📊</span>
+                                    <span style={{ fontSize: '1.4rem' }}>📊</span>
                                     <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>Excel P&L Settlement Calculator</div>
+                                        <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a' }}>Excel P&L Settlement Calculator</div>
                                         <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Reconcile payouts, ads spend & RTO return penalties.</div>
-                                    </div>
-                                </div>
-
-                                {/* Tool 5: Background Remover & Studio */}
-                                <div 
-                                    style={{
-                                        padding: '0.65rem 0.75rem',
-                                        borderRadius: '10px',
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        alignItems: 'flex-start',
-                                        gap: '0.75rem',
-                                        transition: 'all 0.15s ease'
-                                    }}
-                                    className="tool-dropdown-item"
-                                >
-                                    <span style={{ fontSize: '1.3rem' }}>🖼️</span>
-                                    <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                                            Background Remover & Studio
-                                            <span style={{ fontSize: '0.55rem', background: '#ec4899', color: '#ffffff', padding: '0.05rem 0.3rem', borderRadius: '4px', fontWeight: 800 }}>NEW</span>
-                                        </div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Remove background & change live studio scenes.</div>
                                     </div>
                                 </div>
                             </div>
                         )}
                     </div>
 
+                    {/* Navigation Direct Buttons */}
                     <button 
-                        style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontWeight: 700, color: '#2563eb' }}
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 800, color: '#2563eb', padding: '0.5rem 0.75rem', borderRadius: '10px' }}
                     >
                         <span>🖼️ BG Remover</span>
                         <span style={{ fontSize: '0.55rem', background: '#ec4899', color: '#ffffff', padding: '0.1rem 0.35rem', borderRadius: '4px', fontWeight: 800 }}>NEW</span>
                     </button>
+
                     <button 
                         className={`nav-link ${activeTab === 'free-image-generator' ? 'active' : ''}`}
                         onClick={() => onTabChange('free-image-generator')}
+                        style={{ fontWeight: 700, padding: '0.5rem 0.75rem', borderRadius: '10px' }}
                     >
                         🆓 Image Generator
                     </button>
+
                     <button 
                         className={`nav-link ${activeTab === 'pnl-calculator' ? 'active' : ''}`}
                         onClick={() => onTabChange('pnl-calculator')}
+                        style={{ fontWeight: 700, padding: '0.5rem 0.75rem', borderRadius: '10px' }}
                     >
                         📊 P&L Calculator
                     </button>
+
                     <button 
                         className={`nav-link ${activeTab === 'meesho-label-exporter' ? 'active' : ''}`}
                         onClick={() => onTabChange('meesho-label-exporter')}
+                        style={{ fontWeight: 700, padding: '0.5rem 0.75rem', borderRadius: '10px' }}
                     >
                         📋 Label Exporter
                     </button>
+
                     <button 
                         className={`nav-link ${activeTab === 'pricing' ? 'active' : ''}`}
                         onClick={() => onTabChange('pricing')}
+                        style={{ fontWeight: 700, padding: '0.5rem 0.75rem', borderRadius: '10px' }}
                     >
                         💎 Pricing & Affiliate
                     </button>
                 </nav>
 
-                {/* Desktop Action Buttons */}
-                <div className="desktop-actions">
+                {/* Desktop Action Buttons (Right) */}
+                <div className="desktop-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
                     {currentUser ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                            <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>
+                            <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#475569', background: '#f1f5f9', padding: '0.4rem 0.85rem', borderRadius: '10px' }}>
                                 💎 {currentUser.credits} Credits
                             </span>
                             <button 
-                                className="btn-get-started" 
-                                style={{ padding: '0.65rem 1.25rem', background: 'linear-gradient(135deg, #2563eb, #7c3aed)', boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)' }} 
+                                className="btn-get-started card-hover-lift" 
+                                style={{ padding: '0.65rem 1.35rem', borderRadius: '12px', background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)', boxShadow: '0 4px 18px rgba(37, 99, 235, 0.35)', fontWeight: 800 }} 
                                 onClick={onGoToDashboard}
                             >
                                 ⚡ Go to App Dashboard
@@ -828,10 +869,38 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                         </div>
                     ) : (
                         <>
-                            <button className="btn-signin" onClick={onLogin}>
+                            <button 
+                                className="btn-signin card-hover-lift" 
+                                onClick={onLogin}
+                                style={{
+                                    background: '#ffffff',
+                                    border: '1px solid #cbd5e1',
+                                    color: '#0f172a',
+                                    padding: '0.6rem 1.25rem',
+                                    borderRadius: '12px',
+                                    fontWeight: 800,
+                                    fontSize: '0.88rem',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+                                }}
+                            >
                                 Sign In
                             </button>
-                            <button className="btn-get-started" onClick={onRegister}>
+                            <button 
+                                className="btn-get-started card-hover-lift" 
+                                onClick={onRegister}
+                                style={{
+                                    background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                                    border: 'none',
+                                    color: '#ffffff',
+                                    padding: '0.6rem 1.45rem',
+                                    borderRadius: '12px',
+                                    fontWeight: 800,
+                                    fontSize: '0.88rem',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 18px rgba(37, 99, 235, 0.35)'
+                                }}
+                            >
                                 Get Started
                             </button>
                         </>
