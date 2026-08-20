@@ -461,18 +461,46 @@ export default function BulkBackgroundRemoverTab() {
     return (
         <div style={{ width: '100%', maxWidth: '1080px', margin: '0 auto', color: '#0f172a', fontFamily: 'Inter, sans-serif' }}>
             
-            {/* Header & Controls Panel */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
-                <div>
-                    <div style={{ background: 'rgba(37, 99, 235, 0.08)', color: '#2563eb', padding: '0.2rem 0.65rem', borderRadius: '20px', fontSize: '0.68rem', fontWeight: 800, display: 'inline-block', marginBottom: '0.25rem' }}>
-                        ✨ AUTOMATED BACKGROUND REMOVER & LIVE GRAPHIC STAMP STUDIO
+            {/* Sleek Integrated Studio Header Card */}
+            <div style={{
+                background: '#ffffff',
+                borderRadius: '16px',
+                border: '1px solid #cbd5e1',
+                padding: '0.85rem 1.25rem',
+                display: 'flex',
+                justify: 'space-between',
+                alignItems: 'center',
+                marginBottom: '1rem',
+                boxShadow: '0 4px 20px rgba(15, 23, 42, 0.04)',
+                flexWrap: 'wrap',
+                gap: '0.75rem'
+            }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <div style={{
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '10px',
+                        background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#ffffff',
+                        fontSize: '1.1rem',
+                        boxShadow: '0 4px 10px rgba(37, 99, 235, 0.25)'
+                    }}>
+                        🖼️
                     </div>
-                    <h1 style={{ fontFamily: 'Outfit', fontSize: '1.4rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em' }}>
-                        Live Background Studio & 19 Real Graphic PNG Badges Generator
-                    </h1>
+                    <div>
+                        <h1 style={{ fontFamily: 'Outfit', fontSize: '1.15rem', fontWeight: 800, margin: 0, color: '#0f172a', letterSpacing: '-0.015em' }}>
+                            AI Studio & Background Generator
+                        </h1>
+                        <div style={{ fontSize: '0.74rem', color: '#64748b', fontWeight: 500 }}>
+                            1-Click Background Removal • Live Studio Backdrops • 19 Graphic PNG Badges
+                        </div>
+                    </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                     <input
                         type="file"
                         ref={fileInputRef}
@@ -484,9 +512,9 @@ export default function BulkBackgroundRemoverTab() {
                     <button
                         className="btn-action btn-action-primary"
                         onClick={() => fileInputRef.current.click()}
-                        style={{ padding: '0.55rem 1.1rem', borderRadius: '10px', fontWeight: 800, fontSize: '0.82rem' }}
+                        style={{ padding: '0.5rem 1rem', borderRadius: '9px', fontWeight: 800, fontSize: '0.8rem' }}
                     >
-                        ➕ Upload Product Photos (Up to 40)
+                        ➕ Add Product Photos
                     </button>
 
                     {(uploadedImages.length > 0 || dynamicVariations.length > 0) && (
@@ -496,14 +524,14 @@ export default function BulkBackgroundRemoverTab() {
                             onClick={handleExportZip}
                             style={{
                                 background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                                padding: '0.55rem 1.1rem',
-                                borderRadius: '10px',
+                                padding: '0.5rem 1.1rem',
+                                borderRadius: '9px',
                                 fontWeight: 800,
-                                fontSize: '0.82rem',
+                                fontSize: '0.8rem',
                                 boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)'
                             }}
                         >
-                            {isZipping ? '⏳ Zipping...' : `📦 Export All ${dynamicVariations.length || uploadedImages.length} Photos (.ZIP)`}
+                            {isZipping ? '⏳ Zipping...' : `📦 Export ZIP (${dynamicVariations.length || uploadedImages.length})`}
                         </button>
                     )}
                 </div>
@@ -540,47 +568,36 @@ export default function BulkBackgroundRemoverTab() {
                     </button>
                 </div>
             ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     
                     {/* TOP SECTION: Live Canvas Editor & Right Panel Studio Controls */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '420px 1fr', gap: '1.75rem', alignItems: 'start' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '400px 1fr', gap: '1.5rem', alignItems: 'start' }}>
                         
-                        {/* LEFT PANEL: Live Preview Canvas (Compact Sized) */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%', maxWidth: '420px' }}>
+                        {/* LEFT PANEL: Live Preview Canvas */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', width: '100%', maxWidth: '400px' }}>
                             <div style={{
                                 background: '#ffffff',
-                                borderRadius: '24px',
+                                borderRadius: '18px',
                                 border: '1px solid #cbd5e1',
                                 padding: '0.85rem',
-                                boxShadow: '0 20px 40px -15px rgba(15, 23, 42, 0.08)',
+                                boxShadow: '0 10px 30px rgba(15, 23, 42, 0.05)',
                                 position: 'relative'
                             }}>
-                                {/* Top Badge Overlay */}
-                                <div style={{
-                                    position: 'absolute',
-                                    top: '20px',
-                                    left: '20px',
-                                    zIndex: 10,
-                                    background: 'rgba(255, 255, 255, 0.92)',
-                                    backdropFilter: 'blur(8px)',
-                                    border: '1px solid rgba(203, 213, 225, 0.8)',
-                                    padding: '0.35rem 0.85rem',
-                                    borderRadius: '30px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '0.5rem',
-                                    boxShadow: '0 4px 15px rgba(0,0,0,0.08)'
-                                }}>
-                                    <span style={{ fontSize: '0.8rem' }}>✨</span>
-                                    <span style={{ fontWeight: 800, fontSize: '0.75rem', color: '#0f172a' }}>Generate Background</span>
-                                    <span style={{ background: '#3b82f6', color: '#ffffff', fontSize: '0.6rem', fontWeight: 800, padding: '0.1rem 0.4rem', borderRadius: '10px' }}>LIVE</span>
+                                {/* Card Subheader */}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.65rem', padding: '0 0.2rem' }}>
+                                    <span style={{ fontWeight: 800, fontSize: '0.82rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                        <span>🖼️</span> Live Studio Canvas
+                                    </span>
+                                    <span style={{ background: 'rgba(37, 99, 235, 0.1)', color: '#2563eb', fontSize: '0.65rem', fontWeight: 800, padding: '0.15rem 0.5rem', borderRadius: '6px' }}>
+                                        LIVE PREVIEW
+                                    </span>
                                 </div>
 
-                                {/* Main Canvas Viewport - Dynamic Aspect Ratio & 4-Edge Border Display */}
+                                {/* Main Canvas Viewport - Clean Dynamic Aspect Ratio */}
                                 <div style={{
                                     width: '100%',
                                     minHeight: '340px',
-                                    borderRadius: '16px',
+                                    borderRadius: '14px',
                                     overflow: 'hidden',
                                     background: '#0f172a',
                                     display: 'flex',
@@ -593,7 +610,7 @@ export default function BulkBackgroundRemoverTab() {
                                         <img
                                             src={renderedPreviewUrl}
                                             alt="Live Studio Preview"
-                                            style={{ maxWidth: '100%', maxHeight: '450px', width: 'auto', height: 'auto', objectFit: 'contain', borderRadius: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }}
+                                            style={{ maxWidth: '100%', maxHeight: '440px', width: 'auto', height: 'auto', objectFit: 'contain', borderRadius: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }}
                                         />
                                     ) : (
                                         <div style={{ textAlign: 'center', color: '#64748b' }}>
