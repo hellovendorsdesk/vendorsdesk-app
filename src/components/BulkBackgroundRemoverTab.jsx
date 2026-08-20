@@ -427,20 +427,20 @@ export default function BulkBackgroundRemoverTab() {
     };
 
     return (
-        <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', color: '#0f172a', fontFamily: 'Inter, sans-serif' }}>
+        <div style={{ width: '100%', maxWidth: '1080px', margin: '0 auto', color: '#0f172a', fontFamily: 'Inter, sans-serif' }}>
             
             {/* Header & Controls Panel */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
                 <div>
-                    <div style={{ background: 'rgba(37, 99, 235, 0.1)', color: '#2563eb', padding: '0.3rem 0.85rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 700, display: 'inline-block', marginBottom: '0.4rem' }}>
+                    <div style={{ background: 'rgba(37, 99, 235, 0.08)', color: '#2563eb', padding: '0.2rem 0.65rem', borderRadius: '20px', fontSize: '0.68rem', fontWeight: 800, display: 'inline-block', marginBottom: '0.25rem' }}>
                         ✨ AUTOMATED BACKGROUND REMOVER & LIVE GRAPHIC STAMP STUDIO
                     </div>
-                    <h1 style={{ fontFamily: 'Outfit', fontSize: '2.1rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em' }}>
+                    <h1 style={{ fontFamily: 'Outfit', fontSize: '1.4rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em' }}>
                         Live Background Studio & 19 Real Graphic PNG Badges Generator
                     </h1>
                 </div>
 
-                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
                     <input
                         type="file"
                         ref={fileInputRef}
@@ -452,7 +452,7 @@ export default function BulkBackgroundRemoverTab() {
                     <button
                         className="btn-action btn-action-primary"
                         onClick={() => fileInputRef.current.click()}
-                        style={{ padding: '0.7rem 1.3rem', borderRadius: '10px', fontWeight: 800, fontSize: '0.85rem' }}
+                        style={{ padding: '0.55rem 1.1rem', borderRadius: '10px', fontWeight: 800, fontSize: '0.82rem' }}
                     >
                         ➕ Upload Product Photos (Up to 40)
                     </button>
@@ -464,11 +464,11 @@ export default function BulkBackgroundRemoverTab() {
                             onClick={handleExportZip}
                             style={{
                                 background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                                padding: '0.7rem 1.4rem',
+                                padding: '0.55rem 1.1rem',
                                 borderRadius: '10px',
                                 fontWeight: 800,
-                                fontSize: '0.85rem',
-                                boxShadow: '0 4px 15px rgba(16, 185, 129, 0.25)'
+                                fontSize: '0.82rem',
+                                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)'
                             }}
                         >
                             {isZipping ? '⏳ Zipping...' : `📦 Export All ${dynamicVariations.length || uploadedImages.length} Photos (.ZIP)`}
@@ -482,27 +482,27 @@ export default function BulkBackgroundRemoverTab() {
                     className="upload-zone"
                     onClick={() => fileInputRef.current.click()}
                     style={{
-                        padding: '4.5rem 2rem',
-                        borderRadius: '24px',
+                        padding: '2rem 1.25rem',
+                        borderRadius: '18px',
                         border: '2px dashed #2563eb',
                         background: '#ffffff',
                         cursor: 'pointer',
                         textAlign: 'center',
-                        maxWidth: '700px',
-                        margin: '2rem auto',
-                        boxShadow: '0 20px 40px -15px rgba(37, 99, 235, 0.08)'
+                        maxWidth: '520px',
+                        margin: '1.25rem auto',
+                        boxShadow: '0 12px 30px -10px rgba(37, 99, 235, 0.08)'
                     }}
                 >
-                    <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🖼️</div>
-                    <h2 style={{ fontFamily: 'Outfit', fontSize: '1.6rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>
+                    <div style={{ fontSize: '2.2rem', marginBottom: '0.4rem' }}>🖼️</div>
+                    <h2 style={{ fontFamily: 'Outfit', fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.35rem' }}>
                         Upload Product Photos to Remove & Change Background Live
                     </h2>
-                    <p style={{ fontSize: '0.9rem', color: '#64748b', maxWidth: '520px', margin: '0 auto 1.5rem auto', lineHeight: '1.6' }}>
+                    <p style={{ fontSize: '0.8rem', color: '#64748b', maxWidth: '440px', margin: '0 auto 1.1rem auto', lineHeight: '1.5' }}>
                         Supports Kurti, Saree, Shoes, Watches, Bags & Electronics. Select up to 40 images to remove original backdrops, apply 19 Real Graphic Badges, and generate dynamic studio collections!
                     </p>
                     <button
                         className="btn-submit-form"
-                        style={{ padding: '0.8rem 2.2rem', fontSize: '0.95rem', fontWeight: 800, borderRadius: '12px' }}
+                        style={{ padding: '0.55rem 1.4rem', fontSize: '0.82rem', fontWeight: 800, borderRadius: '10px' }}
                     >
                         📸 Select Product Images
                     </button>
