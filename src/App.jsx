@@ -14,108 +14,191 @@ function MeeshoShippingRatesPage({ onRegister }) {
     return (
         <div>
             {/* Hero Section */}
-            <section style={{ padding: '4rem 5% 3.5rem 5%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                <div style={{ background: 'rgba(37, 99, 235, 0.08)', border: '1px solid rgba(37, 99, 235, 0.18)', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 'bold', color: '#2563eb', marginBottom: '1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                    <span>⚡</span> All-In-One Meesho Supplier Growth
-                </div>
-                <h1 style={{ 
-                    fontFamily: 'Outfit', fontSize: '3.4rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.03em', 
-                    background: 'linear-gradient(135deg, #0f172a 40%, #2563eb 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-                    maxWidth: '850px', margin: '0 auto 1.5rem auto' 
-                }}>
-                    Optimize Meesho Listing Images & Export PDF Shipping Labels
-                </h1>
-                <p style={{ fontSize: '1.05rem', color: '#475569', maxWidth: '680px', lineHeight: '1.6', margin: '0 auto 2.25rem auto' }}>
-                    Bypass duplicate catalog image filters, qualify for lower shipping rate brackets (₹48, ₹56, ₹62), and crop bulk thermal shipping labels by SKU in under 2 minutes.
-                </p>
+            <section style={{ padding: '5rem 5% 4rem 5%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
                 
-                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '4rem' }}>
-                    <button 
-                        style={{ background: '#2563eb', border: 'none', color: '#ffffff', padding: '0.85rem 2rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 20px rgba(37, 99, 235, 0.25)' }}
-                        onClick={onRegister}
-                    >
-                        ⚡ Claim 3 Free Credits & Start
-                    </button>
-                    <a 
-                        href="#performance-metrics" 
-                        style={{ display: 'flex', alignItems: 'center', background: '#ffffff', border: '1px solid #cbd5e1', color: '#0f172a', padding: '0.85rem 2rem', borderRadius: '10px', fontSize: '0.95rem', fontWeight: 700, textDecoration: 'none' }}
-                    >
-                        Explore Supplier Tools
-                    </a>
+                {/* Background Ambient Orbs */}
+                <div style={{
+                    position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)',
+                    width: '600px', height: '400px',
+                    background: 'radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(124, 58, 237, 0.08) 50%, transparent 70%)',
+                    filter: 'blur(50px)', pointerEvents: 'none', zIndex: 0
+                }} />
+
+                <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    
+                    {/* Glowing Top Pill Tag */}
+                    <div style={{ 
+                        background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%)', 
+                        border: '1px solid rgba(37, 99, 235, 0.22)', 
+                        padding: '0.4rem 1.25rem', 
+                        borderRadius: '30px', 
+                        fontSize: '0.8rem', 
+                        fontWeight: 800, 
+                        color: '#2563eb', 
+                        marginBottom: '1.75rem', 
+                        display: 'inline-flex', 
+                        alignItems: 'center', 
+                        gap: '0.4rem',
+                        boxShadow: '0 4px 15px rgba(37, 99, 235, 0.08)'
+                    }}>
+                        <span>⚡</span> India's #1 All-In-One Meesho Supplier Growth Suite
+                    </div>
+
+                    {/* Gradient Main Heading */}
+                    <h1 style={{ 
+                        fontFamily: 'Outfit', fontSize: '3.6rem', fontWeight: 800, lineHeight: 1.12, letterSpacing: '-0.03em', 
+                        color: '#0f172a', maxWidth: '900px', margin: '0 auto 1.5rem auto' 
+                    }}>
+                        Optimize Meesho Listing Images & <span style={{ background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Export PDF Shipping Labels</span>
+                    </h1>
+
+                    <p style={{ fontSize: '1.1rem', color: '#475569', maxWidth: '720px', lineHeight: '1.65', margin: '0 auto 2.5rem auto' }}>
+                        Remove backgrounds, change live studio scenes, bypass duplicate catalog filters, qualify for lower shipping rates (₹48, ₹56, ₹62), and crop bulk thermal labels by SKU in under 2 minutes.
+                    </p>
+                    
+                    {/* Hero CTA Buttons */}
+                    <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', marginBottom: '4.5rem', flexWrap: 'wrap' }}>
+                        <button 
+                            style={{ 
+                                background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)', 
+                                border: 'none', 
+                                color: '#ffffff', 
+                                padding: '0.95rem 2.25rem', 
+                                borderRadius: '14px', 
+                                fontSize: '1rem', 
+                                fontWeight: 800, 
+                                cursor: 'pointer', 
+                                boxShadow: '0 10px 25px -5px rgba(37, 99, 235, 0.35)',
+                                transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                            }}
+                            onClick={onRegister}
+                            className="card-hover-lift"
+                        >
+                            ⚡ Claim 3 Free Credits & Start ➔
+                        </button>
+                        <a 
+                            href="#performance-metrics" 
+                            style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                background: '#ffffff', 
+                                border: '1px solid #cbd5e1', 
+                                color: '#0f172a', 
+                                padding: '0.95rem 2.25rem', 
+                                borderRadius: '14px', 
+                                fontSize: '1rem', 
+                                fontWeight: 800, 
+                                textDecoration: 'none',
+                                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.04)'
+                            }}
+                            className="card-hover-lift"
+                        >
+                            Explore Supplier Tools
+                        </a>
+                    </div>
                 </div>
 
-                {/* Hero 4-Tool Suite Preview Showcase */}
-                <div style={{ width: '100%', maxWidth: '950px', background: '#ffffff', borderRadius: '20px', border: '1px solid #cbd5e1', boxShadow: '0 25px 50px -12px rgba(37, 99, 235, 0.12)', padding: '1.5rem', textAlign: 'left', color: '#0f172a' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem', marginBottom: '1.25rem' }}>
+                {/* macOS Browser Mockup Showcase Container */}
+                <div style={{ 
+                    width: '100%', 
+                    maxWidth: '1080px', 
+                    background: '#ffffff', 
+                    borderRadius: '24px', 
+                    border: '1px solid #cbd5e1', 
+                    boxShadow: '0 30px 60px -15px rgba(37, 99, 235, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.04)', 
+                    padding: '1.75rem', 
+                    textAlign: 'left', 
+                    color: '#0f172a',
+                    position: 'relative',
+                    zIndex: 1
+                }}>
+                    {/* Mac Browser Bar */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #e2e8f0', paddingBottom: '1.25rem', marginBottom: '1.5rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ width: '10px', height: '10px', background: '#ef4444', borderRadius: '50%' }}></span>
-                            <span style={{ width: '10px', height: '10px', background: '#eab308', borderRadius: '50%' }}></span>
-                            <span style={{ width: '10px', height: '10px', background: '#22c55e', borderRadius: '50%' }}></span>
-                            <span style={{ fontSize: '0.8rem', color: '#475569', marginLeft: '0.5rem', fontWeight: 700 }}>⚡ VendorsDesk All-In-One Supplier Growth Suite</span>
+                            <span style={{ width: '12px', height: '12px', background: '#ef4444', borderRadius: '50%', display: 'inline-block' }}></span>
+                            <span style={{ width: '12px', height: '12px', background: '#eab308', borderRadius: '50%', display: 'inline-block' }}></span>
+                            <span style={{ width: '12px', height: '12px', background: '#22c55e', borderRadius: '50%', display: 'inline-block' }}></span>
+                            <span style={{ fontSize: '0.82rem', color: '#475569', marginLeft: '0.6rem', fontWeight: 800, letterSpacing: '-0.01em' }}>
+                                ⚡ VendorsDesk All-In-One Supplier Growth Suite
+                            </span>
                         </div>
-                        <div style={{ background: 'rgba(37, 99, 235, 0.1)', color: '#2563eb', padding: '0.25rem 0.75rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 700 }}>
-                            🚀 4 Essential Tools for E-Commerce Sellers
+                        <div style={{ background: 'rgba(37, 99, 235, 0.1)', color: '#2563eb', padding: '0.3rem 0.85rem', borderRadius: '14px', fontSize: '0.78rem', fontWeight: 800 }}>
+                            🚀 5 Essential Tools for E-Commerce Sellers
                         </div>
                     </div>
 
-                    {/* 4 Tool Interactive Grid Cards */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+                    {/* 5 Tool Interactive Grid Cards */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.25rem' }}>
                         
-                        {/* Tool 1: Free Image Generator */}
-                        <div style={{ background: 'linear-gradient(135deg, rgba(236, 72, 153, 0.05), rgba(37, 99, 235, 0.05))', border: '1px solid rgba(236, 72, 153, 0.2)', borderRadius: '14px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {/* Tool 1: BG Remover & Studio */}
+                        <div className="card-hover-lift" style={{ background: 'linear-gradient(135deg, rgba(236, 72, 153, 0.05), rgba(37, 99, 235, 0.05))', border: '1px solid rgba(236, 72, 153, 0.22)', borderRadius: '16px', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#ec4899', background: 'rgba(236, 72, 153, 0.12)', padding: '0.2rem 0.6rem', borderRadius: '8px' }}>🆓 100% FREE UNLIMITED</span>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#ec4899', background: 'rgba(236, 72, 153, 0.12)', padding: '0.2rem 0.65rem', borderRadius: '8px' }}>🖼️ BACKGROUND REMOVER</span>
+                                <span style={{ fontSize: '0.7rem', color: '#2563eb', fontWeight: 800 }}>NEW V2 FEATURE</span>
+                            </div>
+                            <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Background Remover & Live Studio</h4>
+                            <p style={{ fontSize: '0.78rem', color: '#475569', margin: 0, lineHeight: '1.5' }}>Isolate subjects, change background scenes live (Beach, Forest, Living Room, Palace), apply 19 PNG Badges & export ZIP.</p>
+                            <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
+                                <span style={{ fontSize: '0.65rem', background: '#ec4899', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>BG REMOVER</span>
+                                <span style={{ fontSize: '0.65rem', background: '#2563eb', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>LIVE STUDIO</span>
+                                <span style={{ fontSize: '0.65rem', background: '#10b981', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>ZIP EXPORT</span>
+                            </div>
+                        </div>
+
+                        {/* Tool 2: Free Image Generator */}
+                        <div className="card-hover-lift" style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(37, 99, 235, 0.05))', border: '1px solid rgba(16, 185, 129, 0.22)', borderRadius: '16px', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#059669', background: 'rgba(16, 185, 129, 0.12)', padding: '0.2rem 0.65rem', borderRadius: '8px' }}>🆓 100% FREE UNLIMITED</span>
                                 <span style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: 600 }}>0 Credits Required</span>
                             </div>
-                            <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Free Catalog Image Variation Generator</h4>
-                            <p style={{ fontSize: '0.75rem', color: '#475569', margin: 0 }}>Generate Pink/Blue borders, NDD fast dispatch stamps & Best Seller seals without logins or credit deductions.</p>
-                            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
-                                <span style={{ fontSize: '0.65rem', background: '#ec4899', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>PINK BORDER</span>
-                                <span style={{ fontSize: '0.65rem', background: '#2563eb', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>⚡ NDD BADGE</span>
-                                <span style={{ fontSize: '0.65rem', background: '#10b981', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>🚚 FREE DEL</span>
+                            <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Free Catalog Image Generator</h4>
+                            <p style={{ fontSize: '0.78rem', color: '#475569', margin: 0, lineHeight: '1.5' }}>Generate Pink/Blue borders, vertical spacers & 19 Real Graphic Badges to bypass Meesho duplicate listing blocks.</p>
+                            <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
+                                <span style={{ fontSize: '0.65rem', background: '#ec4899', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>PINK BORDER</span>
+                                <span style={{ fontSize: '0.65rem', background: '#2563eb', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>⚡ NDD BADGE</span>
+                                <span style={{ fontSize: '0.65rem', background: '#10b981', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>🚚 FREE DEL</span>
                             </div>
                         </div>
 
-                        {/* Tool 2: Rate Optimizer */}
-                        <div style={{ background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(124, 58, 237, 0.05))', border: '1px solid rgba(37, 99, 235, 0.2)', borderRadius: '14px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {/* Tool 3: Rate Optimizer */}
+                        <div className="card-hover-lift" style={{ background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(124, 58, 237, 0.05))', border: '1px solid rgba(37, 99, 235, 0.22)', borderRadius: '16px', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#2563eb', background: 'rgba(37, 99, 235, 0.12)', padding: '0.2rem 0.6rem', borderRadius: '8px' }}>⚡ PREMIUM RATE OPTIMIZER</span>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#2563eb', background: 'rgba(37, 99, 235, 0.12)', padding: '0.2rem 0.65rem', borderRadius: '8px' }}>⚡ RATE OPTIMIZER</span>
                                 <span style={{ fontSize: '0.7rem', color: '#059669', fontWeight: 700 }}>₹48 Slab Verified</span>
                             </div>
-                            <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Image + Meesho Shipping Rate Check</h4>
-                            <p style={{ fontSize: '0.75rem', color: '#475569', margin: 0 }}>Queries live Meesho shipping matrices (₹48, ₹56, ₹62) via active token pool to ensure minimum shipping fees.</p>
-                            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
-                                <span style={{ fontSize: '0.65rem', background: '#2563eb', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>₹48 FREIGHT SLAB</span>
-                                <span style={{ fontSize: '0.65rem', background: '#059669', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>LIVE TOKEN POOL</span>
+                            <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Image + Shipping Rate Check</h4>
+                            <p style={{ fontSize: '0.78rem', color: '#475569', margin: 0, lineHeight: '1.5' }}>Queries live Meesho shipping matrices (₹48, ₹56, ₹62) via active token pool to ensure minimum shipping fees.</p>
+                            <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
+                                <span style={{ fontSize: '0.65rem', background: '#2563eb', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>₹48 FREIGHT SLAB</span>
+                                <span style={{ fontSize: '0.65rem', background: '#059669', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>LIVE TOKEN POOL</span>
                             </div>
                         </div>
 
-                        {/* Tool 3: Excel P&L Calculator */}
-                        <div style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(37, 99, 235, 0.05))', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '14px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {/* Tool 4: Excel P&L Calculator */}
+                        <div className="card-hover-lift" style={{ background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.05), rgba(37, 99, 235, 0.05))', border: '1px solid rgba(217, 119, 6, 0.22)', borderRadius: '16px', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#059669', background: 'rgba(16, 185, 129, 0.12)', padding: '0.2rem 0.6rem', borderRadius: '8px' }}>📊 EXCEL P&L AUDITOR</span>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#d97706', background: 'rgba(217, 119, 6, 0.12)', padding: '0.2rem 0.65rem', borderRadius: '8px' }}>📊 EXCEL P&L AUDITOR</span>
                                 <span style={{ fontSize: '0.7rem', color: '#dc2626', fontWeight: 700 }}>7-Status Matrix</span>
                             </div>
-                            <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Excel P&L Settlement & Return Calculator</h4>
-                            <p style={{ fontSize: '0.75rem', color: '#475569', margin: 0 }}>Upload Meesho Payout Excel sheets to reconcile net payouts, customer return penalties, RTO losses & SKU margins.</p>
-                            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
-                                <span style={{ fontSize: '0.65rem', background: '#059669', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>NET PAYOUT</span>
-                                <span style={{ fontSize: '0.65rem', background: '#dc2626', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>RTO AUDIT</span>
-                                <span style={{ fontSize: '0.65rem', background: '#d97706', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>ADS DEDUCTION</span>
+                            <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Excel P&L Settlement Calculator</h4>
+                            <p style={{ fontSize: '0.78rem', color: '#475569', margin: 0, lineHeight: '1.5' }}>Upload Meesho Payout Excel sheets to reconcile net payouts, customer return penalties, RTO losses & SKU margins.</p>
+                            <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
+                                <span style={{ fontSize: '0.65rem', background: '#059669', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>NET PAYOUT</span>
+                                <span style={{ fontSize: '0.65rem', background: '#dc2626', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>RTO AUDIT</span>
                             </div>
                         </div>
 
-                        {/* Tool 4: Label Exporter */}
-                        <div style={{ background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(37, 99, 235, 0.05))', border: '1px solid rgba(124, 58, 237, 0.2)', borderRadius: '14px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {/* Tool 5: Label Exporter */}
+                        <div className="card-hover-lift" style={{ background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(37, 99, 235, 0.05))', border: '1px solid rgba(124, 58, 237, 0.22)', borderRadius: '16px', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#7c3aed', background: 'rgba(124, 58, 237, 0.12)', padding: '0.2rem 0.6rem', borderRadius: '8px' }}>📋 LABEL EXPORTER</span>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#7c3aed', background: 'rgba(124, 58, 237, 0.12)', padding: '0.2rem 0.65rem', borderRadius: '8px' }}>📋 LABEL EXPORTER</span>
                                 <span style={{ fontSize: '0.7rem', color: '#2563eb', fontWeight: 700 }}>4x6 Thermal Format</span>
                             </div>
-                            <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Bulk PDF Label Crop & SKU Sorter</h4>
-                            <p style={{ fontSize: '0.75rem', color: '#475569', margin: 0 }}>Crops bulk shipping label PDF sheets into 4x6 thermal printer format and auto-sorts by SKU & courier partner.</p>
-                            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
-                                <span style={{ fontSize: '0.65rem', background: '#7c3aed', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>4x6 CROP</span>
-                                <span style={{ fontSize: '0.65rem', background: '#2563eb', color: '#ffffff', padding: '0.15rem 0.4rem', borderRadius: '4px', fontWeight: 700 }}>SKU SORT</span>
+                            <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Bulk PDF Label Crop & SKU Sorter</h4>
+                            <p style={{ fontSize: '0.78rem', color: '#475569', margin: 0, lineHeight: '1.5' }}>Crops bulk shipping label PDF sheets into 4x6 thermal printer format and auto-sorts by SKU & courier partner.</p>
+                            <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
+                                <span style={{ fontSize: '0.65rem', background: '#7c3aed', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>4x6 CROP</span>
+                                <span style={{ fontSize: '0.65rem', background: '#2563eb', color: '#ffffff', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>SKU SORT</span>
                             </div>
                         </div>
 
