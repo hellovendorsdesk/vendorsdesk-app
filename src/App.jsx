@@ -654,21 +654,23 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
             }}>
                 {/* Left Brand Logo */}
                 <div 
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', cursor: 'pointer' }}
                     onClick={() => { onTabChange('meesho-shipping-rates'); setMobileMenuOpen(false); }}
                 >
                     <div style={{
-                        width: '38px',
-                        height: '38px',
+                        width: '36px',
+                        height: '36px',
                         borderRadius: '10px',
                         background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
+                        boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
+                        flexShrink: 0
                     }}>
-                        <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '24px', width: 'auto', objectFit: 'contain' }} onError={(e) => { e.target.style.display = 'none'; }} />
-                        <span style={{ color: '#ffffff', fontWeight: 900, fontSize: '1.2rem' }}>✓</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
                     </div>
                     <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.45rem', letterSpacing: '-0.02em', color: '#0f172a' }}>
                         VendorsDesk
