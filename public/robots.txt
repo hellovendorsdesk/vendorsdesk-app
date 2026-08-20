@@ -1,27 +1,6 @@
-# VendorsDesk Robots.txt & AI Crawler Protocol
 User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api/
 
-# AI Search Engines & LLM Crawlers Optimization (ChatGPT, Gemini, Perplexity, Claude)
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Bytespider
-Allow: /
-
-# XML Sitemap Index
 Sitemap: https://vendorsdesk.in/sitemap.xml
