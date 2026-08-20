@@ -70,6 +70,7 @@ export default function BulkBackgroundRemoverTab() {
     const [customBgImage, setCustomBgImage] = useState(null);
 
     // Graphic Badges & Border Customization Controls
+    const [graphicBadgeList, setGraphicBadgeList] = useState(GRAPHIC_BADGES);
     const [selectedBadge, setSelectedBadge] = useState(GRAPHIC_BADGES[1]); // Default Pink Best Seller
     const [badgePosition, setBadgePosition] = useState('top_left'); // 'top_left' | 'top_right' | 'bottom_left' | 'bottom_right' | 'top_center'
     const [borderColor, setBorderColor] = useState(BORDER_COLORS[1]); // Default Pink
@@ -86,6 +87,26 @@ export default function BulkBackgroundRemoverTab() {
 
     const fileInputRef = useRef(null);
     const bgInputRef = useRef(null);
+    const customBadgeInputRef = useRef(null);
+
+    // Handle Upload of User Custom Graphic Badge (PNG/JPG)
+    const handleCustomBadgeUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const customBadgeObj = {
+                id: `custom_badge_${Date.now()}`,
+                name: `📤 Custom Badge: ${file.name.slice(0, 22)}`,
+                path: event.target.result
+            };
+
+            setGraphicBadgeList(prev => [customBadgeObj, ...prev]);
+            setSelectedBadge(customBadgeObj);
+        };
+        reader.readAsDataURL(file);
+    };
 
     const currentItem = uploadedImages[activeIndex] || null;
 
@@ -663,21 +684,39 @@ export default function BulkBackgroundRemoverTab() {
                             flexDirection: 'column',
                             gap: '1.25rem'
                         }}>
-                            {/* 1. GRAPHIC BADGES & BORDER SELECTOR BOX (MATCHING USER ATTACHED SCREENSHOT) */}
+                            {/* 1. GRAPHIC BADGES & BORDER SELECTOR BOX (WITH CUSTOM USER BADGE UPLOAD) */}
                             <div style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%)', border: '1px solid #cbd5e1', borderRadius: '16px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                                <label style={{ fontSize: '0.85rem', fontWeight: 800, color: '#0f172a' }}>
-                                    🏷️ Choose Graphic Badge & Frame:
-                                </label>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <label style={{ fontSize: '0.85rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                                        🏷️ Choose Graphic Badge & Frame:
+                                    </label>
+                                    
+                                    <input 
+                                        type="file" 
+                                        ref={customBadgeInputRef} 
+                                        style={{ display: 'none' }} 
+                                        accept="image/*" 
+                                        onChange={handleCustomBadgeUpload} 
+                                    />
+
+                                    <button
+                                        className="btn-action"
+                                        onClick={() => customBadgeInputRef.current.click()}
+                                        style={{ padding: '0.25rem 0.65rem', fontSize: '0.72rem', fontWeight: 800, background: '#eff6ff', color: '#2563eb', border: '1px solid rgba(37,99,235,0.25)', borderRadius: '8px' }}
+                                    >
+                                        📤 Upload Custom Badge
+                                    </button>
+                                </div>
 
                                 <select
                                     value={selectedBadge.id}
                                     onChange={(e) => {
-                                        const b = GRAPHIC_BADGES.find(item => item.id === e.target.value);
+                                        const b = graphicBadgeList.find(item => item.id === e.target.value);
                                         if (b) setSelectedBadge(b);
                                     }}
                                     style={{ width: '100%', padding: '0.65rem 0.85rem', fontSize: '0.85rem', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 700 }}
                                 >
-                                    {GRAPHIC_BADGES.map(b => (
+                                    {graphicBadgeList.map(b => (
                                         <option key={b.id} value={b.id}>{b.name}</option>
                                     ))}
                                 </select>
