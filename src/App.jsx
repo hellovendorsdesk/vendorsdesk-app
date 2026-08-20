@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { secureFetch } from './utils/crypto';
+import { updatePageSEO } from './utils/seoManager';
 import HomeTab from './components/HomeTab';
 import OptimizerTab from './components/OptimizerTab';
 import LabelExporterTab from './components/LabelExporterTab';
@@ -1097,28 +1098,61 @@ export default function App() {
     const [copiedText, setCopiedText] = useState('Copy');
     const [activeMarketingTab, setActiveMarketingTab] = useState('meesho-shipping-rates');
 
-    useEffect(() => {
-        if (!currentUser) {
-            window.scrollTo(0, 0);
-            if (activeMarketingTab === 'meesho-shipping-rates') {
-                document.title = "Meesho Shipping Rate Calculator 2026 | Check Slabs & Charges | VendorsDesk";
-                const meta = document.querySelector('meta[name="description"]');
-                if (meta) meta.setAttribute('content', "Free Meesho shipping rate calculator for Indian suppliers. Check weight categories, shipping rate cards (₹48, ₹56, ₹62, ₹74), and reduce logistics costs.");
-            } else if (activeMarketingTab === 'meesho-image-generator') {
-                document.title = "Meesho Listing Image Generator & Duplicate Bypass Optimizer | VendorsDesk";
-                const meta = document.querySelector('meta[name="description"]');
-                if (meta) meta.setAttribute('content', "Automated Meesho catalog image variation generator. Add pink/blue borders and NDD badges to bypass duplicate image filters and qualify for lower shipping slabs.");
-            } else if (activeMarketingTab === 'meesho-label-exporter') {
-                document.title = "Meesho Bulk Shipping Label Exporter & 4x6 PDF Crop Tool | VendorsDesk";
-                const meta = document.querySelector('meta[name="description"]');
-                if (meta) meta.setAttribute('content', "Crop and sort Meesho shipping label sheets in under 2 minutes. Auto-crop labels for 4x6 thermal printers, group by SKU combinations, and bundle by courier partner.");
-            } else if (activeMarketingTab === 'pricing') {
-                document.title = "VendorsDesk Credit Pricing Plans & 33% Affiliate Referral Program | Start Free";
-                const meta = document.querySelector('meta[name="description"]');
-                if (meta) meta.setAttribute('content', "Affordable credit-based plans for Meesho suppliers starting at ₹99. Earn 33% lifetime recurring commission on referred seller subscriptions.");
-            }
+    const PAGE_ROUTES = {
+        '/': 'home',
+        '/home': 'home',
+        '/free-image-generator': 'free-image-generator',
+        '/image-generator': 'free-image-generator',
+        '/rate-optimizer': 'optimizer',
+        '/optimizer': 'optimizer',
+        '/pnl-calculator': 'pnl-calculator',
+        '/label-exporter': 'label-exporter',
+        '/margin-calculator': 'calculator',
+        '/calculator': 'calculator',
+        '/pricing': 'billing',
+        '/billing': 'billing',
+        '/affiliate': 'affiliate'
+    };
+
+    const PAGE_PATHS = {
+        'home': '/home',
+        'free-image-generator': '/free-image-generator',
+        'optimizer': '/rate-optimizer',
+        'pnl-calculator': '/pnl-calculator',
+        'label-exporter': '/label-exporter',
+        'calculator': '/margin-calculator',
+        'billing': '/pricing',
+        'affiliate': '/affiliate'
+    };
+
+    const navigateToPage = (pageKey, pushState = true) => {
+        setActivePage(pageKey);
+        setActiveMarketingTab(pageKey);
+        updatePageSEO(pageKey);
+        const targetPath = PAGE_PATHS[pageKey] || '/home';
+        if (pushState && window.location.pathname !== targetPath) {
+            window.history.pushState({ page: pageKey }, '', targetPath);
         }
-    }, [activeMarketingTab, currentUser]);
+    };
+
+    useEffect(() => {
+        const currentPath = window.location.pathname.toLowerCase();
+        const initialPage = PAGE_ROUTES[currentPath] || 'home';
+        setActivePage(initialPage);
+        setActiveMarketingTab(initialPage);
+        updatePageSEO(initialPage);
+
+        const handlePopState = (e) => {
+            const path = window.location.pathname.toLowerCase();
+            const pageKey = PAGE_ROUTES[path] || (e.state && e.state.page) || 'home';
+            setActivePage(pageKey);
+            setActiveMarketingTab(pageKey);
+            updatePageSEO(pageKey);
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []);
 
 
     // Google hybrid credentials state
@@ -1789,7 +1823,7 @@ export default function App() {
                     {/* Brand */}
                     <div 
                         style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '2.5rem', cursor: 'pointer' }}
-                        onClick={() => setActivePage('home')}
+                        onClick={() => navigateToPage('home')}
                     >
                         <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} onError={(e) => { e.target.style.display = 'none'; }} />
                         <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.35rem', letterSpacing: '-0.02em', color: '#0f172a' }}>
@@ -1801,7 +1835,7 @@ export default function App() {
                     <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                         <button 
                             className={`sidebar-link ${activePage === 'home' ? 'active' : ''}`}
-                            onClick={() => setActivePage('home')}
+                            onClick={() => navigateToPage('home')}
                         >
                             🏠 Home Dashboard
                         </button>
@@ -1812,37 +1846,37 @@ export default function App() {
                         </button>
                         <button 
                             className={`sidebar-link ${activePage === 'free-image-generator' ? 'active' : ''}`}
-                            onClick={() => setActivePage('free-image-generator')}
+                            onClick={() => navigateToPage('free-image-generator')}
                         >
                             🆓 Free Image Generator
                         </button>
                         <button 
                             className={`sidebar-link ${activePage === 'optimizer' ? 'active' : ''}`}
-                            onClick={() => setActivePage('optimizer')}
+                            onClick={() => navigateToPage('optimizer')}
                         >
                             ⚡ Rate Optimizer
                         </button>
                         <button 
                             className={`sidebar-link ${activePage === 'pnl-calculator' ? 'active' : ''}`}
-                            onClick={() => setActivePage('pnl-calculator')}
+                            onClick={() => navigateToPage('pnl-calculator')}
                         >
                             📊 Excel P&L Calculator
                         </button>
                         <button 
                             className={`sidebar-link ${activePage === 'label-exporter' ? 'active' : ''}`}
-                            onClick={() => setActivePage('label-exporter')}
+                            onClick={() => navigateToPage('label-exporter')}
                         >
                             📋 Label Exporter
                         </button>
                         <button 
                             className={`sidebar-link ${activePage === 'calculator' ? 'active' : ''}`}
-                            onClick={() => setActivePage('calculator')}
+                            onClick={() => navigateToPage('calculator')}
                         >
                             🧮 Margin Calculator
                         </button>
                         <button 
                             className={`sidebar-link ${activePage === 'billing' ? 'active' : ''}`}
-                            onClick={() => setActivePage('billing')}
+                            onClick={() => navigateToPage('billing')}
                             style={{ position: 'relative' }}
                         >
                             💳 Purchase Plan
@@ -1852,13 +1886,13 @@ export default function App() {
                         </button>
                         <button 
                             className={`sidebar-link ${activePage === 'affiliate' ? 'active' : ''}`}
-                            onClick={() => setActivePage('affiliate')}
+                            onClick={() => navigateToPage('affiliate')}
                         >
                             👥 Affiliate Program
                         </button>
                         <button 
                             className={`sidebar-link ${activePage === 'website' ? 'active' : ''}`}
-                            onClick={() => setActivePage('website')}
+                            onClick={() => navigateToPage('home')}
                             style={{ marginTop: '0.5rem', background: 'rgba(37, 99, 235, 0.06)', border: '1px solid rgba(37, 99, 235, 0.2)', color: '#2563eb', fontWeight: 700 }}
                         >
                             🌐 View Website & Plans
