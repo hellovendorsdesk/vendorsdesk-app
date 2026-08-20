@@ -652,26 +652,16 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                 top: 0,
                 zIndex: 990
             }}>
-                {/* Left Brand Logo */}
+                {/* Left Official Brand Logo */}
                 <div 
                     style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', cursor: 'pointer' }}
                     onClick={() => { onTabChange('meesho-shipping-rates'); setMobileMenuOpen(false); }}
                 >
-                    <div style={{
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '10px',
-                        background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
-                        flexShrink: 0
-                    }}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                    </div>
+                    <img 
+                        src="/logo-icon.png" 
+                        alt="VendorsDesk Official Logo" 
+                        style={{ height: '38px', width: 'auto', objectFit: 'contain' }} 
+                    />
                     <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.45rem', letterSpacing: '-0.02em', color: '#0f172a' }}>
                         VendorsDesk
                     </span>
