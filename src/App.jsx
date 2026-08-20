@@ -750,9 +750,9 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                                     }}
                                     className="tool-dropdown-item"
                                 >
-                                    <span style={{ fontSize: '1.4rem' }}>⚡</span>
+                                    <span style={{ fontSize: '1.3rem' }}>⚡</span>
                                     <div>
-                                        <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a' }}>Rate & Shipping Optimizer</div>
+                                        <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Rate & Shipping Optimizer</div>
                                         <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Audit ₹48, ₹56, ₹62 freight slabs & token pools.</div>
                                     </div>
                                 </div>
@@ -761,7 +761,7 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                                 <div 
                                     onClick={() => { onTabChange('pnl-calculator'); setIsToolsDropdownOpen(false); }}
                                     style={{
-                                        padding: '0.65rem 0.85rem',
+                                        padding: '0.6rem 0.8rem',
                                         borderRadius: '12px',
                                         cursor: 'pointer',
                                         background: activeTab === 'pnl-calculator' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
@@ -771,52 +771,46 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                                     }}
                                     className="tool-dropdown-item"
                                 >
-                                    <span style={{ fontSize: '1.4rem' }}>📊</span>
+                                    <span style={{ fontSize: '1.3rem' }}>📊</span>
                                     <div>
-                                        <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0f172a' }}>Excel P&L Settlement Calculator</div>
+                                        <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Excel P&L Settlement Calculator</div>
                                         <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Reconcile payouts, ads spend & RTO return penalties.</div>
+                                    </div>
+                                </div>
+
+                                {/* Tool 5: Bulk PDF Label Crop & SKU Sorter */}
+                                <div 
+                                    onClick={() => { onTabChange('meesho-label-exporter'); setIsToolsDropdownOpen(false); }}
+                                    style={{
+                                        padding: '0.6rem 0.8rem',
+                                        borderRadius: '12px',
+                                        cursor: 'pointer',
+                                        background: activeTab === 'meesho-label-exporter' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: '0.75rem'
+                                    }}
+                                    className="tool-dropdown-item"
+                                >
+                                    <span style={{ fontSize: '1.3rem' }}>📋</span>
+                                    <div>
+                                        <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Bulk PDF Label Crop & SKU Sorter</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Crop 4x6 thermal shipping labels by SKU.</div>
                                     </div>
                                 </div>
                             </div>
                         )}
                     </div>
 
-                    {/* Navigation Direct Buttons */}
+                    {/* Featured Shortcut Link: Pricing */}
                     <button 
-                        style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 800, color: '#2563eb', padding: '0.5rem 0.75rem', borderRadius: '10px' }}
-                    >
-                        <span>🖼️ BG Remover</span>
-                        <span style={{ fontSize: '0.55rem', background: '#ec4899', color: '#ffffff', padding: '0.1rem 0.35rem', borderRadius: '4px', fontWeight: 800 }}>NEW</span>
-                    </button>
-
-                    <button 
-                        className={`nav-link ${activeTab === 'free-image-generator' ? 'active' : ''}`}
-                        onClick={() => onTabChange('free-image-generator')}
-                        style={{ fontWeight: 700, padding: '0.5rem 0.75rem', borderRadius: '10px' }}
-                    >
-                        🆓 Image Generator
-                    </button>
-
-                    <button 
-                        className={`nav-link ${activeTab === 'pnl-calculator' ? 'active' : ''}`}
-                        onClick={() => onTabChange('pnl-calculator')}
-                        style={{ fontWeight: 700, padding: '0.5rem 0.75rem', borderRadius: '10px' }}
-                    >
-                        📊 P&L Calculator
-                    </button>
-
-                    <button 
-                        className={`nav-link ${activeTab === 'meesho-label-exporter' ? 'active' : ''}`}
-                        onClick={() => onTabChange('meesho-label-exporter')}
-                        style={{ fontWeight: 700, padding: '0.5rem 0.75rem', borderRadius: '10px' }}
-                    >
-                        📋 Label Exporter
-                    </button>
-
-                    <button 
-                        className={`nav-link ${activeTab === 'pricing' ? 'active' : ''}`}
-                        onClick={() => onTabChange('pricing')}
-                        style={{ fontWeight: 700, padding: '0.5rem 0.75rem', borderRadius: '10px' }}
+                        className="nav-link"
+                        onClick={() => {
+                            const el = document.getElementById('pricing-affiliate-section');
+                            if (el) el.scrollIntoView({ behavior: 'smooth' });
+                            else onTabChange('pricing');
+                        }}
+                        style={{ fontWeight: 700, padding: '0.45rem 0.75rem', borderRadius: '10px', fontSize: '0.85rem', color: '#475569' }}
                     >
                         💎 Pricing & Affiliate
                     </button>
