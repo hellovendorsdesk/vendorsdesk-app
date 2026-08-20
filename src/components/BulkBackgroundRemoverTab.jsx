@@ -196,10 +196,12 @@ export default function BulkBackgroundRemoverTab() {
             outCanvas.height = height;
             const outCtx = outCanvas.getContext('2d');
 
-            // 1. Draw Border Frame if selected
+            // 1. Draw 4-Edge Solid Border Frame if selected
             let drawX = 0, drawY = 0, drawW = width, drawH = height;
             if (borderObj && borderObj.value) {
-                const borderWidth = Math.round(width * 0.024);
+                const borderWidth = Math.max(16, Math.round(Math.min(width, height) * 0.035));
+                
+                // Fill entire canvas base with border color
                 outCtx.fillStyle = borderObj.value;
                 outCtx.fillRect(0, 0, width, height);
 
@@ -209,7 +211,13 @@ export default function BulkBackgroundRemoverTab() {
                 drawH = height - (borderWidth * 2);
             }
 
-            // 2. Draw Background
+            // Save context and clip all inner drawing (background & subject) inside 4 borders
+            outCtx.save();
+            outCtx.beginPath();
+            outCtx.rect(drawX, drawY, drawW, drawH);
+            outCtx.clip();
+
+            // 2. Draw Background inside inner clipped bounds
             if (bgObj.type === 'color') {
                 if (bgObj.value !== 'transparent') {
                     outCtx.fillStyle = bgObj.value;
@@ -252,8 +260,11 @@ export default function BulkBackgroundRemoverTab() {
                 outCtx.restore();
             }
 
-            // 4. Overlay Isolated Subject Product
+            // 4. Overlay Isolated Subject Product inside inner clipped bounds
             outCtx.drawImage(isolatedCanvas, drawX, drawY, drawW, drawH);
+
+            // Restore clipping context to allow badge overlay on top
+            outCtx.restore();
 
             // 5. Overlay Real PNG Graphic Badge if selected
             if (badgeObj && badgeObj.path) {
@@ -544,23 +555,24 @@ export default function BulkBackgroundRemoverTab() {
                                     <span style={{ background: '#3b82f6', color: '#ffffff', fontSize: '0.6rem', fontWeight: 800, padding: '0.1rem 0.4rem', borderRadius: '10px' }}>LIVE</span>
                                 </div>
 
-                                {/* Main Canvas Viewport - Compact Height */}
+                                {/* Main Canvas Viewport - Dynamic Aspect Ratio & 4-Edge Border Display */}
                                 <div style={{
                                     width: '100%',
-                                    height: '380px',
+                                    minHeight: '340px',
                                     borderRadius: '16px',
                                     overflow: 'hidden',
-                                    background: selectedBg.preview || selectedBg.url ? `url(${selectedBg.url}) center/cover` : selectedBg.value,
+                                    background: '#0f172a',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    position: 'relative'
+                                    position: 'relative',
+                                    padding: '0.5rem'
                                 }}>
                                     {renderedPreviewUrl ? (
                                         <img
                                             src={renderedPreviewUrl}
                                             alt="Live Studio Preview"
-                                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                                            style={{ maxWidth: '100%', maxHeight: '450px', width: 'auto', height: 'auto', objectFit: 'contain', borderRadius: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }}
                                         />
                                     ) : (
                                         <div style={{ textAlign: 'center', color: '#64748b' }}>
