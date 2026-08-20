@@ -7,6 +7,7 @@ import CalculatorTab from './components/CalculatorTab';
 import MeeshoAnalyticsTab from './components/MeeshoAnalyticsTab';
 import FreeImageGeneratorTab from './components/FreeImageGeneratorTab';
 import PnLCalculatorTab from './components/PnLCalculatorTab';
+import BulkBackgroundRemoverTab from './components/BulkBackgroundRemoverTab';
 
 /* ── 1. MEESHO SHIPPING RATES & P&L HOME PAGE ─────────────────── */
 function MeeshoShippingRatesPage({ onRegister }) {
@@ -1684,6 +1685,13 @@ export default function App() {
                             🏠 Home Dashboard
                         </button>
                         <button 
+                            className={`sidebar-link ${activePage === 'bg-remover' ? 'active' : ''}`}
+                            onClick={() => setActivePage('bg-remover')}
+                            style={{ background: 'rgba(37, 99, 235, 0.08)', color: '#2563eb', fontWeight: 700 }}
+                        >
+                            🖼️ Bulk Background Remover
+                        </button>
+                        <button 
                             className={`sidebar-link ${activePage === 'free-image-generator' ? 'active' : ''}`}
                             onClick={() => setActivePage('free-image-generator')}
                         >
@@ -1802,6 +1810,10 @@ export default function App() {
                     {/* Render active tabs/pages */}
                     {activePage === 'home' && (
                         <HomeTab onNavigate={(page) => setActivePage(page)} />
+                    )}
+
+                    {activePage === 'bg-remover' && (
+                        <BulkBackgroundRemoverTab />
                     )}
 
                     {activePage === 'free-image-generator' && (
