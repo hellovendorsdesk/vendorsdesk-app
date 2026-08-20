@@ -25,32 +25,22 @@ const GRAPHIC_BADGES = [
     { id: 'badge_new_arrival_yellow_tag', name: '🏷️ Yellow Arrow New Arrival Tag', path: '/badges/badge_new_arrival_yellow_tag.png' }
 ];
 
-// Curated High-Definition Real Product Photoshoot Backdrops
+// Curated High-Definition Verified Product Photoshoot Backdrops (Desks, Tables, Marble & Studios)
 const MAGIC_BACKGROUNDS = [
-    { id: 'bg_marble_studio', name: 'Luxury White Marble Podium', type: 'image', url: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=800&auto=format&fit=crop' },
-    { id: 'bg_wooden_sun', name: 'Wooden Table & Warm Sun', type: 'image', url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop' },
-    { id: 'bg_pastel_podium', name: 'Pastel Podiums & Soft Shadows', type: 'image', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop' },
-    { id: 'bg_silk_satin', name: 'Silk Velvet Satin Surface', type: 'image', url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop' },
+    { id: 'bg_wooden_sun', name: 'Oak Wood Table & Sun', type: 'image', url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop' },
     { id: 'bg_living_room', name: 'Cozy Living Room Table', type: 'image', url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop' },
-    { id: 'bg_window_sill', name: 'Sunny Window Sill & Blinds', type: 'image', url: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&auto=format&fit=crop' },
-    { id: 'bg_minimal_spotlight', name: 'Minimalist White Studio Spotlight', type: 'image', url: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=800&auto=format&fit=crop' },
-    { id: 'bg_dark_marble', name: 'Luxury Dark Granite Marble', type: 'image', url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop' },
+    { id: 'bg_modern_desk', name: 'Minimalist Office Desk', type: 'image', url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop' },
+    { id: 'bg_boho_rattan', name: 'Boho Rattan Wooden Board', type: 'image', url: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=800&auto=format&fit=crop' },
     { id: 'bg_terracotta', name: 'Terracotta Pedestal Display', type: 'image', url: 'https://images.unsplash.com/photo-1604014237800-1c9102c219da?w=800&auto=format&fit=crop' },
-    { id: 'bg_boho_rattan', name: 'Boho Rattan & Oak Wood', type: 'image', url: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=800&auto=format&fit=crop' },
-    { id: 'bg_gold_accent', name: 'Gold Accent Royal Pedestal', type: 'image', url: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&auto=format&fit=crop' },
-    { id: 'bg_beach', name: 'Tropical Beach Ocean', type: 'image', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop' },
+    { id: 'bg_industrial_concrete', name: 'Industrial Concrete Desk', type: 'image', url: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=800&auto=format&fit=crop' },
+    { id: 'bg_beach', name: 'Tropical Ocean Beach', type: 'image', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop' },
     { id: 'bg_forest', name: 'Sunlit Forest Meadow', type: 'image', url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&auto=format&fit=crop' },
-    { id: 'bg_floral_arch', name: 'White Floral Bridal Arch', type: 'image', url: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop' },
     { id: 'bg_palace_corridor', name: 'Regal Palace Hall', type: 'image', url: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop' },
     { id: 'bg_library', name: 'Warm Oak Library Bookshelf', type: 'image', url: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&auto=format&fit=crop' },
     { id: 'bg_japanese_garden', name: 'Zen Garden Tatami Studio', type: 'image', url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&auto=format&fit=crop' },
     { id: 'bg_pastel_pink', name: 'Pastel Pink Studio Wall', type: 'image', url: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&auto=format&fit=crop' },
-    { id: 'bg_royal_velvet', name: 'Royal Velvet Backdrop', type: 'image', url: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop' },
-    { id: 'bg_industrial_concrete', name: 'Industrial Grey Concrete Table', type: 'image', url: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=800&auto=format&fit=crop' },
     { id: 'bg_sunset_ocean', name: 'Warm Sunset Ocean Horizon', type: 'image', url: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&auto=format&fit=crop' },
-    { id: 'bg_yellow_field', name: 'Mustard Flower Field', type: 'image', url: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=800&auto=format&fit=crop' },
-    { id: 'bg_glass_reflection', name: 'Minimalist Glass Reflection', type: 'image', url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop' },
-    { id: 'bg_modern_desk', name: 'Minimalist Studio Desk', type: 'image', url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop' }
+    { id: 'bg_yellow_field', name: 'Mustard Flower Field', type: 'image', url: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=800&auto=format&fit=crop' }
 ];
 
 const COLOR_BACKGROUNDS = [
@@ -80,6 +70,12 @@ export default function BulkBackgroundRemoverTab() {
     const [activeTab, setActiveTab] = useState('magic'); // 'magic' | 'photo' | 'color'
     const [selectedBg, setSelectedBg] = useState(MAGIC_BACKGROUNDS[0]);
     const [customBgImage, setCustomBgImage] = useState(null);
+
+    // Subject Transform & Positioning Controls
+    const [subjectScale, setSubjectScale] = useState(100); // 30% to 200%
+    const [subjectOffsetX, setSubjectOffsetX] = useState(0); // -50 to +50
+    const [subjectOffsetY, setSubjectOffsetY] = useState(0); // -50 to +50
+    const [subjectFlipH, setSubjectFlipH] = useState(false);
 
     // Graphic Badges & Border Customization Controls
     const [graphicBadgeList, setGraphicBadgeList] = useState(GRAPHIC_BADGES);
@@ -293,8 +289,25 @@ export default function BulkBackgroundRemoverTab() {
                 outCtx.restore();
             }
 
-            // 4. Overlay Isolated Subject Product inside inner clipped bounds
-            outCtx.drawImage(isolatedCanvas, drawX, drawY, drawW, drawH);
+            // 4. Overlay Isolated Subject Product with Interactive Scale & Move Transforms
+            outCtx.save();
+            const scaleFactor = (subjectScale || 100) / 100;
+            const offX = ((subjectOffsetX || 0) / 100) * drawW;
+            const offY = ((subjectOffsetY || 0) / 100) * drawH;
+
+            const subjW = drawW * scaleFactor;
+            const subjH = drawH * scaleFactor;
+            const subjX = drawX + (drawW - subjW) / 2 + offX;
+            const subjY = drawY + (drawH - subjH) / 2 + offY;
+
+            if (subjectFlipH) {
+                outCtx.translate(subjX + subjW / 2, subjY + subjH / 2);
+                outCtx.scale(-1, 1);
+                outCtx.drawImage(isolatedCanvas, -subjW / 2, -subjH / 2, subjW, subjH);
+            } else {
+                outCtx.drawImage(isolatedCanvas, subjX, subjY, subjW, subjH);
+            }
+            outCtx.restore();
 
             // Restore clipping context to allow badge overlay on top
             outCtx.restore();
@@ -347,7 +360,7 @@ export default function BulkBackgroundRemoverTab() {
         });
 
         return () => { isMounted = false; };
-    }, [activeIndex, selectedBg, customBgImage, selectedBadge, badgePosition, borderColor, uploadedImages.length]);
+    }, [activeIndex, selectedBg, customBgImage, selectedBadge, badgePosition, borderColor, subjectScale, subjectOffsetX, subjectOffsetY, subjectFlipH, uploadedImages.length]);
 
     // Dynamically Generate N Unique Studio Variations for Active Product
     const handleGenerateDynamicCollection = async () => {
@@ -788,14 +801,83 @@ export default function BulkBackgroundRemoverTab() {
                                 </div>
                             </div>
 
-                            {/* 2. THREE MAIN CATEGORY TABS: Magic | Photo | Color */}
-                            <div style={{
-                                display: 'grid',
-                                gridTemplateColumns: '1fr 1fr 1fr',
-                                background: '#f1f5f9',
-                                padding: '0.35rem',
-                                borderRadius: '16px'
-                            }}>
+                            {/* 2. INTERACTIVE SUBJECT SCALE & MOVE TRANSFORM CONTROLS */}
+                            <div style={{ background: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '16px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <label style={{ fontSize: '0.85rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                                        🔍 Move & Resize Subject Product:
+                                    </label>
+                                    <button
+                                        onClick={() => { setSubjectScale(100); setSubjectOffsetX(0); setSubjectOffsetY(0); setSubjectFlipH(false); }}
+                                        style={{ padding: '0.2rem 0.5rem', fontSize: '0.7rem', fontWeight: 700, background: '#ffffff', color: '#64748b', border: '1px solid #cbd5e1', borderRadius: '6px', cursor: 'pointer' }}
+                                    >
+                                        ↺ Reset
+                                    </button>
+                                </div>
+
+                                {/* Subject Scale/Size Slider */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: '#475569' }}>
+                                        <span>Size / Scale:</span>
+                                        <span>{subjectScale}%</span>
+                                    </div>
+                                    <input 
+                                        type="range" 
+                                        min="40" 
+                                        max="180" 
+                                        value={subjectScale} 
+                                        onChange={(e) => setSubjectScale(Number(e.target.value))} 
+                                        style={{ width: '100%', accentColor: '#2563eb', cursor: 'pointer' }} 
+                                    />
+                                </div>
+
+                                {/* Move X (Horizontal) & Move Y (Vertical) */}
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: '#475569' }}>
+                                            <span>Move Left / Right:</span>
+                                            <span>{subjectOffsetX > 0 ? `+${subjectOffsetX}%` : `${subjectOffsetX}%`}</span>
+                                        </div>
+                                        <input 
+                                            type="range" 
+                                            min="-40" 
+                                            max="40" 
+                                            value={subjectOffsetX} 
+                                            onChange={(e) => setSubjectOffsetX(Number(e.target.value))} 
+                                            style={{ width: '100%', accentColor: '#2563eb', cursor: 'pointer' }} 
+                                        />
+                                    </div>
+
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: '#475569' }}>
+                                            <span>Move Up / Down:</span>
+                                            <span>{subjectOffsetY > 0 ? `+${subjectOffsetY}%` : `${subjectOffsetY}%`}</span>
+                                        </div>
+                                        <input 
+                                            type="range" 
+                                            min="-40" 
+                                            max="40" 
+                                            value={subjectOffsetY} 
+                                            onChange={(e) => setSubjectOffsetY(Number(e.target.value))} 
+                                            style={{ width: '100%', accentColor: '#2563eb', cursor: 'pointer' }} 
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Flip Horizontal Toggle */}
+                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#0f172a', cursor: 'pointer', marginTop: '0.2rem' }}>
+                                    <input 
+                                        type="checkbox" 
+                                        checked={subjectFlipH} 
+                                        onChange={(e) => setSubjectFlipH(e.target.checked)} 
+                                        style={{ width: '16px', height: '16px', accentColor: '#2563eb', cursor: 'pointer' }} 
+                                    />
+                                    ↔️ Flip Subject Horizontally (Mirror View)
+                                </label>
+                            </div>
+
+                            {/* 3. STUDIO BACKDROP CATEGORY SELECTOR TABS */}
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.4rem', background: '#f1f5f9', padding: '0.35rem', borderRadius: '14px' }}>
                                 <button
                                     onClick={() => { setActiveTab('magic'); setCustomBgImage(null); }}
                                     style={{
@@ -810,10 +892,10 @@ export default function BulkBackgroundRemoverTab() {
                                         boxShadow: activeTab === 'magic' ? '0 2px 8px rgba(0,0,0,0.08)' : 'none'
                                     }}
                                 >
-                                    Magic ✨
+                                    Scenes ✨
                                 </button>
                                 <button
-                                    onClick={() => setActiveTab('photo')}
+                                    onClick={() => { setActiveTab('photo'); setCustomBgImage(null); }}
                                     style={{
                                         padding: '0.6rem 0',
                                         border: 'none',
@@ -875,7 +957,15 @@ export default function BulkBackgroundRemoverTab() {
                                                     position: 'relative'
                                                 }}
                                             >
-                                                <img src={bg.url} alt={bg.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                <img 
+                                                    src={bg.url} 
+                                                    alt={bg.name} 
+                                                    onError={(e) => {
+                                                        e.target.onerror = null;
+                                                        e.target.src = 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop';
+                                                    }}
+                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                                                />
                                                 <div style={{
                                                     position: 'absolute',
                                                     bottom: 0, left: 0, right: 0,
