@@ -48,12 +48,12 @@ function MeeshoShippingRatesPage({ onRegister }) {
                     {/* Refined Main Heading */}
                     <h1 style={{ 
                         fontFamily: 'Outfit', fontSize: '2.5rem', fontWeight: 800, lineHeight: 1.18, letterSpacing: '-0.025em', 
-                        color: '#0f172a', maxWidth: '780px', margin: '0 auto 1rem auto' 
+                        color: '#ffffff', maxWidth: '780px', margin: '0 auto 1rem auto' 
                     }}>
-                        Optimize Meesho Listing Images & <span style={{ background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Export PDF Shipping Labels</span>
+                        Optimize Meesho Listing Images & <span style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Export PDF Shipping Labels</span>
                     </h1>
 
-                    <p style={{ fontSize: '0.92rem', color: '#475569', maxWidth: '620px', lineHeight: '1.55', margin: '0 auto 1.75rem auto' }}>
+                    <p style={{ fontSize: '0.95rem', color: '#cbd5e1', maxWidth: '620px', lineHeight: '1.6', margin: '0 auto 1.75rem auto', fontWeight: 450 }}>
                         Remove backgrounds, change live studio scenes, bypass duplicate catalog filters, qualify for lower shipping rates (₹48, ₹56, ₹62), and crop bulk thermal labels by SKU in under 2 minutes.
                     </p>
                     
@@ -1104,55 +1104,59 @@ export default function App() {
     const [activeMarketingTab, setActiveMarketingTab] = useState('meesho-shipping-rates');
 
     const PAGE_ROUTES = {
-        '/': 'home',
-        '/home': 'home',
+        '/': 'meesho-shipping-rates',
+        '/home': 'meesho-shipping-rates',
         '/background-remover': 'bg-remover',
         '/bg-remover': 'bg-remover',
         '/free-image-generator': 'free-image-generator',
         '/image-generator': 'free-image-generator',
-        '/rate-optimizer': 'optimizer',
-        '/optimizer': 'optimizer',
+        '/rate-optimizer': 'meesho-shipping-rates',
+        '/optimizer': 'meesho-shipping-rates',
         '/pnl-calculator': 'pnl-calculator',
-        '/label-exporter': 'label-exporter',
-        '/margin-calculator': 'calculator',
-        '/calculator': 'calculator',
-        '/pricing': 'billing',
-        '/billing': 'billing',
-        '/affiliate': 'affiliate'
+        '/label-exporter': 'meesho-label-exporter',
+        '/margin-calculator': 'meesho-shipping-rates',
+        '/calculator': 'meesho-shipping-rates',
+        '/pricing': 'pricing',
+        '/billing': 'pricing',
+        '/affiliate': 'pricing'
     };
 
     const PAGE_PATHS = {
         'home': '/home',
+        'meesho-shipping-rates': '/home',
         'bg-remover': '/background-remover',
         'free-image-generator': '/free-image-generator',
         'optimizer': '/rate-optimizer',
         'pnl-calculator': '/pnl-calculator',
         'label-exporter': '/label-exporter',
+        'meesho-label-exporter': '/label-exporter',
         'calculator': '/margin-calculator',
+        'pricing': '/pricing',
         'billing': '/pricing',
         'affiliate': '/affiliate'
     };
 
     const navigateToPage = (pageKey, pushState = true) => {
-        setActivePage(pageKey);
-        setActiveMarketingTab(pageKey);
+        const mappedTab = PAGE_ROUTES[pageKey] || pageKey;
+        setActivePage(mappedTab);
+        setActiveMarketingTab(mappedTab);
         updatePageSEO(pageKey);
-        const targetPath = PAGE_PATHS[pageKey] || '/home';
+        const targetPath = PAGE_PATHS[mappedTab] || '/home';
         if (pushState && window.location.pathname !== targetPath) {
-            window.history.pushState({ page: pageKey }, '', targetPath);
+            window.history.pushState({ page: mappedTab }, '', targetPath);
         }
     };
 
     useEffect(() => {
         const currentPath = window.location.pathname.toLowerCase();
-        const initialPage = PAGE_ROUTES[currentPath] || 'home';
-        setActivePage(initialPage);
-        setActiveMarketingTab(initialPage);
-        updatePageSEO(initialPage);
+        const initialTab = PAGE_ROUTES[currentPath] || 'meesho-shipping-rates';
+        setActivePage(initialTab);
+        setActiveMarketingTab(initialTab);
+        updatePageSEO(initialTab);
 
         const handlePopState = (e) => {
             const path = window.location.pathname.toLowerCase();
-            const pageKey = PAGE_ROUTES[path] || (e.state && e.state.page) || 'home';
+            const pageKey = PAGE_ROUTES[path] || (e.state && e.state.page) || 'meesho-shipping-rates';
             setActivePage(pageKey);
             setActiveMarketingTab(pageKey);
             updatePageSEO(pageKey);
