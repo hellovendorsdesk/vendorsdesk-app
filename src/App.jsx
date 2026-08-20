@@ -1771,7 +1771,7 @@ export default function App() {
                 <MarketingLandingPage 
                     currentUser={currentUser}
                     activeTab={activeMarketingTab} 
-                    onTabChange={setActiveMarketingTab} 
+                    onTabChange={(tabKey) => navigateToPage(tabKey)} 
                     onLogin={handleGoToAppLogin}
                     onRegister={handleGoToAppSignup}
                     onGoToDashboard={handleGoToAppDashboard}
@@ -1788,7 +1788,7 @@ export default function App() {
                 <MarketingLandingPage 
                     currentUser={null}
                     activeTab={activeMarketingTab} 
-                    onTabChange={setActiveMarketingTab} 
+                    onTabChange={(tabKey) => navigateToPage(tabKey)} 
                     onLogin={handleGoToAppLogin}
                     onRegister={handleGoToAppSignup}
                     onGoToDashboard={handleGoToAppDashboard}
@@ -1804,7 +1804,7 @@ export default function App() {
                 <MarketingLandingPage 
                     currentUser={currentUser}
                     activeTab={activeMarketingTab} 
-                    onTabChange={setActiveMarketingTab} 
+                    onTabChange={(tabKey) => navigateToPage(tabKey)} 
                     onLogin={handleGoToAppLogin}
                     onRegister={handleGoToAppSignup}
                     onGoToDashboard={handleGoToAppDashboard}
