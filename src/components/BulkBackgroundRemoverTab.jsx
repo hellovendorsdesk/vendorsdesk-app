@@ -646,17 +646,17 @@ export default function BulkBackgroundRemoverTab() {
                                 </div>
 
                                 {/* Left Action Footer */}
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem', padding: '0 0.5rem' }}>
-                                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem', padding: '0 0.5rem', gap: '0.75rem', flexWrap: 'wrap' }}>
+                                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                         Photo {activeIndex + 1} of {uploadedImages.length}: <span style={{ color: '#0f172a' }}>{currentItem.name}</span>
                                     </div>
 
                                     <button
                                         className="btn-submit-form"
                                         onClick={() => handleDownloadSingle(renderedPreviewUrl)}
-                                        style={{ padding: '0.55rem 1.25rem', borderRadius: '10px', fontSize: '0.82rem', fontWeight: 800 }}
+                                        style={{ padding: '0.55rem 1.25rem', borderRadius: '10px', fontSize: '0.82rem', fontWeight: 800, whiteSpace: 'nowrap', flexShrink: 0, minWidth: 'max-content' }}
                                     >
-                                        ⬇ Download Single HD
+                                        ⬇ Download HD Image
                                     </button>
                                 </div>
                             </div>
