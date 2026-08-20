@@ -670,14 +670,12 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                                     </div>
                                 </div>
 
-                                {/* Tool 4: Label Exporter */}
+                                {/* Tool 5: Background Remover & Studio */}
                                 <div 
-                                    onClick={() => { onTabChange('meesho-label-exporter'); setIsToolsDropdownOpen(false); }}
                                     style={{
                                         padding: '0.65rem 0.75rem',
                                         borderRadius: '10px',
                                         cursor: 'pointer',
-                                        background: activeTab === 'meesho-label-exporter' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
                                         display: 'flex',
                                         alignItems: 'flex-start',
                                         gap: '0.75rem',
@@ -685,16 +683,25 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                                     }}
                                     className="tool-dropdown-item"
                                 >
-                                    <span style={{ fontSize: '1.3rem' }}>📋</span>
+                                    <span style={{ fontSize: '1.3rem' }}>🖼️</span>
                                     <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>Bulk Thermal Label Exporter</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Crop shipping label PDFs into 4x6 thermal printer format.</div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                            Background Remover & Studio
+                                            <span style={{ fontSize: '0.55rem', background: '#ec4899', color: '#ffffff', padding: '0.05rem 0.3rem', borderRadius: '4px', fontWeight: 800 }}>NEW</span>
+                                        </div>
+                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Remove background & change live studio scenes.</div>
                                     </div>
                                 </div>
                             </div>
                         )}
                     </div>
 
+                    <button 
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontWeight: 700, color: '#2563eb' }}
+                    >
+                        <span>🖼️ BG Remover</span>
+                        <span style={{ fontSize: '0.55rem', background: '#ec4899', color: '#ffffff', padding: '0.1rem 0.35rem', borderRadius: '4px', fontWeight: 800 }}>NEW</span>
+                    </button>
                     <button 
                         className={`nav-link ${activeTab === 'free-image-generator' ? 'active' : ''}`}
                         onClick={() => onTabChange('free-image-generator')}
@@ -835,7 +842,6 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
             {activeTab === 'contact-us' && <ContactUsPage />}
 
             {/* Custom 404 Not Found Page */}
-            {!['free-image-generator', 'meesho-shipping-rates', 'pnl-calculator', 'meesho-image-generator', 'meesho-label-exporter', 'pricing', 'privacy-policy', 'refund-policy', 'terms-of-service', 'contact-us'].includes(activeTab) && (
                 <div style={{ maxWidth: '600px', margin: '4rem auto', textAlign: 'center', padding: '3.5rem 2rem', background: '#ffffff', borderRadius: '20px', border: '1px solid #e2e8f0', boxShadow: '0 20px 40px rgba(15, 23, 42, 0.08)' }}>
                     <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🔍 404</div>
                     <h1 style={{ fontFamily: 'Outfit', fontSize: '2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.75rem' }}>Page Not Found</h1>
