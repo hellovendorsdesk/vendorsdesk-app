@@ -25,20 +25,32 @@ const GRAPHIC_BADGES = [
     { id: 'badge_new_arrival_yellow_tag', name: '🏷️ Yellow Arrow New Arrival Tag', path: '/badges/badge_new_arrival_yellow_tag.png' }
 ];
 
-// Curated High-Definition Studio Background Scenes
+// Curated High-Definition Real Product Photoshoot Backdrops
 const MAGIC_BACKGROUNDS = [
-    { id: 'bg_beach', name: 'Tropical Beach', type: 'image', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop' },
-    { id: 'bg_forest', name: 'Sunlit Forest', type: 'image', url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&auto=format&fit=crop' },
-    { id: 'bg_mountain', name: 'Green Mountain Peak', type: 'image', url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop' },
-    { id: 'bg_sunset_wave', name: 'Sunset Ocean', type: 'image', url: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&auto=format&fit=crop' },
-    { id: 'bg_living_room', name: 'Cozy Living Room', type: 'image', url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop' },
-    { id: 'bg_floral_arch', name: 'White Floral Arch', type: 'image', url: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop' },
-    { id: 'bg_library', name: 'Warm Library', type: 'image', url: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&auto=format&fit=crop' },
-    { id: 'bg_japanese_garden', name: 'Zen Garden Tatami', type: 'image', url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&auto=format&fit=crop' },
+    { id: 'bg_marble_studio', name: 'Luxury White Marble Podium', type: 'image', url: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=800&auto=format&fit=crop' },
+    { id: 'bg_wooden_sun', name: 'Wooden Table & Warm Sun', type: 'image', url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop' },
+    { id: 'bg_pastel_podium', name: 'Pastel Podiums & Soft Shadows', type: 'image', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop' },
+    { id: 'bg_silk_satin', name: 'Silk Velvet Satin Surface', type: 'image', url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop' },
+    { id: 'bg_living_room', name: 'Cozy Living Room Table', type: 'image', url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop' },
+    { id: 'bg_window_sill', name: 'Sunny Window Sill & Blinds', type: 'image', url: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&auto=format&fit=crop' },
+    { id: 'bg_minimal_spotlight', name: 'Minimalist White Studio Spotlight', type: 'image', url: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=800&auto=format&fit=crop' },
+    { id: 'bg_dark_marble', name: 'Luxury Dark Granite Marble', type: 'image', url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop' },
+    { id: 'bg_terracotta', name: 'Terracotta Pedestal Display', type: 'image', url: 'https://images.unsplash.com/photo-1604014237800-1c9102c219da?w=800&auto=format&fit=crop' },
+    { id: 'bg_boho_rattan', name: 'Boho Rattan & Oak Wood', type: 'image', url: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=800&auto=format&fit=crop' },
+    { id: 'bg_gold_accent', name: 'Gold Accent Royal Pedestal', type: 'image', url: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&auto=format&fit=crop' },
+    { id: 'bg_beach', name: 'Tropical Beach Ocean', type: 'image', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop' },
+    { id: 'bg_forest', name: 'Sunlit Forest Meadow', type: 'image', url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&auto=format&fit=crop' },
+    { id: 'bg_floral_arch', name: 'White Floral Bridal Arch', type: 'image', url: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop' },
     { id: 'bg_palace_corridor', name: 'Regal Palace Hall', type: 'image', url: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop' },
-    { id: 'bg_yellow_field', name: 'Yellow Flower Field', type: 'image', url: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=800&auto=format&fit=crop' },
-    { id: 'bg_marble_studio', name: 'Luxury White Marble', type: 'image', url: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=800&auto=format&fit=crop' },
-    { id: 'bg_modern_office', name: 'Minimalist Studio Desk', type: 'image', url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop' },
+    { id: 'bg_library', name: 'Warm Oak Library Bookshelf', type: 'image', url: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&auto=format&fit=crop' },
+    { id: 'bg_japanese_garden', name: 'Zen Garden Tatami Studio', type: 'image', url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&auto=format&fit=crop' },
+    { id: 'bg_pastel_pink', name: 'Pastel Pink Studio Wall', type: 'image', url: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&auto=format&fit=crop' },
+    { id: 'bg_royal_velvet', name: 'Royal Velvet Backdrop', type: 'image', url: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop' },
+    { id: 'bg_industrial_concrete', name: 'Industrial Grey Concrete Table', type: 'image', url: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=800&auto=format&fit=crop' },
+    { id: 'bg_sunset_ocean', name: 'Warm Sunset Ocean Horizon', type: 'image', url: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&auto=format&fit=crop' },
+    { id: 'bg_yellow_field', name: 'Mustard Flower Field', type: 'image', url: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=800&auto=format&fit=crop' },
+    { id: 'bg_glass_reflection', name: 'Minimalist Glass Reflection', type: 'image', url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop' },
+    { id: 'bg_modern_desk', name: 'Minimalist Studio Desk', type: 'image', url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop' }
 ];
 
 const COLOR_BACKGROUNDS = [
