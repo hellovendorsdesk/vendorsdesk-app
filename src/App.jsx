@@ -9,6 +9,7 @@ import MeeshoAnalyticsTab from './components/MeeshoAnalyticsTab';
 import FreeImageGeneratorTab from './components/FreeImageGeneratorTab';
 import PnLCalculatorTab from './components/PnLCalculatorTab';
 import BulkBackgroundRemoverTab from './components/BulkBackgroundRemoverTab';
+import FeedbackWidget from './components/FeedbackWidget';
 
 /* ── 1. MEESHO SHIPPING RATES & P&L HOME PAGE ─────────────────── */
 function MeeshoShippingRatesPage({ onRegister }) {
@@ -818,6 +819,15 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                     >
                         💎 Pricing & Affiliate
                     </button>
+
+                    {/* Contact & Support Link */}
+                    <button 
+                        className="nav-link"
+                        onClick={() => onTabChange('contact-us')}
+                        style={{ fontWeight: 700, padding: '0.45rem 0.75rem', borderRadius: '10px', fontSize: '0.85rem', color: '#475569' }}
+                    >
+                        📞 Contact & Support
+                    </button>
                 </nav>
 
                 {/* Desktop Action Buttons (Right) */}
@@ -919,6 +929,12 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                             onClick={() => { onTabChange('pricing'); setMobileMenuOpen(false); }}
                         >
                             💎 Pricing & Affiliate
+                        </button>
+                        <button 
+                            className={`mobile-nav-link ${activeTab === 'contact-us' ? 'active' : ''}`}
+                            onClick={() => { onTabChange('contact-us'); setMobileMenuOpen(false); }}
+                        >
+                            📞 Contact & Support
                         </button>
 
                         <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '0.4rem 0' }} />
@@ -1118,7 +1134,10 @@ export default function App() {
         '/calculator': 'meesho-shipping-rates',
         '/pricing': 'pricing',
         '/billing': 'pricing',
-        '/affiliate': 'pricing'
+        '/affiliate': 'pricing',
+        '/contact': 'contact-us',
+        '/contact-us': 'contact-us',
+        '/support': 'contact-us'
     };
 
     const PAGE_PATHS = {
@@ -1133,7 +1152,8 @@ export default function App() {
         'calculator': '/margin-calculator',
         'pricing': '/pricing',
         'billing': '/pricing',
-        'affiliate': '/affiliate'
+        'affiliate': '/affiliate',
+        'contact-us': '/contact-us'
     };
 
     const navigateToPage = (pageKey, pushState = true) => {
@@ -1776,6 +1796,7 @@ export default function App() {
                     onRegister={handleGoToAppSignup}
                     onGoToDashboard={handleGoToAppDashboard}
                 />
+                <FeedbackWidget currentUser={currentUser} />
                 {authModals}
             </>
         );
@@ -1793,6 +1814,7 @@ export default function App() {
                     onRegister={handleGoToAppSignup}
                     onGoToDashboard={handleGoToAppDashboard}
                 />
+                <FeedbackWidget currentUser={null} />
                 {authModals}
             </>
         );
@@ -2344,6 +2366,9 @@ export default function App() {
                     </div>
                 </div>
             )}
+
+            {/* Global Floating Feedback & Suggestions Widget */}
+            <FeedbackWidget currentUser={currentUser} />
         </div>
     );
 }
