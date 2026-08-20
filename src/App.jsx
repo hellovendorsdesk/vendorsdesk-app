@@ -46,13 +46,13 @@ function MeeshoShippingRatesPage({ onRegister }) {
 
                     {/* Refined Main Heading */}
                     <h1 style={{ 
-                        fontFamily: 'Outfit', fontSize: '2.5rem', fontWeight: 800, lineHeight: 1.18, letterSpacing: '-0.025em', 
-                        color: '#ffffff', maxWidth: '780px', margin: '0 auto 1rem auto' 
+                        fontFamily: 'Outfit', fontSize: '2.6rem', fontWeight: 800, lineHeight: 1.18, letterSpacing: '-0.025em', 
+                        color: '#0f172a', maxWidth: '800px', margin: '0 auto 1rem auto' 
                     }}>
-                        Optimize Meesho Listing Images & <span style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Export PDF Shipping Labels</span>
+                        Optimize Meesho Listing Images & <span style={{ background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Export PDF Shipping Labels</span>
                     </h1>
 
-                    <p style={{ fontSize: '0.95rem', color: '#cbd5e1', maxWidth: '620px', lineHeight: '1.6', margin: '0 auto 1.75rem auto', fontWeight: 450 }}>
+                    <p style={{ fontSize: '1rem', color: '#475569', maxWidth: '650px', lineHeight: '1.6', margin: '0 auto 1.75rem auto', fontWeight: 500 }}>
                         Remove backgrounds, change live studio scenes, bypass duplicate catalog filters, qualify for lower shipping rates (₹48, ₹56, ₹62), and crop bulk thermal labels by SKU in under 2 minutes.
                     </p>
                     
@@ -347,7 +347,7 @@ function PricingAffiliatePage({ onRegister }) {
             
             {/* Pricing Section */}
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h2 style={{ fontFamily: 'Outfit', fontSize: '2.8rem', fontWeight: 800, marginBottom: '0.75rem' }}>Simple, Credit-Based Plans</h2>
+                <h2 style={{ fontFamily: 'Outfit', fontSize: '2.8rem', fontWeight: 800, marginBottom: '0.75rem', color: '#0f172a' }}>Simple, Credit-Based Plans</h2>
                 <p style={{ color: '#475569', fontSize: '0.95rem' }}>Acquire check query credits and start optimizing catalog variation rates.</p>
             </div>
 
