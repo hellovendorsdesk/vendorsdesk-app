@@ -480,7 +480,7 @@ export default function BulkBackgroundRemoverTab() {
                 border: '1px solid #cbd5e1',
                 padding: '0.85rem 1.25rem',
                 display: 'flex',
-                justify: 'space-between',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 marginBottom: '1rem',
                 boxShadow: '0 4px 20px rgba(15, 23, 42, 0.04)',
@@ -512,7 +512,7 @@ export default function BulkBackgroundRemoverTab() {
                     </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginLeft: 'auto' }}>
                     <input
                         type="file"
                         ref={fileInputRef}
