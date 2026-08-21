@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import JSZip from 'jszip';
 
 // List of All 19 Graphic PNG Badge Image Files from Backend Assets
 const GRAPHIC_BADGE_ASSETS = [
@@ -71,35 +72,89 @@ export default function FreeImageGeneratorTab() {
     const [generatedVariations, setGeneratedVariations] = useState([]);
     const [isGenerating, setIsGenerating] = useState(false);
     const [isGeneratingMore, setIsGeneratingMore] = useState(false);
+    const [isZipping, setIsZipping] = useState(false);
     const [currentBatchIndex, setCurrentBatchIndex] = useState(0);
 
     // Selected Custom Graphic Badge
+    const [badgeAssetList, setBadgeAssetList] = useState(GRAPHIC_BADGE_ASSETS);
     const [selectedBadgeAsset, setSelectedBadgeAsset] = useState(GRAPHIC_BADGE_ASSETS[0]);
     const [selectedBadgeColor, setSelectedBadgeColor] = useState('#ff3f6c');
     const [selectedBadgePosition, setSelectedBadgePosition] = useState('top_left');
 
     const fileInputRef = useRef(null);
+    const customBadgeInputRef = useRef(null);
     const badgeImageCache = useRef(new Map());
 
-    // Preload PNG Badge Asset Image
-    const loadBadgeImage = (filename) => {
+    // Handle User Custom Badge Upload
+    const handleCustomBadgeUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const customBadgeObj = {
+                id: `custom_badge_${Date.now()}`,
+                name: `📤 Custom Badge: ${file.name.slice(0, 20)}`,
+                file: event.target.result,
+                category: 'custom'
+            };
+
+            setBadgeAssetList(prev => [customBadgeObj, ...prev]);
+            setSelectedBadgeAsset(customBadgeObj);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    // Preload PNG Badge Asset Image or Data URL
+    const loadBadgeImage = (srcOrFilename) => {
         return new Promise((resolve) => {
-            if (badgeImageCache.current.has(filename)) {
-                resolve(badgeImageCache.current.get(filename));
+            if (!srcOrFilename) { resolve(null); return; }
+            if (badgeImageCache.current.has(srcOrFilename)) {
+                resolve(badgeImageCache.current.get(srcOrFilename));
                 return;
             }
             const img = new Image();
             img.crossOrigin = 'anonymous';
-            img.src = `/badges/${filename}`;
+            img.src = srcOrFilename.startsWith('data:') ? srcOrFilename : `/badges/${srcOrFilename}`;
             img.onload = () => {
-                badgeImageCache.current.set(filename, img);
+                badgeImageCache.current.set(srcOrFilename, img);
                 resolve(img);
             };
             img.onerror = () => {
-                console.error(`Failed to load graphic badge image: /badges/${filename}`);
+                console.error(`Failed to load graphic badge image: ${srcOrFilename}`);
                 resolve(null);
             };
         });
+    };
+
+    // Export All Generated Catalog Images into 1 Single ZIP File Archive
+    const handleDownloadAllZip = async () => {
+        if (generatedVariations.length === 0 || isZipping) return;
+        setIsZipping(true);
+        try {
+            const zip = new JSZip();
+            const folder = zip.folder("vendorsdesk_catalog_variations");
+
+            generatedVariations.forEach((item, idx) => {
+                if (item.dataUrl) {
+                    const base64Data = item.dataUrl.split(',')[1];
+                    folder.file(`catalog_variation_${idx + 1}.jpg`, base64Data, { base64: true });
+                }
+            });
+
+            const content = await zip.generateAsync({ type: 'blob' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(content);
+            link.download = `vendorsdesk_catalog_variations_${generatedVariations.length}_bundle.zip`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (err) {
+            console.error('ZIP Export Error:', err);
+            alert('Failed to generate ZIP archive.');
+        } finally {
+            setIsZipping(false);
+        }
     };
 
     const handleFile = (file) => {
@@ -304,26 +359,26 @@ export default function FreeImageGeneratorTab() {
     };
 
     return (
-        <div style={{ width: '100%', maxWidth: '1150px', margin: '0 auto' }}>
+        <div style={{ width: '100%', maxWidth: '1040px', margin: '0 auto' }}>
             
             {/* Header & Upload Card */}
-            <div className="panel-card" style={{ marginBottom: '2rem', textAlign: 'center', background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(236, 72, 153, 0.05))', border: '1px solid rgba(37, 99, 235, 0.15)' }}>
-                <div style={{ background: 'rgba(37, 99, 235, 0.1)', color: '#2563eb', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 700, display: 'inline-block', marginBottom: '0.85rem' }}>
+            <div className="panel-card" style={{ padding: '1.25rem 1.5rem', marginBottom: '1rem', textAlign: 'center', background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.04), rgba(236, 72, 153, 0.04))', border: '1px solid rgba(37, 99, 235, 0.15)' }}>
+                <div style={{ background: 'rgba(37, 99, 235, 0.08)', color: '#2563eb', padding: '0.2rem 0.65rem', borderRadius: '20px', fontSize: '0.68rem', fontWeight: 800, display: 'inline-block', marginBottom: '0.4rem' }}>
                     🆓 100% FREE UNLIMITED GRAPHIC BADGE GENERATOR
                 </div>
-                <h2 style={{ fontFamily: 'Outfit', fontSize: '2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>
+                <h2 style={{ fontFamily: 'Outfit', fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.35rem' }}>
                     Meesho Catalog Image Graphic Badge Generator
                 </h2>
-                <p style={{ color: '#475569', fontSize: '0.95rem', maxWidth: '720px', margin: '0 auto 1.5rem auto', lineHeight: '1.6' }}>
+                <p style={{ color: '#475569', fontSize: '0.82rem', maxWidth: '640px', margin: '0 auto 1rem auto', lineHeight: '1.5' }}>
                     Bypass Meesho duplicate listing filters with <strong>19 Real Graphic PNG Badges & Stamps</strong> (Best Seller, Premium Quality, 100% Original, Free Delivery, Fast Shipping). Click <strong>"Generate More Variations"</strong> continuously to unlock unlimited combinations for free!
                 </p>
 
                 {!imagePreview ? (
-                    <div className="upload-zone" onClick={() => fileInputRef.current.click()} style={{ maxWidth: '500px', margin: '0 auto', padding: '2.5rem 1.5rem', borderRadius: '16px', border: '2px dashed #3b82f6', background: '#ffffff', cursor: 'pointer' }}>
+                    <div className="upload-zone" onClick={() => fileInputRef.current.click()} style={{ maxWidth: '480px', margin: '0 auto', padding: '1.75rem 1.25rem', borderRadius: '16px', border: '2px dashed #3b82f6', background: '#ffffff', cursor: 'pointer' }}>
                         <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" onChange={(e) => handleFile(e.target.files[0])} />
-                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🖼️</div>
-                        <div style={{ fontWeight: 700, fontSize: '1.05rem', color: '#0f172a', marginBottom: '0.25rem' }}>Upload Product Photo</div>
-                        <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Supports PNG, JPG (Click or Drag & Drop)</div>
+                        <div style={{ fontSize: '2.2rem', marginBottom: '0.35rem' }}>🖼️</div>
+                        <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a', marginBottom: '0.2rem' }}>Upload Product Photo</div>
+                        <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Supports PNG, JPG (Click or Drag & Drop)</div>
                     </div>
                 ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'center' }}>
@@ -338,15 +393,31 @@ export default function FreeImageGeneratorTab() {
                         <div style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '1rem 1.25rem', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap', width: '100%', maxWidth: '780px', boxShadow: '0 4px 14px rgba(0,0,0,0.04)' }}>
                             <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', whiteSpace: 'nowrap' }}>Choose Graphic Badge:</div>
                             
+                            <input 
+                                type="file" 
+                                ref={customBadgeInputRef} 
+                                style={{ display: 'none' }} 
+                                accept="image/*" 
+                                onChange={handleCustomBadgeUpload} 
+                            />
+
+                            <button
+                                className="btn-action"
+                                onClick={() => customBadgeInputRef.current.click()}
+                                style={{ padding: '0.45rem 0.75rem', fontSize: '0.78rem', fontWeight: 800, background: '#eff6ff', color: '#2563eb', border: '1px solid rgba(37,99,235,0.25)', borderRadius: '8px' }}
+                            >
+                                📤 Upload Custom Badge
+                            </button>
+
                             <select
                                 value={selectedBadgeAsset.id}
                                 onChange={(e) => {
-                                    const asset = GRAPHIC_BADGE_ASSETS.find(b => b.id === e.target.value);
+                                    const asset = badgeAssetList.find(b => b.id === e.target.value);
                                     if (asset) setSelectedBadgeAsset(asset);
                                 }}
                                 style={{ flexGrow: 1, padding: '0.5rem 0.75rem', fontSize: '0.85rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 600 }}
                             >
-                                {GRAPHIC_BADGE_ASSETS.map((b) => (
+                                {badgeAssetList.map((b) => (
                                     <option key={b.id} value={b.id}>{b.name}</option>
                                 ))}
                             </select>
@@ -390,8 +461,27 @@ export default function FreeImageGeneratorTab() {
                         <h3 style={{ fontFamily: 'Outfit', fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
                             ✨ Generated Graphic Catalog Variations ({generatedVariations.length})
                         </h3>
-                        <div style={{ fontSize: '0.8rem', color: '#059669', fontWeight: 700, background: 'rgba(16, 185, 129, 0.1)', padding: '0.35rem 0.85rem', borderRadius: '12px' }}>
-                            ⚡ Free Unlimited Download
+                        
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <button
+                                className="btn-submit-form"
+                                disabled={isZipping}
+                                onClick={handleDownloadAllZip}
+                                style={{
+                                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                    padding: '0.55rem 1.25rem',
+                                    borderRadius: '10px',
+                                    fontWeight: 800,
+                                    fontSize: '0.85rem',
+                                    boxShadow: '0 4px 15px rgba(16, 185, 129, 0.25)'
+                                }}
+                            >
+                                {isZipping ? '⏳ Zipping...' : `📦 Export All ${generatedVariations.length} Images (.ZIP)`}
+                            </button>
+
+                            <div style={{ fontSize: '0.8rem', color: '#059669', fontWeight: 700, background: 'rgba(16, 185, 129, 0.1)', padding: '0.4rem 0.85rem', borderRadius: '10px' }}>
+                                ⚡ Free Unlimited Download
+                            </div>
                         </div>
                     </div>
 
