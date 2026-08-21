@@ -2173,7 +2173,7 @@ export default function App() {
                                     value={couponCode} 
                                     onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                                     disabled={isApplyingCoupon || !!submittingPlanId}
-                                    style={{ textTransform: 'uppercase' }}
+                                    style={{ flex: 1, textTransform: 'uppercase' }}
                                 />
                                 <button 
                                     className="btn-action btn-action-primary" 
