@@ -93,10 +93,17 @@ export default function LabelExporterTab({ currentUser, onNavigateToBilling }) {
     const isLocked = !currentUser || currentUser.tier === 'free';
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
-                <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem', fontFamily: 'Outfit, sans-serif' }}>Shipping Label Export</h2>
-                <p style={{ color: 'var(--text-secondary)' }}>Upload your Meesho PDF sheets, sort by SKU, crop labels, and export clean packs</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', maxWidth: '1040px', margin: '0 auto', width: '100%' }}>
+            <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
+                <div style={{ background: 'rgba(124, 58, 237, 0.08)', color: '#7c3aed', padding: '0.2rem 0.65rem', borderRadius: '20px', fontSize: '0.68rem', fontWeight: 800, display: 'inline-block', marginBottom: '0.25rem' }}>
+                    📋 BULK PDF THERMAL LABEL CROPPER & SKU SORTER
+                </div>
+                <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '0.25rem', fontFamily: 'Outfit, sans-serif', color: '#0f172a' }}>
+                    Shipping Label Exporter & SKU Sorter
+                </h2>
+                <p style={{ color: '#64748b', fontSize: '0.82rem', margin: 0 }}>
+                    Upload your Meesho PDF sheets, sort by SKU, crop thermal 4x6 labels, and export clean print packs.
+                </p>
             </div>
 
             {isLocked ? (
