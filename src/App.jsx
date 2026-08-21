@@ -8,6 +8,7 @@ import CalculatorTab from './components/CalculatorTab';
 import MeeshoAnalyticsTab from './components/MeeshoAnalyticsTab';
 import FreeImageGeneratorTab from './components/FreeImageGeneratorTab';
 import PnLCalculatorTab from './components/PnLCalculatorTab';
+import BulkBackgroundRemoverTab from './components/BulkBackgroundRemoverTab';
 import FeedbackWidget from './components/FeedbackWidget';
 
 /* ── 1. MEESHO SHIPPING RATES & P&L HOME PAGE ─────────────────── */
@@ -694,10 +695,12 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
                             }}>
                                 {/* Tool 1: Background Remover & Live Studio */}
                                 <div 
+                                    onClick={() => { onTabChange('bg-remover'); setIsToolsDropdownOpen(false); }}
                                     style={{
                                         padding: '0.65rem 0.85rem',
                                         borderRadius: '12px',
                                         cursor: 'pointer',
+                                        background: activeTab === 'bg-remover' ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
                                         display: 'flex',
                                         alignItems: 'flex-start',
                                         gap: '0.75rem'
@@ -963,6 +966,7 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
             </header>
 
             {/* Conditionally Render Subpages */}
+            {activeTab === 'bg-remover' && <div style={{ padding: '2.5rem 5%' }}><BulkBackgroundRemoverTab /></div>}
             {activeTab === 'free-image-generator' && <div style={{ padding: '2.5rem 5%' }}><FreeImageGeneratorTab onRegister={onRegister} /></div>}
             {activeTab === 'meesho-shipping-rates' && <MeeshoShippingRatesPage onRegister={onRegister} />}
             {activeTab === 'pnl-calculator' && <div style={{ padding: '2.5rem 5%' }}><PnLCalculatorTab /></div>}
@@ -975,6 +979,7 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
             {activeTab === 'contact-us' && <ContactUsPage />}
 
             {/* Custom 404 Not Found Page */}
+            {!['bg-remover', 'free-image-generator', 'meesho-shipping-rates', 'pnl-calculator', 'meesho-image-generator', 'meesho-label-exporter', 'pricing', 'privacy-policy', 'refund-policy', 'terms-of-service', 'contact-us'].includes(activeTab) && (
                 <div style={{ maxWidth: '600px', margin: '4rem auto', textAlign: 'center', padding: '3.5rem 2rem', background: '#ffffff', borderRadius: '20px', border: '1px solid #e2e8f0', boxShadow: '0 20px 40px rgba(15, 23, 42, 0.08)' }}>
                     <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🔍 404</div>
                     <h1 style={{ fontFamily: 'Outfit', fontSize: '2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.75rem' }}>Page Not Found</h1>
@@ -1117,6 +1122,8 @@ export default function App() {
     const PAGE_ROUTES = {
         '/': 'home',
         '/home': 'home',
+        '/background-remover': 'bg-remover',
+        '/bg-remover': 'bg-remover',
         '/free-image-generator': 'free-image-generator',
         '/image-generator': 'free-image-generator',
         '/rate-optimizer': 'optimizer',
@@ -1136,6 +1143,7 @@ export default function App() {
 
     const PAGE_PATHS = {
         'home': '/home',
+        'bg-remover': '/background-remover',
         'free-image-generator': '/free-image-generator',
         'optimizer': '/rate-optimizer',
         'pnl-calculator': '/pnl-calculator',
@@ -1901,6 +1909,8 @@ export default function App() {
                             🏠 Home Dashboard
                         </button>
                         <button 
+                            className={`sidebar-link ${activePage === 'bg-remover' ? 'active' : ''}`}
+                            onClick={() => navigateToPage('bg-remover')}
                             style={{ background: 'rgba(37, 99, 235, 0.08)', color: '#2563eb', fontWeight: 700 }}
                         >
                             🖼️ Bulk Background Remover
@@ -2026,6 +2036,8 @@ export default function App() {
                         <HomeTab onNavigate={(page) => setActivePage(page)} />
                     )}
 
+                    {activePage === 'bg-remover' && (
+                        <BulkBackgroundRemoverTab />
                     )}
 
                     {activePage === 'free-image-generator' && (
