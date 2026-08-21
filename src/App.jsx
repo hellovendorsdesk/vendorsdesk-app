@@ -1289,20 +1289,24 @@ export default function App() {
         if (authModalOpen) {
             const timer = setTimeout(() => {
                 try {
-                    if (window.google) {
+                    const btnContainer = document.getElementById("google-signin-btn");
+                    if (window.google && window.google.accounts && window.google.accounts.id && btnContainer) {
+                        btnContainer.innerHTML = '';
                         google.accounts.id.initialize({
                             client_id: "148360176717-1dpf5u3v99ckjhu5gruud4f9u17uqoc2.apps.googleusercontent.com",
-                            callback: handleGoogleCredentialResponse
+                            callback: handleGoogleCredentialResponse,
+                            auto_select: false,
+                            cancel_on_tap_outside: true
                         });
                         google.accounts.id.renderButton(
-                            document.getElementById("google-signin-btn"),
+                            btnContainer,
                             { theme: "outline", size: "large", width: 340 }
                         );
                     }
                 } catch (e) {
-                    console.error("Google script initialization failed:", e);
+                    console.warn("Google Sign-In initialization skipped/not allowed on this origin:", e.message);
                 }
-            }, 400);
+            }, 300);
             return () => clearTimeout(timer);
         }
     }, [authModalOpen]);
