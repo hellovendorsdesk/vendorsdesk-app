@@ -1287,10 +1287,11 @@ export default function App() {
     // Google Sign-In button initialization
     useEffect(() => {
         if (authModalOpen) {
+            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
             const timer = setTimeout(() => {
                 try {
                     const btnContainer = document.getElementById("google-signin-btn");
-                    if (window.google && window.google.accounts && window.google.accounts.id && btnContainer) {
+                    if (!isLocalhost && window.google && window.google.accounts && window.google.accounts.id && btnContainer) {
                         btnContainer.innerHTML = '';
                         google.accounts.id.initialize({
                             client_id: "148360176717-1dpf5u3v99ckjhu5gruud4f9u17uqoc2.apps.googleusercontent.com",
@@ -1302,6 +1303,8 @@ export default function App() {
                             btnContainer,
                             { theme: "outline", size: "large", width: 340 }
                         );
+                    } else if (isLocalhost && btnContainer) {
+                        btnContainer.innerHTML = '<div style="font-size:0.75rem; color:#64748b; background:#f8fafc; padding:0.45rem 0.85rem; border-radius:8px; border:1px solid #e2e8f0; font-weight:600; text-align:center;">⚡ Google 1-Click Login Active on Production (vendorsdesk.in)</div>';
                     }
                 } catch (e) {
                     console.warn("Google Sign-In initialization skipped/not allowed on this origin:", e.message);
