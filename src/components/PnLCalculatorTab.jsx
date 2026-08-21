@@ -315,10 +315,10 @@ export default function PnLCalculatorTab() {
             <div className="panel-card" style={{ marginBottom: '2rem', background: 'linear-gradient(135deg, rgba(37,99,235,0.06), rgba(16,185,129,0.06))', border: '1px solid rgba(37,99,235,0.2)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
                     <div>
-                        <div style={{ background: 'rgba(37,99,235,0.1)', color: '#2563eb', padding: '0.3rem 0.85rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 700, display: 'inline-block', marginBottom: '0.5rem' }}>
-                            📊 MEESHO RECONCILIATION & PROFIT ANALYTICS ENGINE
+                        <div style={{ background: 'rgba(37, 99, 235, 0.08)', color: '#2563eb', padding: '0.2rem 0.65rem', borderRadius: '20px', fontSize: '0.68rem', fontWeight: 800, display: 'inline-block', marginBottom: '0.25rem' }}>
+                            📊 MEESHO PAYOUT & RECONCILIATION AUDITOR
                         </div>
-                        <h2 style={{ fontFamily: 'Outfit', fontSize: '1.8rem', fontWeight: 800, margin: 0 }}>
+                        <h2 style={{ fontFamily: 'Outfit', fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>
                             Payment & Profit Analytics Dashboard
                         </h2>
                     </div>
