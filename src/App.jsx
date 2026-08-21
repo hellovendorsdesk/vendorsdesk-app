@@ -1886,7 +1886,8 @@ export default function App() {
                 top: 0,
                 bottom: 0,
                 left: 0,
-                zIndex: 100
+                zIndex: 100,
+                overflowY: 'auto'
             }}>
                 <div>
                     {/* Brand */}
@@ -1987,7 +1988,7 @@ export default function App() {
             </aside>
 
             {/* Main Area */}
-            <div style={{ marginLeft: '260px', flexGrow: 1, padding: '2.5rem', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ marginLeft: '260px', width: 'calc(100% - 260px)', flexGrow: 1, padding: '2.5rem', display: 'flex', justifyContent: 'center' }}>
                 <div style={{ width: '100%', maxWidth: '100%' }}>
                     
                     {/* Top 0-Credits Banner Notice */}
