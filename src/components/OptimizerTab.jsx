@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import JSZip from 'jszip';
 import { secureFetch } from '../utils/crypto';
 
 function fileToBase64(file) {
@@ -65,12 +66,46 @@ export default function OptimizerTab({ currentUser, onCreditsChange, onNavigateT
     const [selectedJob, setSelectedJob] = useState(null);
     const [lightboxUrl, setLightboxUrl] = useState(null);
     const [downloadingId, setDownloadingId] = useState(null);
+    const [isZipping, setIsZipping] = useState(false);
     const [showCreditModal, setShowCreditModal] = useState(false);
 
     const fileInputRef = useRef(null);
     const selectRef = useRef(null);
     const pollRef = useRef(null);
     const pollTriesRef = useRef(0);
+
+    const handleDownloadOptimizerZip = async () => {
+        if (results.length === 0 || isZipping) return;
+        setIsZipping(true);
+        try {
+            const zip = new JSZip();
+            const folder = zip.folder("vendorsdesk_rate_variations");
+
+            for (let idx = 0; idx < results.length; idx++) {
+                const item = results[idx];
+                if (item.imageUrl) {
+                    try {
+                        const resp = await fetch(item.imageUrl);
+                        const blob = await resp.blob();
+                        folder.file(`variation_${idx + 1}_${(item.label || 'img').replace(/[^a-z0-9]/gi, '_')}.jpg`, blob);
+                    } catch(e) {}
+                }
+            }
+
+            const content = await zip.generateAsync({ type: 'blob' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(content);
+            link.download = `vendorsdesk_variations_${results.length}_bundle.zip`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (err) {
+            console.error('ZIP Error:', err);
+            alert('Failed to generate ZIP archive.');
+        } finally {
+            setIsZipping(false);
+        }
+    };
 
     useEffect(() => {
         const loadCategories = async () => {
@@ -310,13 +345,15 @@ export default function OptimizerTab({ currentUser, onCreditsChange, onNavigateT
     const pct = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
 
     return (
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '100%', maxWidth: '1180px', margin: '0 auto' }}>
             {viewMode === 'dashboard' && (
-                <div className="app-workspace">
-                    <div className="control-panel-section">
-                        <h3 className="panel-title" style={{ color: '#2563eb', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem', fontFamily: 'Outfit' }}>Upload & Optimize</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(340px, 380px) 1fr', gap: '1.5rem', alignItems: 'start', width: '100%' }}>
+                    
+                    {/* LEFT COLUMN: UPLOAD & OPTIMIZE INPUT FORM */}
+                    <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+                        <h3 className="panel-title" style={{ color: '#2563eb', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem', fontFamily: 'Outfit', fontSize: '1.2rem', fontWeight: 800 }}>Upload & Optimize</h3>
 
-                        <div className="form-group">
+                        <div className="form-group" style={{ marginBottom: 0 }}>
                             <label style={{ fontWeight: 600, marginBottom: '0.4rem', display: 'block' }}>Select Meesho Category</label>
                             <div className={`searchable-select-container ${dropdownOpen ? 'open' : ''}`} ref={selectRef}>
                                 <input type="text" placeholder="Search categories (e.g. Sarees, Kurtis...)" value={searchQuery}
@@ -336,27 +373,76 @@ export default function OptimizerTab({ currentUser, onCreditsChange, onNavigateT
                             </div>
                         </div>
 
-                        <div className="form-group">
-                            <label style={{ fontWeight: 600, marginBottom: '0.4rem', display: 'block' }}>Upload Product Image</label>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                            <label style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a', marginBottom: '0.4rem', display: 'block' }}>Upload Product Image</label>
+                            
                             {!imagePreview ? (
-                                <div className={`upload-zone ${dragOver ? 'dragover' : ''}`} onClick={() => fileInputRef.current.click()}
-                                    onDragOver={(e) => { e.preventDefault(); setDragOver(true); }} onDragLeave={() => setDragOver(false)}
-                                    onDrop={(e) => { e.preventDefault(); setDragOver(false); handleFile(e.dataTransfer.files[0]); }} style={{ padding: '1.5rem 1rem', borderRadius: '12px' }}>
-                                    <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" onChange={(e) => handleFile(e.target.files[0])} />
-                                    <div className="upload-icon" style={{ fontSize: '1.8rem' }}>📸</div>
-                                    <div className="upload-text-main" style={{ fontSize: '0.85rem' }}>Click / Drop one image</div>
-                                    <div className="upload-text-sub" style={{ fontSize: '0.7rem' }}>PNG, JPG (Max 15MB)</div>
-                                </div>
+                                <label 
+                                    htmlFor="optimizer-file-input"
+                                    className={`upload-zone ${dragOver ? 'dragover' : ''}`} 
+                                    onDragOver={(e) => { e.preventDefault(); setDragOver(true); }} 
+                                    onDragLeave={() => setDragOver(false)}
+                                    onDrop={(e) => { e.preventDefault(); setDragOver(false); if (e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); }} 
+                                    style={{ 
+                                        width: '100%',
+                                        minHeight: '160px',
+                                        padding: '1.5rem 1rem', 
+                                        borderRadius: '16px',
+                                        border: '2px dashed #2563eb',
+                                        background: '#ffffff',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justify: 'center',
+                                        textAlign: 'center',
+                                        gap: '0.4rem',
+                                        boxShadow: '0 4px 14px rgba(37, 99, 235, 0.06)'
+                                    }}
+                                >
+                                    <input 
+                                        id="optimizer-file-input"
+                                        type="file" 
+                                        ref={fileInputRef} 
+                                        style={{ display: 'none' }} 
+                                        accept="image/*" 
+                                        onChange={(e) => {
+                                            if (e.target.files && e.target.files[0]) {
+                                                handleFile(e.target.files[0]);
+                                            }
+                                        }} 
+                                    />
+                                    <div className="upload-icon" style={{ fontSize: '2.4rem' }}>📁</div>
+                                    <div className="upload-text-main" style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>
+                                        Click to Upload / Drag & Drop Image
+                                    </div>
+                                    <div className="upload-text-sub" style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
+                                        Supports PNG, JPG, WEBP (Max 15MB)
+                                    </div>
+                                    <span style={{ fontSize: '0.72rem', background: '#eff6ff', color: '#2563eb', fontWeight: 700, padding: '0.3rem 0.75rem', borderRadius: '20px', marginTop: '0.25rem', border: '1px solid rgba(37,99,235,0.2)' }}>
+                                        ⚡ 1-Click Auto Processing
+                                    </span>
+                                </label>
                             ) : (
-                                <div style={{ position: 'relative', border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden', background: '#f8fafc' }}>
-                                    <img src={imagePreview} alt="preview" style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'contain', display: 'block' }} />
-                                    <button onClick={clearImage} style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(220,38,38,0.9)', color: '#fff', border: 'none', width: '24px', height: '24px', borderRadius: '50%', cursor: 'pointer' }}>✕</button>
+                                <div style={{ position: 'relative', border: '2px solid #2563eb', borderRadius: '16px', overflow: 'hidden', background: '#ffffff', padding: '0.5rem' }}>
+                                    <img src={imagePreview} alt="preview" style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'contain', display: 'block', borderRadius: '12px' }} />
+                                    <button 
+                                        onClick={clearImage} 
+                                        style={{ 
+                                            position: 'absolute', top: '12px', right: '12px', 
+                                            background: '#ef4444', color: '#ffffff', border: 'none', 
+                                            width: '30px', height: '30px', borderRadius: '50%', cursor: 'pointer',
+                                            fontWeight: 'bold', fontSize: '0.9rem', boxShadow: '0 4px 10px rgba(239, 68, 68, 0.4)' 
+                                        }}
+                                    >
+                                        ✕
+                                    </button>
                                 </div>
                             )}
                         </div>
 
                         <button className="btn-submit-form" disabled={!selectedCategory || !imageFile || isOptimizing} onClick={startOptimization}
-                            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '1rem', opacity: (!selectedCategory || !imageFile || isOptimizing) ? 0.6 : 1, cursor: isOptimizing ? 'not-allowed' : 'pointer' }}>
+                            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.85rem', opacity: (!selectedCategory || !imageFile || isOptimizing) ? 0.6 : 1, cursor: isOptimizing ? 'not-allowed' : 'pointer', width: '100%' }}>
                             {isOptimizing ? (
                                 <>
                                     <span style={{ width: '16px', height: '16px', border: '2px solid #ffffff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
@@ -369,13 +455,14 @@ export default function OptimizerTab({ currentUser, onCreditsChange, onNavigateT
                         {errorMsg && <div style={{ color: 'var(--danger)', fontSize: '0.8rem' }}>{errorMsg}</div>}
                     </div>
 
-                    <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', minHeight: 'auto' }}>
+                    {/* RIGHT COLUMN: OUTPUT & RECENT OPTIMIZATIONS */}
+                    <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', minHeight: '480px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem' }}>
-                            <h3 className="panel-title" style={{ color: '#2563eb', fontFamily: 'Outfit' }}>Recent Optimizations</h3>
+                            <h3 className="panel-title" style={{ color: '#2563eb', fontFamily: 'Outfit' }}>Output & Recent Optimizations</h3>
                             <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Total: {jobs.length}</span>
                         </div>
                         {jobs.length > 0 ? (
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem', alignContent: 'start' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '1rem', alignContent: 'start' }}>
                                 {jobs.map(job => (
                                     <div key={job._id} onClick={() => openJob(job)} className="history-card-hover"
                                         style={{ background: '#ffffff', border: '1px solid var(--card-border)', borderRadius: '14px', overflow: 'hidden', display: 'flex', flexDirection: 'column', cursor: 'pointer' }}>
@@ -394,10 +481,10 @@ export default function OptimizerTab({ currentUser, onCreditsChange, onNavigateT
                                 ))}
                             </div>
                         ) : (
-                            <div style={{ textAlign: 'center', padding: '3rem 1rem', color: 'var(--text-secondary)' }}>
-                                <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>📦</div>
-                                <div style={{ fontSize: '0.9rem', fontWeight: 600 }}>No optimizations yet</div>
-                                <p style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>Upload an image and generate variations to see results here.</p>
+                            <div style={{ textAlign: 'center', padding: '4rem 1rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', my: 'auto' }}>
+                                <div style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>📦</div>
+                                <div style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>Output Panel Empty</div>
+                                <p style={{ fontSize: '0.82rem', marginTop: '0.4rem', maxWidth: '340px', lineHeight: '1.5' }}>Upload a product photo on the left panel and click "Generate Variations" to see optimized rates & images right here.</p>
                             </div>
                         )}
                     </div>
@@ -406,16 +493,37 @@ export default function OptimizerTab({ currentUser, onCreditsChange, onNavigateT
 
             {viewMode === 'results' && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
-                    <div className="panel-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-                        <div>
-                            <div onClick={() => { if (pollRef.current) clearTimeout(pollRef.current); setViewMode('dashboard'); setSelectedJob(null); setIsOptimizing(false); }} style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', cursor: 'pointer', marginBottom: '0.35rem' }}>◀ Back</div>
-                            <h2 style={{ fontSize: '1.4rem', fontFamily: 'Outfit', fontWeight: 700 }}>Optimization Results</h2>
-                            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                    <div className="panel-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.25rem', width: '100%', boxSizing: 'border-box' }}>
+                        <div style={{ flex: '1 1 260px', minWidth: 0 }}>
+                            <div onClick={() => { if (pollRef.current) clearTimeout(pollRef.current); setViewMode('dashboard'); setSelectedJob(null); setIsOptimizing(false); }} style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', cursor: 'pointer', marginBottom: '0.35rem', fontWeight: 600 }}>◀ Back</div>
+                            <h2 style={{ fontSize: '1.4rem', fontFamily: 'Outfit', fontWeight: 700, wordBreak: 'break-word' }}>Optimization Results</h2>
+                            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', wordBreak: 'break-word', margin: '0.2rem 0 0 0' }}>
                                 {selectedJob ? selectedJob.category : (results[0] && results[0].category) || 'Variations'} — {successful.length} rates found
                                 {cheapestCharge != null && <> · Best rate <strong style={{ color: 'var(--success)' }}>₹{cheapestCharge}</strong></>}
                             </p>
                         </div>
-                        {!isOptimizing && <button className="btn-action btn-action-primary" style={{ padding: '0.6rem 1.25rem', fontWeight: 600 }} onClick={() => { setViewMode('dashboard'); setSelectedJob(null); }}>⚡ Optimize Another</button>}
+                        {!isOptimizing && (
+                            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap', maxWidth: '100%' }}>
+                                {results.length > 0 && (
+                                    <button
+                                        className="btn-submit-form"
+                                        disabled={isZipping}
+                                        onClick={handleDownloadOptimizerZip}
+                                        style={{
+                                            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                            padding: '0.65rem 1.25rem',
+                                            borderRadius: '10px',
+                                            fontWeight: 800,
+                                            fontSize: '0.85rem',
+                                            whiteSpace: 'nowrap'
+                                        }}
+                                    >
+                                        {isZipping ? '⏳ Zipping...' : `📦 Export All ${results.length} (.ZIP)`}
+                                    </button>
+                                )}
+                                <button className="btn-action btn-action-primary" style={{ padding: '0.65rem 1.25rem', fontWeight: 700, borderRadius: '10px', whiteSpace: 'nowrap' }} onClick={() => { setViewMode('dashboard'); setSelectedJob(null); }}>⚡ Optimize Another</button>
+                            </div>
+                        )}
                     </div>
 
                     {/* Live progress banner */}
@@ -441,26 +549,88 @@ export default function OptimizerTab({ currentUser, onCreditsChange, onNavigateT
                     )}
 
                     {!isOptimizing && (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1.25rem', alignContent: 'start' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '1.5rem', alignContent: 'start' }}>
                         {sortedResults.map((v, idx) => {
                             const isCheapest = v.status === 'success' && v.shippingCharge != null && v.shippingCharge === cheapestCharge;
                             const id = v.id || v._id;
                             return (
-                                <div key={id || idx} className="variation-card" style={{ background: '#ffffff', border: isCheapest ? '2px solid #10b981' : '1px solid var(--card-border)', borderRadius: '16px', overflow: 'hidden', position: 'relative' }}>
-                                    {isCheapest && <span className="badge badge-active" style={{ position: 'absolute', top: '10px', right: '10px', background: '#10b981', color: '#fff', fontSize: '0.6rem', padding: '0.2rem 0.45rem', borderRadius: '8px', zIndex: 5, fontWeight: 700 }}>CHEAPEST</span>}
-                                    <div className="card-img-container" style={{ aspectRatio: '1 / 1', height: 'auto', background: '#f1f5f9', cursor: v.imageUrl ? 'zoom-in' : 'default' }} onClick={() => v.imageUrl && setLightboxUrl(v.imageUrl)}>
-                                        {v.imageUrl ? <img src={v.imageUrl} alt={v.label} className="card-img" /> : <div style={{ color: 'var(--text-secondary)', fontSize: '0.7rem', padding: '1rem', textAlign: 'center' }}>No image<br />(check failed)</div>}
+                                <div 
+                                    key={id || idx} 
+                                    className="panel-card card-hover-lift" 
+                                    style={{ 
+                                        padding: '0.85rem',
+                                        background: '#ffffff', 
+                                        border: isCheapest ? '2px solid #10b981' : '1px solid #cbd5e1', 
+                                        borderRadius: '20px', 
+                                        overflow: 'hidden', 
+                                        position: 'relative',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: '0.65rem',
+                                        boxShadow: isCheapest ? '0 10px 25px rgba(16, 185, 129, 0.15)' : '0 4px 15px rgba(15, 23, 42, 0.05)'
+                                    }}
+                                >
+                                    {isCheapest && (
+                                        <span 
+                                            style={{ 
+                                                position: 'absolute', top: '14px', right: '14px', 
+                                                background: '#10b981', color: '#ffffff', 
+                                                fontSize: '0.65rem', padding: '0.25rem 0.6rem', 
+                                                borderRadius: '20px', zIndex: 5, fontWeight: 800,
+                                                boxShadow: '0 4px 10px rgba(16, 185, 129, 0.3)',
+                                                letterSpacing: '0.04em'
+                                            }}
+                                        >
+                                            ⚡ CHEAPEST
+                                        </span>
+                                    )}
+
+                                    <div 
+                                        style={{ 
+                                            width: '100%',
+                                            aspectRatio: '1 / 1', 
+                                            borderRadius: '14px',
+                                            background: '#f8fafc', 
+                                            overflow: 'hidden',
+                                            cursor: v.imageUrl ? 'zoom-in' : 'default',
+                                            border: '1px solid #f1f5f9',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justify: 'center'
+                                        }} 
+                                        onClick={() => v.imageUrl && setLightboxUrl(v.imageUrl)}
+                                    >
+                                        {v.imageUrl ? (
+                                            <img 
+                                                src={v.imageUrl} 
+                                                alt={v.label} 
+                                                style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} 
+                                            />
+                                        ) : (
+                                            <div style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', padding: '1rem', textAlign: 'center' }}>
+                                                No image preview<br />(check failed)
+                                            </div>
+                                        )}
                                     </div>
-                                    <div className="card-body" style={{ padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginTop: 'auto' }}>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <span style={{ fontSize: '0.75rem', fontWeight: 600, width: '58%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={v.label}>{v.label}</span>
-                                            <span style={{ fontSize: '1.05rem', fontWeight: 800, color: v.status === 'success' && v.shippingCharge != null ? 'var(--success)' : 'var(--danger)' }}>
+                                            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', width: '62%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={v.label}>
+                                                {v.label}
+                                            </span>
+                                            <span style={{ fontSize: '1.1rem', fontWeight: 800, color: v.status === 'success' && v.shippingCharge != null ? 'var(--success)' : 'var(--danger)' }}>
                                                 {v.status === 'success' && v.shippingCharge != null ? `₹${v.shippingCharge}` : '❌'}
                                             </span>
                                         </div>
+
                                         {v.imageUrl && (
-                                            <button className="btn-download-small" style={{ marginTop: '0.25rem', padding: '0.45rem', width: '100%' }} disabled={downloadingId === id} onClick={() => downloadVariation(v)}>
-                                                {downloadingId === id ? 'Downloading...' : '⬇ Download'}
+                                            <button 
+                                                className="btn-action btn-action-primary" 
+                                                style={{ padding: '0.5rem', borderRadius: '10px', fontSize: '0.78rem', fontWeight: 800, width: '100%' }} 
+                                                disabled={downloadingId === id} 
+                                                onClick={() => downloadVariation(v)}
+                                            >
+                                                {downloadingId === id ? 'Downloading...' : '⬇ Download HD Image'}
                                             </button>
                                         )}
                                     </div>
