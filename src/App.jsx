@@ -1542,8 +1542,36 @@ export default function App() {
     const authModals = (
         <>
             {authModalOpen && (
-                <div className="auth-modal-overlay">
-                    <div className="auth-modal-card">
+                <div className="auth-modal-overlay" style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100vw',
+                    height: '100vh',
+                    background: 'rgba(15, 23, 42, 0.75)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '1.5rem',
+                    zIndex: 99999
+                }}>
+                    <div className="auth-modal-card" style={{
+                        position: 'relative',
+                        width: '100%',
+                        maxWidth: '440px',
+                        background: '#ffffff',
+                        border: '1px solid #cbd5e1',
+                        borderRadius: '24px',
+                        padding: '2.25rem 2rem',
+                        boxShadow: '0 25px 60px -15px rgba(15, 23, 42, 0.35)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1.25rem',
+                        fontFamily: 'Inter, sans-serif',
+                        color: '#0f172a'
+                    }}>
                         {/* Close Modal Button */}
                         <button 
                             type="button"
