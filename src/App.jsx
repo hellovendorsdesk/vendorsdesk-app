@@ -1115,19 +1115,20 @@ export default function App() {
     const [activeMarketingTab, setActiveMarketingTab] = useState('meesho-shipping-rates');
 
     const PAGE_ROUTES = {
-        '/': 'meesho-shipping-rates',
-        '/home': 'meesho-shipping-rates',
+        '/': 'home',
+        '/home': 'home',
         '/free-image-generator': 'free-image-generator',
         '/image-generator': 'free-image-generator',
-        '/rate-optimizer': 'meesho-shipping-rates',
-        '/optimizer': 'meesho-shipping-rates',
+        '/rate-optimizer': 'optimizer',
+        '/optimizer': 'optimizer',
         '/pnl-calculator': 'pnl-calculator',
-        '/label-exporter': 'meesho-label-exporter',
-        '/margin-calculator': 'meesho-shipping-rates',
-        '/calculator': 'meesho-shipping-rates',
-        '/pricing': 'pricing',
-        '/billing': 'pricing',
-        '/affiliate': 'pricing',
+        '/label-exporter': 'label-exporter',
+        '/meesho-label-exporter': 'label-exporter',
+        '/margin-calculator': 'calculator',
+        '/calculator': 'calculator',
+        '/pricing': 'billing',
+        '/billing': 'billing',
+        '/affiliate': 'affiliate',
         '/contact': 'contact-us',
         '/contact-us': 'contact-us',
         '/support': 'contact-us'
@@ -1135,12 +1136,10 @@ export default function App() {
 
     const PAGE_PATHS = {
         'home': '/home',
-        'meesho-shipping-rates': '/home',
         'free-image-generator': '/free-image-generator',
         'optimizer': '/rate-optimizer',
         'pnl-calculator': '/pnl-calculator',
         'label-exporter': '/label-exporter',
-        'meesho-label-exporter': '/label-exporter',
         'calculator': '/margin-calculator',
         'pricing': '/pricing',
         'billing': '/pricing',
@@ -1152,7 +1151,7 @@ export default function App() {
         const mappedTab = PAGE_ROUTES[pageKey] || pageKey;
         setActivePage(mappedTab);
         setActiveMarketingTab(mappedTab);
-        updatePageSEO(pageKey);
+        updatePageSEO(mappedTab);
         const targetPath = PAGE_PATHS[mappedTab] || '/home';
         if (pushState && window.location.pathname !== targetPath) {
             window.history.pushState({ page: mappedTab }, '', targetPath);
@@ -1161,7 +1160,7 @@ export default function App() {
 
     useEffect(() => {
         const currentPath = window.location.pathname.toLowerCase();
-        const initialTab = PAGE_ROUTES[currentPath] || 'meesho-shipping-rates';
+        const initialTab = PAGE_ROUTES[currentPath] || 'home';
         setActivePage(initialTab);
         setActiveMarketingTab(initialTab);
         updatePageSEO(initialTab);
