@@ -968,7 +968,7 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
             {/* Conditionally Render Subpages */}
             {activeTab === 'bg-remover' && <div style={{ padding: '2.5rem 5%' }}><BulkBackgroundRemoverTab /></div>}
             {activeTab === 'free-image-generator' && <div style={{ padding: '2.5rem 5%' }}><FreeImageGeneratorTab onRegister={onRegister} /></div>}
-            {activeTab === 'meesho-shipping-rates' && <MeeshoShippingRatesPage onRegister={onRegister} />}
+            {(activeTab === 'meesho-shipping-rates' || activeTab === 'home') && <MeeshoShippingRatesPage onRegister={onRegister} />}
             {activeTab === 'pnl-calculator' && <div style={{ padding: '2.5rem 5%' }}><PnLCalculatorTab /></div>}
             {activeTab === 'meesho-image-generator' && <MeeshoImageGeneratorPage onRegister={onRegister} />}
             {activeTab === 'meesho-label-exporter' && <MeeshoLabelExporterPage onRegister={onRegister} />}
@@ -979,7 +979,7 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
             {activeTab === 'contact-us' && <ContactUsPage />}
 
             {/* Custom 404 Not Found Page */}
-            {!['bg-remover', 'free-image-generator', 'meesho-shipping-rates', 'pnl-calculator', 'meesho-image-generator', 'meesho-label-exporter', 'pricing', 'privacy-policy', 'refund-policy', 'terms-of-service', 'contact-us'].includes(activeTab) && (
+            {!['home', 'bg-remover', 'free-image-generator', 'meesho-shipping-rates', 'pnl-calculator', 'meesho-image-generator', 'meesho-label-exporter', 'pricing', 'privacy-policy', 'refund-policy', 'terms-of-service', 'contact-us'].includes(activeTab) && (
                 <div style={{ maxWidth: '600px', margin: '4rem auto', textAlign: 'center', padding: '3.5rem 2rem', background: '#ffffff', borderRadius: '20px', border: '1px solid #e2e8f0', boxShadow: '0 20px 40px rgba(15, 23, 42, 0.08)' }}>
                     <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🔍 404</div>
                     <h1 style={{ fontFamily: 'Outfit', fontSize: '2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.75rem' }}>Page Not Found</h1>
@@ -996,7 +996,7 @@ function MarketingLandingPage({ currentUser, activeTab, onTabChange, onLogin, on
             )}
 
             {/* General FAQs Accordion Section */}
-            {activeTab === 'meesho-shipping-rates' && (
+            {(activeTab === 'meesho-shipping-rates' || activeTab === 'home') && (
                 <section id="faqs" style={{ padding: '5rem 5% 6rem 5%', maxWidth: '800px', margin: '0 auto', borderTop: '1px solid #e2e8f0' }}>
                     <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
                         <h2 style={{ fontFamily: 'Outfit', fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.75rem', color: '#0f172a' }}>Frequently Asked Questions</h2>
