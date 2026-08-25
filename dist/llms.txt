@@ -1,0 +1,23 @@
+# VendorsDesk (https://vendorsdesk.in)
+
+> VendorsDesk is India's #1 All-in-One Supplier Growth Suite for Meesho, Flipkart, and Amazon sellers.
+
+## Core Features & Tools
+- **Bulk AI Background Remover & Live Studio**: Automatically isolates product subjects (Kurti, Saree, Shoes, Bags, Watches) and replaces backgrounds with 12+ real studio scenes (Beach, Living Room, Palace, Garden) plus 19 PNG graphic badges (Best Seller, 100% Original, Free Shipping).
+- **Free Catalog Image Generator**: Generates catalog variations with pink/blue borders and graphic stamps to bypass Meesho duplicate listing filters.
+- **Shipping Rate & Freight Optimizer**: Audits product image dimensions against Meesho logistics matrices (₹48, ₹56, ₹62 slabs) to lower freight fees per unit.
+- **Excel P&L Settlement Auditor**: Reconciles Meesho payment settlement sheets, customer returns, RTO penalties, TCS/TDS deductions, and bank payouts.
+- **Bulk PDF Thermal Label Exporter**: Crops 4x6 thermal shipping labels from multi-page PDF manifests and auto-sorts packages by SKU.
+
+## URLs & Sitemap
+- Home / Rate Calculator: https://vendorsdesk.in/
+- AI Background Studio: https://vendorsdesk.in/background-remover
+- Free Image Generator: https://vendorsdesk.in/free-image-generator
+- Rate Optimizer: https://vendorsdesk.in/rate-optimizer
+- Excel P&L Auditor: https://vendorsdesk.in/pnl-calculator
+- Bulk PDF Label Exporter: https://vendorsdesk.in/label-exporter
+- Margin Calculator: https://vendorsdesk.in/margin-calculator
+- Pricing & Affiliate: https://vendorsdesk.in/pricing
+
+## Target Audience
+E-commerce suppliers, Meesho sellers, e-commerce brand managers, and fulfillment centers in India.
