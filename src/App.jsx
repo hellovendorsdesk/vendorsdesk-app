@@ -1418,11 +1418,25 @@ export default function App() {
         }
     };
 
+    const handleCloseAuthModal = () => {
+        setAuthModalOpen(false);
+        setAuthError('');
+        if (isAppDomain && !currentUser) {
+            if (window.location.hostname.includes('vendorsdesk.in')) {
+                window.location.href = 'https://vendorsdesk.in';
+            }
+        }
+    };
+
     const handleLogout = () => {
         localStorage.removeItem('vendorsdesk_token');
         setCurrentUser(null);
-        setAuthModalOpen(true);
-        setActivePage('home');
+        if (isAppDomain && window.location.hostname.includes('vendorsdesk.in')) {
+            window.location.href = 'https://vendorsdesk.in';
+        } else {
+            setAuthModalOpen(true);
+            setActivePage('home');
+        }
     };
 
     const handleApplyCoupon = async () => {
@@ -1541,21 +1555,29 @@ export default function App() {
     const authModals = (
         <>
             {authModalOpen && (
-                <div className="auth-modal-overlay" style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100vw',
-                    height: '100vh',
-                    background: 'rgba(15, 23, 42, 0.75)',
-                    backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '1.5rem',
-                    zIndex: 99999
-                }}>
+                <div 
+                    className="auth-modal-overlay" 
+                    onClick={(e) => {
+                        if (e.target === e.currentTarget) {
+                            handleCloseAuthModal();
+                        }
+                    }}
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100vw',
+                        height: '100vh',
+                        background: 'rgba(15, 23, 42, 0.75)',
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '1.5rem',
+                        zIndex: 99999
+                    }}
+                >
                     <div className="auth-modal-card" style={{
                         position: 'relative',
                         width: '100%',
@@ -1574,7 +1596,7 @@ export default function App() {
                         {/* Close Modal Button */}
                         <button 
                             type="button"
-                            onClick={() => { setAuthModalOpen(false); setAuthError(''); }}
+                            onClick={handleCloseAuthModal}
                             style={{
                                 position: 'absolute', top: '1.2rem', right: '1.2rem',
                                 background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '50%',
@@ -2271,7 +2293,7 @@ export default function App() {
                         {/* Close Modal Button */}
                         <button 
                             type="button"
-                            onClick={() => setAuthModalOpen(false)}
+                            onClick={handleCloseAuthModal}
                             style={{
                                 position: 'absolute', top: '1.2rem', right: '1.2rem',
                                 background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '50%',
