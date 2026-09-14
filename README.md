@@ -1,16 +1,11 @@
-# React + Vite
+# VendorsDesk App
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Core application and tooling suite for **[VendorsDesk](https://www.vendorsdesk.in)**.
 
-Currently, two official plugins are available:
+## Key Features
+- **[Meesho Rate Calculator](https://www.vendorsdesk.in/meesho-shipping-rates)**: Fast freight rate calculations for Meesho sellers across India.
+- **[Meesho Bulk Label Exporter](https://www.vendorsdesk.in/meesho-label-exporter)**: Batch crop A4 labels to 4x6 thermal print format.
+- **[AI Catalog Studio](https://www.vendorsdesk.in/free-image-generator)**: Convert phone pictures to high-CTR e-commerce catalog photos.
+- **[Background Eraser](https://www.vendorsdesk.in/bg-remover)**: Studio-grade background removal.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Explore all free seller utilities at [VendorsDesk.in](https://www.vendorsdesk.in).
