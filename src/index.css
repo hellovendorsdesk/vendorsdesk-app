@@ -127,23 +127,25 @@ button:active,
 }
 
 .btn-submit-form,
-.btn-action-primary {
-    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%) !important;
-    background-size: 200% 200% !important;
-    animation: gradientShimmer 6s ease infinite !important;
+.btn-action-primary,
+.btn-primary {
+    background: #2563eb !important;
     color: #ffffff !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     padding: 0.75rem 1.4rem;
-    font-weight: 800;
-    font-family: 'Outfit', sans-serif;
-    box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .btn-submit-form:hover,
-.btn-action-primary:hover {
+.btn-action-primary:hover,
+.btn-primary:hover {
+    background: #1d4ed8 !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 12px 28px -4px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
-    filter: brightness(1.08);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
 .btn-action {
@@ -719,4 +721,159 @@ textarea::placeholder {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+}
+
+/* ── Landing Page Modern SaaS System ────────────────────────────── */
+.hero-section {
+    padding: clamp(2.5rem, 6vw, 4.5rem) 1.25rem clamp(2rem, 5vw, 3.5rem) 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+    padding: 0.35rem 0.95rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    max-width: 95%;
+    white-space: normal;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+}
+
+.hero-title {
+    font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+    font-size: clamp(1.85rem, 5.5vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+    max-width: 860px;
+    margin: 0 auto 1.25rem auto;
+    word-break: normal;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+}
+
+.hero-title-gradient {
+    color: #2563eb;
+    display: inline;
+}
+
+.hero-subtitle {
+    color: #475569;
+    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+    max-width: 640px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.6;
+    word-break: normal;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+    padding: 0 0.75rem;
+}
+
+.hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    box-sizing: border-box;
+    padding: 0 1rem;
+}
+
+.hero-cta-group button {
+    flex: 1 1 200px;
+    max-width: 240px;
+}
+
+.hero-badges-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    row-gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 600;
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+}
+
+.hero-badge-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+/* Bento Feature Grid */
+.bento-section {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 5rem 1.25rem;
+    box-sizing: border-box;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 800px) {
+    .bento-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+    }
+}
+
+.bento-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.bento-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px -4px rgba(37, 99, 235, 0.1);
+    border-color: #bfdbfe;
 }
