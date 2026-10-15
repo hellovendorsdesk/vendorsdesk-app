@@ -1,4 +1,17 @@
 import React from 'react';
+import { 
+    Calculator, 
+    TrendingUp, 
+    TrendingDown, 
+    CheckCircle2, 
+    AlertTriangle, 
+    Info, 
+    IndianRupee, 
+    Percent, 
+    Package, 
+    Truck, 
+    RotateCcw 
+} from 'lucide-react';
 import useMarginCalculator from '../hooks/useMarginCalculator';
 
 export default function CalculatorTab() {
@@ -32,118 +45,263 @@ export default function CalculatorTab() {
         breakEven
     } = useMarginCalculator();
 
+    const isProfitable = netProfit >= 0;
+
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
-                <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem', fontFamily: 'Outfit, sans-serif' }}>E-commerce Profit Calculator</h2>
-                <p style={{ color: 'var(--text-secondary)' }}>Calculate your net margin, break-even price, and return loss factor on Meesho</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1080px', margin: '0 auto', width: '100%' }}>
+            {/* Header Banner */}
+            <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
+                <div style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.45rem',
+                    background: 'rgba(37, 99, 235, 0.08)',
+                    color: '#2563eb',
+                    border: '1px solid rgba(37, 99, 235, 0.2)',
+                    padding: '0.25rem 0.85rem',
+                    borderRadius: '20px',
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.04em',
+                    marginBottom: '0.5rem'
+                }}>
+                    <Calculator size={13} />
+                    <span>MEESHO ZERO-COMMISSION PROFIT ENGINE</span>
+                </div>
+                <h2 style={{ fontSize: '1.65rem', fontWeight: 800, marginBottom: '0.35rem', fontFamily: 'Outfit, sans-serif', color: '#0f172a' }}>
+                    E-commerce Profit & Margin Calculator
+                </h2>
+                <p style={{ color: '#64748b', fontSize: '0.88rem', margin: '0 auto', maxWidth: '580px', lineHeight: 1.5 }}>
+                    Calculate realistic net margins, break-even price thresholds, GST liability, and return loss factors on Meesho.
+                </p>
             </div>
 
             <div className="calculator-main-grid">
                 
                 {/* Inputs card */}
                 <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                    <h3 style={{ fontSize: '1.25rem', fontFamily: 'Outfit', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem', color: '#2563eb', fontWeight: 800 }}>Calculator Inputs</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem' }}>
+                        <Calculator size={18} color="#2563eb" />
+                        <h3 style={{ fontSize: '1.1rem', fontFamily: 'Outfit, sans-serif', color: '#0f172a', fontWeight: 700, margin: 0 }}>
+                            Calculator Parameters
+                        </h3>
+                    </div>
                     
                     <div className="form-group">
-                        <label>Listing Selling Price (₹)</label>
-                        <input type="number" value={sellingPrice} onChange={(e) => setSellingPrice(Number(e.target.value))} />
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <IndianRupee size={13} color="#64748b" />
+                            Listing Selling Price (₹)
+                        </label>
+                        <input 
+                            type="number" 
+                            value={sellingPrice} 
+                            onChange={(e) => setSellingPrice(Number(e.target.value))} 
+                            placeholder="e.g. 499"
+                        />
                     </div>
 
                     <div className="form-group">
-                        <label>Product Cost Price (₹)</label>
-                        <input type="number" value={costPrice} onChange={(e) => setCostPrice(Number(e.target.value))} />
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <IndianRupee size={13} color="#64748b" />
+                            Product Cost Price (₹)
+                        </label>
+                        <input 
+                            type="number" 
+                            value={costPrice} 
+                            onChange={(e) => setCostPrice(Number(e.target.value))} 
+                            placeholder="e.g. 180"
+                        />
                     </div>
 
                     <div className="form-group">
-                        <label>GST Rate Slab</label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <Percent size={13} color="#64748b" />
+                            GST Rate Slab
+                        </label>
                         <select value={gstSlab} onChange={(e) => setGstSlab(Number(e.target.value))}>
-                            <option value="5">5% (Sarees/Garments under 1000)</option>
-                            <option value="12">12% (Garments above 1000/Bags)</option>
+                            <option value="5">5% (Sarees/Garments under ₹1,000)</option>
+                            <option value="12">12% (Garments above ₹1,000/Bags)</option>
                             <option value="18">18% (Electronics/Cosmetics)</option>
-                            <option value="28">28% (Luxury items)</option>
+                            <option value="28">28% (Luxury goods)</option>
                         </select>
                     </div>
 
                     <div className="form-group">
-                        <label>Outbound Shipping Cost (₹)</label>
-                        <input type="number" value={shippingCost} onChange={(e) => setShippingCost(Number(e.target.value))} />
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <Truck size={13} color="#64748b" />
+                            Outbound Shipping Cost (₹)
+                        </label>
+                        <input 
+                            type="number" 
+                            value={shippingCost} 
+                            onChange={(e) => setShippingCost(Number(e.target.value))} 
+                            placeholder="e.g. 50"
+                        />
                     </div>
 
                     <div className="form-group">
-                        <label>Packaging & Label Cost (₹)</label>
-                        <input type="number" value={packagingCost} onChange={(e) => setPackagingCost(Number(e.target.value))} />
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <Package size={13} color="#64748b" />
+                            Packaging & Label Cost (₹)
+                        </label>
+                        <input 
+                            type="number" 
+                            value={packagingCost} 
+                            onChange={(e) => setPackagingCost(Number(e.target.value))} 
+                            placeholder="e.g. 15"
+                        />
                     </div>
 
                     <div className="form-group">
-                        <label>Average Return Rate (%)</label>
-                        <input type="number" value={returnRate} onChange={(e) => setReturnRate(Number(e.target.value))} />
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <RotateCcw size={13} color="#64748b" />
+                            Average Return Rate (%)
+                        </label>
+                        <input 
+                            type="number" 
+                            value={returnRate} 
+                            onChange={(e) => setReturnRate(Number(e.target.value))} 
+                            placeholder="e.g. 15"
+                        />
                     </div>
 
                     <div className="form-group">
-                        <label>Return Shipping Charge (₹)</label>
-                        <input type="number" value={returnShippingCost} onChange={(e) => setReturnShippingCost(Number(e.target.value))} />
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <Truck size={13} color="#64748b" />
+                            Return Shipping Surcharge (₹)
+                        </label>
+                        <input 
+                            type="number" 
+                            value={returnShippingCost} 
+                            onChange={(e) => setReturnShippingCost(Number(e.target.value))} 
+                            placeholder="e.g. 120"
+                        />
                     </div>
                 </div>
 
                 {/* Output analysis card */}
                 <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.25rem', fontFamily: 'Outfit', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem', color: '#7c3aed', fontWeight: 800 }}>Profitability Analysis</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem' }}>
+                        <TrendingUp size={18} color="#10b981" />
+                        <h3 style={{ fontSize: '1.1rem', fontFamily: 'Outfit, sans-serif', color: '#0f172a', fontWeight: 700, margin: 0 }}>
+                            Profitability Analysis
+                        </h3>
+                    </div>
 
                     {/* Big Profit Stats */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: '1.25rem' }}>
-                        <div className="stat-card" style={{ background: '#f8fafc', border: '1px solid var(--card-border)', padding: '1.25rem' }}>
-                            <span className="stat-label">Net Profit / Order</span>
-                            <span className={`stat-val ${netProfit >= 0 ? 'success' : 'failed'}`} style={{ color: netProfit >= 0 ? 'var(--success)' : 'var(--danger)' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: '1rem' }}>
+                        <div style={{
+                            background: isProfitable ? 'rgba(16, 185, 129, 0.05)' : 'rgba(239, 68, 68, 0.05)',
+                            border: `1px solid ${isProfitable ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)'}`,
+                            borderRadius: '12px',
+                            padding: '1.25rem'
+                        }}>
+                            <span style={{ fontSize: '0.78rem', fontWeight: 600, color: '#64748b', display: 'block', marginBottom: '0.35rem' }}>
+                                Net Profit / Order
+                            </span>
+                            <span style={{
+                                fontSize: '1.75rem',
+                                fontWeight: 800,
+                                fontFamily: 'Outfit, sans-serif',
+                                color: isProfitable ? '#059669' : '#dc2626',
+                                display: 'block'
+                            }}>
                                 ₹{netProfit}
                             </span>
-                            <span className="stat-footer">Post return/tax deductions</span>
+                            <span style={{ fontSize: '0.74rem', color: '#94a3b8', display: 'block', marginTop: '0.25rem' }}>
+                                Post return & tax deductions
+                            </span>
                         </div>
-                        <div className="stat-card" style={{ background: '#f8fafc', border: '1px solid var(--card-border)', padding: '1.25rem' }}>
-                            <span className="stat-label">Net Profit Margin</span>
-                            <span className="stat-val" style={{ color: netProfit >= 0 ? '#2563eb' : 'var(--danger)' }}>
+
+                        <div style={{
+                            background: isProfitable ? 'rgba(37, 99, 235, 0.05)' : 'rgba(239, 68, 68, 0.05)',
+                            border: `1px solid ${isProfitable ? 'rgba(37, 99, 235, 0.2)' : 'rgba(239, 68, 68, 0.2)'}`,
+                            borderRadius: '12px',
+                            padding: '1.25rem'
+                        }}>
+                            <span style={{ fontSize: '0.78rem', fontWeight: 600, color: '#64748b', display: 'block', marginBottom: '0.35rem' }}>
+                                Net Profit Margin
+                            </span>
+                            <span style={{
+                                fontSize: '1.75rem',
+                                fontWeight: 800,
+                                fontFamily: 'Outfit, sans-serif',
+                                color: isProfitable ? '#2563eb' : '#dc2626',
+                                display: 'block'
+                            }}>
                                 {profitMargin}%
                             </span>
-                            <span className="stat-footer">On selling price</span>
+                            <span style={{ fontSize: '0.74rem', color: '#94a3b8', display: 'block', marginTop: '0.25rem' }}>
+                                Calculated on selling price
+                            </span>
                         </div>
                     </div>
 
                     {/* Detailed Breakdown */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', background: '#f8fafc', padding: '1.25rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
-                            <span style={{ color: 'var(--text-secondary)' }}>GST Liability (Sales - Input Credit):</span>
-                            <span>₹{netGstLiability}</span>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.85rem',
+                        background: '#f8fafc',
+                        padding: '1.25rem',
+                        borderRadius: '12px',
+                        border: '1px solid #e2e8f0'
+                    }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
+                            <span style={{ color: '#64748b' }}>GST Liability (Sales − Input Credit):</span>
+                            <span style={{ fontWeight: 600, color: '#0f172a' }}>₹{netGstLiability}</span>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
-                            <span style={{ color: 'var(--text-secondary)' }}>Outbound Shipping + Pack:</span>
-                            <span>₹{shippingCost + packagingCost}</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
+                            <span style={{ color: '#64748b' }}>Outbound Shipping + Packaging:</span>
+                            <span style={{ fontWeight: 600, color: '#0f172a' }}>₹{shippingCost + packagingCost}</span>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
-                            <span style={{ color: 'var(--text-secondary)' }}>Referral commission fee (0%):</span>
-                            <span>₹{referralFee}</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
+                            <span style={{ color: '#64748b' }}>Referral Commission Fee (Meesho 0%):</span>
+                            <span style={{ fontWeight: 600, color: '#059669' }}>₹{referralFee}</span>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem' }}>
-                            <span style={{ color: 'var(--text-secondary)' }}>Estimated Return Loss Factor:</span>
-                            <span style={{ color: 'var(--danger)' }}>₹{averageReturnLoss}</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.65rem' }}>
+                            <span style={{ color: '#64748b' }}>Estimated Return Loss Factor:</span>
+                            <span style={{ fontWeight: 600, color: '#dc2626' }}>₹{averageReturnLoss}</span>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem', fontWeight: 'bold', paddingTop: '0.25rem' }}>
-                            <span>Total Deductions:</span>
-                            <span style={{ color: 'var(--danger)' }}>₹{totalDeductions}</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem', fontWeight: 700, paddingTop: '0.25rem' }}>
+                            <span style={{ color: '#0f172a' }}>Total Deductions:</span>
+                            <span style={{ color: '#dc2626' }}>₹{totalDeductions}</span>
                         </div>
                     </div>
 
                     {/* Break-even Summary banner */}
                     <div style={{
-                        background: netProfit >= 0 ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-                        border: netProfit >= 0 ? '1px solid rgba(16, 185, 129, 0.2)' : '1px solid rgba(239, 68, 68, 0.2)',
-                        padding: '1.25rem', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '0.5rem'
+                        background: isProfitable ? 'rgba(16, 185, 129, 0.08)' : 'rgba(239, 68, 68, 0.08)',
+                        border: `1px solid ${isProfitable ? 'rgba(16, 185, 129, 0.25)' : 'rgba(239, 68, 68, 0.25)'}`,
+                        padding: '1.25rem',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.45rem'
                     }}>
-                        <div style={{ fontSize: '0.95rem', fontWeight: 600 }}>
-                            {netProfit >= 0 ? '🟢 Product is Profitable' : '🔴 Product is running in Loss!'}
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            fontSize: '0.95rem',
+                            fontWeight: 700,
+                            color: isProfitable ? '#065f46' : '#991b1b'
+                        }}>
+                            {isProfitable ? (
+                                <>
+                                    <CheckCircle2 size={18} color="#059669" />
+                                    <span>Product is Profitable</span>
+                                </>
+                            ) : (
+                                <>
+                                    <AlertTriangle size={18} color="#dc2626" />
+                                    <span>Product is running in Loss!</span>
+                                </>
+                            )}
                         </div>
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                            Aapko is product par break-even (no profit, no loss) reach karne ke liye minimum **₹{breakEven}** selling price rakhni chahiye. 
-                            Apni return rate control karke ya packaging costs optimize karke aap profit margins increase kar sakte hain.
+                        <p style={{ fontSize: '0.82rem', color: '#475569', lineHeight: '1.55', margin: 0 }}>
+                            Aapko is product par break-even (no profit, no loss) reach karne ke liye minimum <strong style={{ color: '#0f172a' }}>₹{breakEven}</strong> selling price rakhni chahiye. 
+                            Apni return rate control karke ya packaging costs optimize karke aap profit margins maximize kar sakte hain.
                         </p>
                     </div>
 

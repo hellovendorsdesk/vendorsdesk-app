@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { secureFetch } from '../../utils/crypto';
+
+// Subcomponents
+import AppSidebar from '../../components/dashboard/AppSidebar';
+import MobileHeader from '../../components/dashboard/MobileHeader';
+import MobileBottomNav from '../../components/dashboard/MobileBottomNav';
+import BillingPlansView from '../../components/dashboard/BillingPlansView';
+import AffiliateProgramView from '../../components/dashboard/AffiliateProgramView';
+
+// Tabs
 import HomeTab from '../../components/HomeTab';
 import OptimizerTab from '../../components/OptimizerTab';
 import LabelExporterTab from '../../components/LabelExporterTab';
@@ -153,50 +162,12 @@ export default function DashboardShell({ activePage, setActivePage, navigateToPa
     return (
         <div className="dashboard-shell-container">
             {/* Mobile Top Header */}
-            <header className="dashboard-mobile-header">
-                <div 
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer' }}
-                    onClick={() => handleNavigate('home')}
-                >
-                    <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '32px', width: 'auto' }} onError={(e) => { e.target.style.display = 'none'; }} />
-                    <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.25rem', color: '#0f172a' }}>
-                        VendorsDesk
-                    </span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                    {currentUser && (
-                        <span style={{ 
-                            background: 'rgba(37, 99, 235, 0.08)', 
-                            color: '#2563eb', 
-                            padding: '0.3rem 0.65rem', 
-                            borderRadius: '8px', 
-                            fontSize: '0.75rem', 
-                            fontWeight: 700 
-                        }}>
-                            💎 {currentUser.credits}
-                        </span>
-                    )}
-                    <button 
-                        onClick={() => setMobileNavOpen(!mobileNavOpen)}
-                        aria-label="Toggle navigation menu"
-                        style={{
-                            background: '#f8fafc',
-                            border: '1px solid #cbd5e1',
-                            borderRadius: '10px',
-                            width: '38px',
-                            height: '38px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '1.2rem',
-                            cursor: 'pointer',
-                            color: '#0f172a'
-                        }}
-                    >
-                        {mobileNavOpen ? '✕' : '☰'}
-                    </button>
-                </div>
-            </header>
+            <MobileHeader
+                handleNavigate={handleNavigate}
+                currentUser={currentUser}
+                mobileNavOpen={mobileNavOpen}
+                setMobileNavOpen={setMobileNavOpen}
+            />
 
             {/* Mobile Backdrop Overlay */}
             <div 
@@ -204,114 +175,16 @@ export default function DashboardShell({ activePage, setActivePage, navigateToPa
                 onClick={() => setMobileNavOpen(false)}
             />
 
-            {/* Sidebar */}
-            <aside className={`dashboard-sidebar ${mobileNavOpen ? 'mobile-open' : ''}`}>
-                <div>
-                    {/* Brand */}
-                    <div 
-                        style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '2.5rem', cursor: 'pointer' }}
-                        onClick={() => handleNavigate('home')}
-                    >
-                        <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} onError={(e) => { e.target.style.display = 'none'; }} />
-                        <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.35rem', letterSpacing: '-0.02em', color: '#0f172a' }}>
-                            VendorsDesk
-                        </span>
-                    </div>
+            {/* Desktop / Tablet Sidebar */}
+            <AppSidebar
+                activePage={activePage}
+                handleNavigate={handleNavigate}
+                mobileNavOpen={mobileNavOpen}
+                currentUser={currentUser}
+                handleLogout={handleLogout}
+            />
 
-                    {/* Navigation Links */}
-                    <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                        <button 
-                            className={`sidebar-link ${activePage === 'home' ? 'active' : ''}`}
-                            onClick={() => handleNavigate('home')}
-                        >
-                            🏠 Home Dashboard
-                        </button>
-                        <button 
-                            className={`sidebar-link ${activePage === 'templates' ? 'active' : ''}`}
-                            onClick={() => handleNavigate('templates')}
-                            style={{ background: 'rgba(37, 99, 235, 0.08)', color: '#2563eb', fontWeight: 700 }}
-                        >
-                            ⚡ Listing Templates & Autofill
-                        </button>
-                        <button 
-                            className={`sidebar-link ${activePage === 'bg-remover' ? 'active' : ''}`}
-                            onClick={() => handleNavigate('bg-remover')}
-                            style={{ background: 'rgba(37, 99, 235, 0.04)', color: '#2563eb', fontWeight: 600 }}
-                        >
-                            🖼️ Bulk Background Remover
-                        </button>
-                        <button 
-                            className={`sidebar-link ${activePage === 'free-image-generator' ? 'active' : ''}`}
-                            onClick={() => handleNavigate('free-image-generator')}
-                        >
-                            🆓 Free Image Generator
-                        </button>
-                        <button 
-                            className={`sidebar-link ${(activePage === 'optimizer' || activePage === 'meesho-shipping-rates') ? 'active' : ''}`}
-                            onClick={() => handleNavigate('optimizer')}
-                        >
-                            ⚡ Rate Optimizer
-                        </button>
-                        <button 
-                            className={`sidebar-link ${activePage === 'pnl-calculator' ? 'active' : ''}`}
-                            onClick={() => handleNavigate('pnl-calculator')}
-                        >
-                            📊 Excel P&L Calculator
-                        </button>
-                        <button 
-                            className={`sidebar-link ${(activePage === 'label-exporter' || activePage === 'meesho-label-exporter') ? 'active' : ''}`}
-                            onClick={() => handleNavigate('label-exporter')}
-                        >
-                            📋 Label Exporter
-                        </button>
-                        <button 
-                            className={`sidebar-link ${(activePage === 'calculator' || activePage === 'margin-calculator') ? 'active' : ''}`}
-                            onClick={() => handleNavigate('calculator')}
-                        >
-                            🧮 Margin Calculator
-                        </button>
-                        <button 
-                            className={`sidebar-link ${(activePage === 'billing' || activePage === 'pricing') ? 'active' : ''}`}
-                            onClick={() => handleNavigate('billing')}
-                            style={{ position: 'relative' }}
-                        >
-                            💳 Purchase Plan
-                            {currentUser && currentUser.credits <= 0 && (
-                                <span style={{ marginLeft: 'auto', background: '#ef4444', color: '#ffffff', fontSize: '0.6rem', padding: '0.15rem 0.4rem', borderRadius: '6px', fontWeight: 800 }}>GET CREDITS</span>
-                            )}
-                        </button>
-                        <button 
-                            className={`sidebar-link ${activePage === 'affiliate' ? 'active' : ''}`}
-                            onClick={() => handleNavigate('affiliate')}
-                        >
-                            👥 Affiliate Program
-                        </button>
-                        <button 
-                            className={`sidebar-link ${activePage === 'website' ? 'active' : ''}`}
-                            onClick={() => handleNavigate('home')}
-                            style={{ marginTop: '0.5rem', background: 'rgba(37, 99, 235, 0.06)', border: '1px solid rgba(37, 99, 235, 0.2)', color: '#2563eb', fontWeight: 700 }}
-                        >
-                            🌐 View Website & Plans
-                        </button>
-                    </nav>
-                </div>
-
-                {/* Profile Section Footer */}
-                {currentUser && (
-                    <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                        <div>
-                            <div style={{ fontWeight: 600, fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{currentUser.name}</div>
-                            <div style={{ fontSize: '0.75rem', color: currentUser.credits <= 0 ? '#ef4444' : 'var(--text-secondary)', fontWeight: currentUser.credits <= 0 ? 700 : 400 }}>
-                                💎 {currentUser.credits} Credits {currentUser.credits <= 0 && '(0 Remaining)'}
-                            </div>
-                            <div style={{ fontSize: '0.75rem', color: '#2563eb', textTransform: 'uppercase', fontWeight: 'bold', marginTop: '0.15rem' }}>Tier: {currentUser.tier}</div>
-                        </div>
-                        <button className="btn-action btn-action-danger" onClick={handleLogout} style={{ width: '100%' }}>Logout</button>
-                    </div>
-                )}
-            </aside>
-
-            {/* Main Area */}
+            {/* Main Content Area */}
             <div className="dashboard-main-content">
                 <div style={{ width: '100%', maxWidth: '100%' }}>
                     
@@ -356,7 +229,7 @@ export default function DashboardShell({ activePage, setActivePage, navigateToPa
                         </div>
                     )}
 
-                    {/* Render active tabs/pages */}
+                    {/* Page router */}
                     {activePage === 'home' && (
                         <HomeTab onNavigate={(page) => setActivePage(page)} />
                     )}
@@ -399,195 +272,28 @@ export default function DashboardShell({ activePage, setActivePage, navigateToPa
                     )}
 
                     {(activePage === 'billing' || activePage === 'pricing') && (
-                        <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                            <h2 style={{ fontSize: '1.8rem', fontFamily: 'Outfit' }}>Account Upgrade Tiers</h2>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Choose your plan to acquire query credits and start optimizing catalog variation rates.</p>
-
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '0.5rem' }}>
-                                {/* Starter Plan - ₹99 */}
-                                <div 
-                                    className="plan-card" 
-                                    style={{
-                                        borderColor: selectedPlan === 'tier_99' ? '#2563eb' : '#cbd5e1',
-                                        background: selectedPlan === 'tier_99' ? 'rgba(37, 99, 235, 0.08)' : '#f8fafc',
-                                        borderRadius: '14px',
-                                        padding: '1.25rem',
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        gap: '0.5rem'
-                                    }}
-                                    onClick={() => setSelectedPlan('tier_99')}
-                                >
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <strong style={{ fontSize: '1rem', color: '#0f172a' }}>Starter</strong>
-                                        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#2563eb' }}>₹99</span>
-                                    </div>
-                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>⚡ Adds <strong>40 Credits</strong> (30 Days)</span>
-                                </div>
-
-                                {/* Growth Plan - ₹299 (Best Value) */}
-                                <div 
-                                    className="plan-card" 
-                                    style={{
-                                        borderColor: selectedPlan === 'tier_299' ? '#2563eb' : '#cbd5e1',
-                                        background: selectedPlan === 'tier_299' ? 'rgba(37, 99, 235, 0.08)' : '#f8fafc',
-                                        borderRadius: '14px',
-                                        padding: '1.25rem',
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        gap: '0.5rem',
-                                        position: 'relative'
-                                    }}
-                                    onClick={() => setSelectedPlan('tier_299')}
-                                >
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <strong style={{ fontSize: '1rem', color: '#0f172a' }}>Growth (Best Value)</strong>
-                                        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#2563eb' }}>₹299</span>
-                                    </div>
-                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>🔥 Adds <strong>150 Credits</strong> (45 Days)</span>
-                                </div>
-
-                                {/* Pro Plan - ₹599 */}
-                                <div 
-                                    className="plan-card" 
-                                    style={{
-                                        borderColor: selectedPlan === 'tier_599' ? '#2563eb' : '#cbd5e1',
-                                        background: selectedPlan === 'tier_599' ? 'rgba(37, 99, 235, 0.08)' : '#f8fafc',
-                                        borderRadius: '14px',
-                                        padding: '1.25rem',
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        gap: '0.5rem'
-                                    }}
-                                    onClick={() => setSelectedPlan('tier_599')}
-                                >
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <strong style={{ fontSize: '1rem', color: '#0f172a' }}>Pro</strong>
-                                        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#2563eb' }}>₹599</span>
-                                    </div>
-                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>🚀 Adds <strong>350 Credits</strong> (60 Days)</span>
-                                </div>
-
-                                {/* Enterprise Plan - ₹999 */}
-                                <div 
-                                    className="plan-card" 
-                                    style={{
-                                        borderColor: selectedPlan === 'tier_999' ? '#2563eb' : '#cbd5e1',
-                                        background: selectedPlan === 'tier_999' ? 'rgba(37, 99, 235, 0.08)' : '#f8fafc',
-                                        borderRadius: '14px',
-                                        padding: '1.25rem',
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        gap: '0.5rem'
-                                    }}
-                                    onClick={() => setSelectedPlan('tier_999')}
-                                >
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <strong style={{ fontSize: '1rem', color: '#0f172a' }}>Enterprise</strong>
-                                        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#2563eb' }}>₹999</span>
-                                    </div>
-                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>👑 Adds <strong>750 Credits</strong> (90 Days)</span>
-                                </div>
-                            </div>
-
-                            {/* Coupon Section */}
-                            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem' }}>
-                                <input 
-                                    type="text" 
-                                    placeholder="Enter Coupon (e.g. WELCOME50)" 
-                                    value={couponCode} 
-                                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                                    disabled={isApplyingCoupon || !!submittingPlanId}
-                                    style={{ flex: 1, textTransform: 'uppercase' }}
-                                />
-                                <button 
-                                    className="btn-action btn-action-primary" 
-                                    disabled={isApplyingCoupon || !!submittingPlanId || !couponCode}
-                                    style={{ padding: '0 1.5rem', whiteSpace: 'nowrap', opacity: (isApplyingCoupon || !!submittingPlanId || !couponCode) ? 0.6 : 1 }} 
-                                    onClick={handleApplyCoupon}
-                                >
-                                    {isApplyingCoupon ? 'Applying...' : 'Apply Coupon'}
-                                </button>
-                            </div>
-                            {couponMessage && <div style={{ color: 'var(--success)', fontSize: '0.85rem' }}>{couponMessage}</div>}
-                            {couponError && <div style={{ color: 'var(--danger)', fontSize: '0.85rem' }}>{couponError}</div>}
-
-                            {billingError && <div style={{ color: 'var(--danger)', fontSize: '0.85rem', marginTop: '0.5rem' }}>{billingError}</div>}
-                            {billingSuccess && <div style={{ color: 'var(--success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>{billingSuccess}</div>}
-
-                            <button 
-                                className="btn-submit-form" 
-                                disabled={!!submittingPlanId}
-                                onClick={() => handleSubscribe()} 
-                                style={{ 
-                                    marginTop: '0.5rem',
-                                    opacity: submittingPlanId ? 0.75 : 1,
-                                    cursor: submittingPlanId ? 'not-allowed' : 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: '0.5rem'
-                                }}
-                            >
-                                {submittingPlanId ? (
-                                    <>
-                                        <span style={{ width: '16px', height: '16px', border: '2px solid #ffffff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
-                                        Connecting to Cashfree Gateway...
-                                    </>
-                                ) : (
-                                    'Pay & Upgrade Subscription'
-                                )}
-                            </button>
-                        </div>
+                        <BillingPlansView
+                            selectedPlan={selectedPlan}
+                            setSelectedPlan={setSelectedPlan}
+                            couponCode={couponCode}
+                            setCouponCode={setCouponCode}
+                            couponMessage={couponMessage}
+                            couponError={couponError}
+                            isApplyingCoupon={isApplyingCoupon}
+                            handleApplyCoupon={handleApplyCoupon}
+                            submittingPlanId={submittingPlanId}
+                            billingError={billingError}
+                            billingSuccess={billingSuccess}
+                            handleSubscribe={handleSubscribe}
+                        />
                     )}
 
-                    {activePage === 'affiliate' && currentUser && (
-                        <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                            <h2 style={{ fontSize: '1.8rem', fontFamily: 'Outfit' }}>Affiliate Program</h2>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Share your code with other sellers. Earn substantial credits when they make their first purchase!</p>
-
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1.25rem', margin: '0.5rem 0' }}>
-                                <div className="stat-card" style={{ background: '#f8fafc', border: '1px solid var(--card-border)', padding: '1.25rem' }}>
-                                    <span className="stat-label">Total Referrals</span>
-                                    <span className="stat-val" style={{ color: '#7c3aed', fontSize: '2rem' }}>{currentUser.referralsCount || 0}</span>
-                                    <span className="stat-footer">Sellers signed up</span>
-                                </div>
-                                <div className="stat-card" style={{ background: '#f8fafc', border: '1px solid var(--card-border)', padding: '1.25rem' }}>
-                                    <span className="stat-label">Commission Rate</span>
-                                    <span className="stat-val" style={{ color: 'var(--success)', fontSize: '2rem' }}>33%</span>
-                                    <span className="stat-footer">1/3 of referee's first plan credits</span>
-                                </div>
-                            </div>
-
-                            <div className="form-group" style={{ background: '#f8fafc', border: '1px solid var(--card-border)', padding: '1.25rem', borderRadius: '12px' }}>
-                                <label style={{ marginBottom: '0.5rem', fontWeight: 600 }}>Your Referral Link</label>
-                                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                    <input 
-                                        type="text" 
-                                        readOnly 
-                                        value={`${window.location.origin}/?ref=${currentUser.referralCode}`} 
-                                        style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--text-secondary)' }}
-                                    />
-                                    <button className="btn-action" style={{ padding: '0 1.5rem' }} onClick={copyReferralLink}>
-                                        {copiedText}
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                                <strong style={{ color: 'var(--text-primary)', display: 'block', marginBottom: '0.5rem' }}>How it Works:</strong>
-                                <ol style={{ paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                                    <li>Copy your unique referral link and send it to other sellers.</li>
-                                    <li>When they sign up via your link, they receive **5 extra free credits** (total 8 free credits).</li>
-                                    <li>When they buy their first plan, **you receive 1/3 of their plan's credits** (e.g. they buy Standard 200 credits plan, you receive 66 credits commission).</li>
-                                    <li>Referral payouts are one-time per user and apply only on their first purchase.</li>
-                                </ol>
-                            </div>
-                        </div>
+                    {activePage === 'affiliate' && (
+                        <AffiliateProgramView
+                            currentUser={currentUser}
+                            copiedText={copiedText}
+                            copyReferralLink={copyReferralLink}
+                        />
                     )}
 
                     {activePage === 'privacy-policy' && <PrivacyPolicyPage />}
@@ -597,6 +303,13 @@ export default function DashboardShell({ activePage, setActivePage, navigateToPa
 
                 </div>
             </div>
+
+            {/* Mobile Bottom Navigation Bar (< 1024px) */}
+            <MobileBottomNav
+                activePage={activePage}
+                handleNavigate={handleNavigate}
+                onOpenMore={() => setMobileNavOpen(true)}
+            />
         </div>
     );
 }
