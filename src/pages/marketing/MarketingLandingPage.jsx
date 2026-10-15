@@ -47,23 +47,26 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
     ];
 
     return (
-        <div style={{ minHeight: '100vh', width: '100%', maxWidth: '100vw', background: 'var(--bg-gradient)', color: 'var(--text-primary)', overflowX: 'hidden' }}>
+        <div style={{ minHeight: '100vh', width: '100%', maxWidth: '100vw', background: '#080b11', color: '#f8fafc', overflowX: 'hidden' }}>
             
-            {/* ── Header / Navbar ────────────────────────────────────────── */}
+            {/* ── Header / Floating Island Navbar ────────────────────────── */}
             <header className="site-header" style={{
-                background: 'rgba(255, 255, 255, 0.95)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                borderBottom: '1px solid #e2e8f0',
-                boxShadow: '0 2px 12px rgba(15, 23, 42, 0.04)',
-                padding: '0.75rem 1.5rem',
+                background: 'rgba(13, 18, 31, 0.85)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06)',
+                padding: '0.65rem 1.25rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 position: 'sticky',
-                top: 0,
+                top: '0.75rem',
                 zIndex: 990,
-                width: '100%',
+                width: 'calc(100% - 1.5rem)',
+                maxWidth: '1140px',
+                margin: '0.5rem auto 1rem auto',
+                borderRadius: '9999px',
                 boxSizing: 'border-box'
             }}>
                 {/* Brand Logo */}
@@ -74,10 +77,10 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                     <img 
                         src="/logo-icon.png" 
                         alt="VendorsDesk Official Logo" 
-                        style={{ height: '34px', width: 'auto', objectFit: 'contain' }} 
+                        style={{ height: '32px', width: 'auto', objectFit: 'contain' }} 
                         onError={(e) => { e.target.style.display = 'none'; }}
                     />
-                    <span style={{ fontFamily: 'Plus Jakarta Sans, Outfit, sans-serif', fontWeight: 800, fontSize: '1.35rem', letterSpacing: '-0.02em', color: '#0f172a' }}>
+                    <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em', color: '#ffffff' }}>
                         VendorsDesk
                     </span>
                 </div>
@@ -100,31 +103,33 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                                 gap: '0.45rem',
                                 fontWeight: 700,
                                 fontSize: '0.85rem',
-                                padding: '0.55rem 0.95rem',
-                                borderRadius: '10px',
-                                background: '#f8fafc',
-                                border: '1px solid #e2e8f0',
-                                color: '#0f172a',
+                                padding: '0.5rem 0.95rem',
+                                borderRadius: '9999px',
+                                background: 'rgba(255, 255, 255, 0.05)',
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                color: '#ffffff',
                                 cursor: 'pointer',
                                 transition: 'all 0.2s ease'
                             }}
                         >
-                            <Layers size={15} color="#2563eb" />
+                            <Layers size={15} color="#38bdf8" />
                             <span>Free Tools</span>
-                            <span style={{ fontSize: '0.65rem', background: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0', padding: '0.1rem 0.4rem', borderRadius: '6px', fontWeight: 700 }}>5 SUITE</span>
-                            <ChevronDown size={14} style={{ transition: 'transform 0.2s', transform: isToolsDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+                            <span style={{ fontSize: '0.65rem', background: 'rgba(56, 189, 248, 0.12)', color: '#38bdf8', border: '1px solid rgba(56, 189, 248, 0.25)', padding: '0.1rem 0.4rem', borderRadius: '6px', fontWeight: 700 }}>5 SUITE</span>
+                            <ChevronDown size={14} color="#94a3b8" style={{ transition: 'transform 0.2s', transform: isToolsDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
                         </button>
 
                         {isToolsDropdownOpen && (
                             <div style={{
                                 position: 'absolute',
-                                top: '100%',
+                                top: 'calc(100% + 10px)',
                                 left: 0,
                                 width: '330px',
-                                background: '#ffffff',
-                                border: '1px solid #cbd5e1',
-                                borderRadius: '16px',
-                                boxShadow: '0 20px 40px -8px rgba(15, 23, 42, 0.15)',
+                                background: 'rgba(13, 18, 31, 0.96)',
+                                backdropFilter: 'blur(24px)',
+                                WebkitBackdropFilter: 'blur(24px)',
+                                border: '1px solid rgba(255, 255, 255, 0.12)',
+                                borderRadius: '18px',
+                                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06)',
                                 padding: '0.65rem',
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -133,53 +138,53 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                             }}>
                                 <div 
                                     onClick={() => { onTabChange('meesho-shipping-rates'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: activeTab === 'meesho-shipping-rates' ? '#f1f5f9' : 'transparent' }}
+                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: activeTab === 'meesho-shipping-rates' ? 'rgba(56, 189, 248, 0.1)' : 'transparent', transition: 'background 0.15s ease' }}
                                 >
-                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <TrendingDown size={17} color="#2563eb" />
+                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <TrendingDown size={17} color="#38bdf8" />
                                     </div>
                                     <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>Freight &amp; Slab Optimizer</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b' }}>Audit lowest courier freight slabs</div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Freight &amp; Slab Optimizer</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Audit lowest courier freight slabs</div>
                                     </div>
                                 </div>
 
                                 <div 
                                     onClick={() => { onTabChange('free-image-generator'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem' }}
+                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: 'transparent', transition: 'background 0.15s ease' }}
                                 >
-                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <Image size={17} color="#2563eb" />
+                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Image size={17} color="#38bdf8" />
                                     </div>
                                     <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>Anti-Duplicate Image Studio</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b' }}>Bypass duplicate listing bans</div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Anti-Duplicate Image Studio</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Bypass duplicate listing bans</div>
                                     </div>
                                 </div>
 
                                 <div 
                                     onClick={() => { onTabChange('meesho-label-exporter'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem' }}
+                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: 'transparent', transition: 'background 0.15s ease' }}
                                 >
-                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <Printer size={17} color="#2563eb" />
+                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Printer size={17} color="#38bdf8" />
                                     </div>
                                     <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>4×6 Thermal Label Cropper</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b' }}>Organize PDF invoices by SKU</div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>4×6 Thermal Label Cropper</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Organize PDF invoices by SKU</div>
                                     </div>
                                 </div>
 
                                 <div 
                                     onClick={() => { onTabChange('pnl-calculator'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem' }}
+                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: 'transparent', transition: 'background 0.15s ease' }}
                                 >
-                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <FileSpreadsheet size={17} color="#2563eb" />
+                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <FileSpreadsheet size={17} color="#38bdf8" />
                                     </div>
                                     <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>Net P&amp;L Settlement Sheet</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b' }}>Track real returns &amp; deduction margins</div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Net P&amp;L Settlement Sheet</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Track real returns &amp; deduction margins</div>
                                     </div>
                                 </div>
                             </div>
@@ -196,10 +201,10 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                             fontWeight: 600,
                             fontSize: '0.85rem',
                             padding: '0.55rem 0.85rem',
-                            borderRadius: '10px',
+                            borderRadius: '9999px',
                             background: 'transparent',
                             border: '1px solid transparent',
-                            color: '#475569',
+                            color: activeTab === 'pricing' ? '#38bdf8' : '#94a3b8',
                             cursor: 'pointer'
                         }}
                     >
@@ -217,10 +222,10 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                             fontWeight: 600,
                             fontSize: '0.85rem',
                             padding: '0.55rem 0.85rem',
-                            borderRadius: '10px',
+                            borderRadius: '9999px',
                             background: 'transparent',
                             border: '1px solid transparent',
-                            color: '#475569',
+                            color: activeTab === 'contact-us' ? '#38bdf8' : '#94a3b8',
                             cursor: 'pointer'
                         }}
                     >
@@ -252,9 +257,20 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                             <button 
                                 className="btn-primary" 
                                 onClick={onRegister}
-                                style={{ padding: '0.55rem 1.15rem', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+                                style={{
+                                    padding: '0.55rem 1.25rem',
+                                    fontSize: '0.85rem',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.45rem',
+                                    background: '#ffffff',
+                                    color: '#080b11',
+                                    borderRadius: '9999px',
+                                    fontWeight: 700,
+                                    boxShadow: '0 0 25px rgba(255, 255, 255, 0.2)'
+                                }}
                             >
-                                <Sparkles size={14} />
+                                <Sparkles size={14} color="#080b11" />
                                 <span>Get Started</span>
                             </button>
                         </>
@@ -268,15 +284,15 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                     aria-label="Toggle Menu"
                     style={{
                         display: 'none',
-                        background: '#f8fafc',
-                        border: '1px solid #cbd5e1',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.12)',
                         borderRadius: '10px',
                         width: '40px',
                         height: '40px',
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: 'pointer',
-                        color: '#0f172a'
+                        color: '#ffffff'
                     }}
                 >
                     {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -284,60 +300,130 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
 
                 {/* Mobile Menu Drawer */}
                 {mobileMenuOpen && (
-                    <div className="mobile-menu-drawer">
-                        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0.4rem 0.5rem' }}>
+                    <div className="mobile-menu-drawer" style={{
+                        position: 'absolute',
+                        top: 'calc(100% + 10px)',
+                        left: 0,
+                        right: 0,
+                        background: 'rgba(13, 18, 31, 0.98)',
+                        backdropFilter: 'blur(24px)',
+                        WebkitBackdropFilter: 'blur(24px)',
+                        border: '1px solid rgba(255, 255, 255, 0.12)',
+                        borderRadius: '20px',
+                        padding: '1.25rem',
+                        boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8)',
+                        zIndex: 999,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.65rem'
+                    }}>
+                        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0.2rem 0.5rem' }}>
                             Supplier Growth Tools
                         </div>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'meesho-shipping-rates' ? 'active' : ''}`}
                             onClick={() => { onTabChange('meesho-shipping-rates'); setMobileMenuOpen(false); }}
-                            style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'meesho-shipping-rates' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'meesho-shipping-rates' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'meesho-shipping-rates' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
                         >
-                            <TrendingDown size={16} color="#2563eb" />
+                            <TrendingDown size={16} color="#38bdf8" />
                             <span>Freight &amp; Rate Optimizer</span>
                         </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'free-image-generator' ? 'active' : ''}`}
                             onClick={() => { onTabChange('free-image-generator'); setMobileMenuOpen(false); }}
-                            style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'free-image-generator' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'free-image-generator' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'free-image-generator' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
                         >
-                            <Image size={16} color="#2563eb" />
+                            <Image size={16} color="#38bdf8" />
                             <span>Anti-Duplicate Catalog Studio</span>
                         </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'meesho-label-exporter' ? 'active' : ''}`}
                             onClick={() => { onTabChange('meesho-label-exporter'); setMobileMenuOpen(false); }}
-                            style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'meesho-label-exporter' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'meesho-label-exporter' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'meesho-label-exporter' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
                         >
-                            <Printer size={16} color="#2563eb" />
+                            <Printer size={16} color="#38bdf8" />
                             <span>4×6 Thermal Label Cropper</span>
                         </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'pnl-calculator' ? 'active' : ''}`}
                             onClick={() => { onTabChange('pnl-calculator'); setMobileMenuOpen(false); }}
-                            style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'pnl-calculator' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'pnl-calculator' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'pnl-calculator' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
                         >
-                            <FileSpreadsheet size={16} color="#2563eb" />
+                            <FileSpreadsheet size={16} color="#38bdf8" />
                             <span>P&amp;L Settlement Sheet</span>
                         </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'pricing' ? 'active' : ''}`}
                             onClick={() => { onTabChange('pricing'); setMobileMenuOpen(false); }}
-                            style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'pricing' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'pricing' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'pricing' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
                         >
-                            <CreditCard size={16} color="#475569" />
+                            <CreditCard size={16} color="#94a3b8" />
                             <span>Pricing &amp; Affiliate</span>
                         </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'contact-us' ? 'active' : ''}`}
                             onClick={() => { onTabChange('contact-us'); setMobileMenuOpen(false); }}
-                            style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'contact-us' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'contact-us' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'contact-us' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
                         >
-                            <Headphones size={16} color="#475569" />
+                            <Headphones size={16} color="#94a3b8" />
                             <span>Contact &amp; Support</span>
                         </button>
 
-                        <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '0.5rem 0' }} />
+                        <hr style={{ border: 'none', borderTop: '1px solid rgba(255, 255, 255, 0.08)', margin: '0.5rem 0' }} />
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                             <button 
@@ -358,7 +444,7 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                                     onRegister(); 
                                     setMobileMenuOpen(false); 
                                 }}
-                                style={{ width: '100%', justifyContent: 'center' }}
+                                style={{ width: '100%', justifyContent: 'center', background: '#ffffff', color: '#080b11', fontWeight: 700 }}
                             >
                                 Get Started (3 Free Credits)
                             </button>
@@ -392,19 +478,21 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '0.4rem',
-                            background: '#f1f5f9',
-                            color: '#475569',
-                            padding: '0.25rem 0.75rem',
-                            borderRadius: '20px',
+                            background: 'rgba(56, 189, 248, 0.08)',
+                            border: '1px solid rgba(56, 189, 248, 0.22)',
+                            color: '#38bdf8',
+                            padding: '0.3rem 0.85rem',
+                            borderRadius: '9999px',
                             fontSize: '0.72rem',
                             fontWeight: 700,
                             textTransform: 'uppercase',
                             letterSpacing: '0.05em',
-                            marginBottom: '0.5rem'
+                            marginBottom: '0.75rem'
                         }}>
+                            <Sparkles size={12} color="#38bdf8" />
                             <span>Frequently Asked Questions</span>
                         </div>
-                        <h2 style={{ fontFamily: 'Plus Jakarta Sans, Outfit, sans-serif', fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em', margin: 0 }}>
+                        <h2 style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', margin: 0 }}>
                             Clear Answers for Sellers
                         </h2>
                     </div>
@@ -433,36 +521,37 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                                 <div 
                                     key={idx} 
                                     style={{ 
-                                        background: '#ffffff', 
-                                        border: '1px solid #e2e8f0', 
-                                        borderRadius: '14px', 
+                                        background: isOpen ? 'rgba(56, 189, 248, 0.03)' : 'rgba(255, 255, 255, 0.02)', 
+                                        border: isOpen ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.08)', 
+                                        borderRadius: '16px', 
                                         padding: '1.15rem 1.25rem', 
                                         cursor: 'pointer',
-                                        transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-                                        boxShadow: isOpen ? '0 4px 16px rgba(15, 23, 42, 0.05)' : 'none'
+                                        transition: 'all 0.2s ease',
+                                        boxShadow: isOpen ? '0 10px 30px rgba(0, 0, 0, 0.4)' : 'none'
                                     }} 
                                     onClick={() => toggleFaq(idx)}
                                 >
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-                                        <strong style={{ fontSize: '0.95rem', color: '#0f172a', fontWeight: 700, lineHeight: '1.4' }}>
+                                        <strong style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: 700, lineHeight: '1.4' }}>
                                             {faq.q}
                                         </strong>
                                         <div style={{
                                             width: '26px',
                                             height: '26px',
                                             borderRadius: '6px',
-                                            background: isOpen ? '#eff6ff' : '#f8fafc',
+                                            background: isOpen ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255, 255, 255, 0.04)',
+                                            border: '1px solid rgba(255, 255, 255, 0.08)',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            color: '#2563eb',
+                                            color: '#38bdf8',
                                             flexShrink: 0
                                         }}>
                                             {isOpen ? <Minus size={15} /> : <Plus size={15} />}
                                         </div>
                                     </div>
                                     {isOpen && (
-                                        <div style={{ marginTop: '0.75rem', fontSize: '0.88rem', color: '#475569', lineHeight: '1.6', borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem' }}>
+                                        <div style={{ marginTop: '0.75rem', fontSize: '0.88rem', color: '#94a3b8', lineHeight: '1.6', borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '0.75rem' }}>
                                             {faq.a}
                                         </div>
                                     )}
@@ -473,54 +562,54 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                 </section>
             )}
 
-            {/* ── Modern Footer ──────────────────────────────────────────── */}
-            <footer style={{ padding: '3.5rem 1.25rem 2.5rem 1.25rem', background: '#ffffff', borderTop: '1px solid #e2e8f0', textAlign: 'center', boxSizing: 'border-box' }}>
+            {/* ── Modern Obsidian Footer ──────────────────────────────────── */}
+            <footer style={{ padding: '3.5rem 1.25rem 2.5rem 1.25rem', background: '#05070b', borderTop: '1px solid rgba(255, 255, 255, 0.08)', textAlign: 'center', boxSizing: 'border-box' }}>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                    <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Sparkles size={16} color="#2563eb" />
+                    <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Sparkles size={16} color="#38bdf8" />
                     </div>
-                    <span style={{ fontFamily: 'Plus Jakarta Sans, Outfit, sans-serif', fontWeight: 800, fontSize: '1.15rem', color: '#0f172a' }}>
+                    <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 800, fontSize: '1.15rem', color: '#ffffff' }}>
                         VendorsDesk
                     </span>
                 </div>
                 
-                <p style={{ color: '#64748b', fontSize: '0.82rem', maxWidth: '580px', margin: '0 auto 1.5rem auto', lineHeight: '1.5' }}>
+                <p style={{ color: '#94a3b8', fontSize: '0.82rem', maxWidth: '580px', margin: '0 auto 1.5rem auto', lineHeight: '1.6' }}>
                     VendorsDesk is an independent optimization platform for e-commerce suppliers. All audits are derived dynamically via secure user tokens.
                 </p>
 
                 {/* Legal & Policy Links */}
-                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '1rem', rowGap: '0.5rem', marginBottom: '1.75rem', fontSize: '0.82rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '1.25rem', rowGap: '0.65rem', marginBottom: '1.75rem', fontSize: '0.82rem' }}>
                     <button 
                         onClick={() => { onTabChange('privacy-policy'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                        style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                        style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
                         <Lock size={13} />
                         <span>Privacy Policy</span>
                     </button>
                     <button 
                         onClick={() => { onTabChange('refund-policy'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                        style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                        style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
                         <RotateCcw size={13} />
                         <span>Refund Policy</span>
                     </button>
                     <button 
                         onClick={() => { onTabChange('terms-of-service'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                        style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                        style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
                         <FileText size={13} />
                         <span>Terms of Service</span>
                     </button>
                     <button 
                         onClick={() => { onTabChange('contact-us'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                        style={{ background: 'none', border: 'none', color: '#475569', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                        style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
                         <Mail size={13} />
                         <span>Contact Support</span>
                     </button>
                 </div>
 
-                <div style={{ color: '#94a3b8', fontSize: '0.74rem', borderTop: '1px solid #f1f5f9', paddingTop: '1.25rem' }}>
+                <div style={{ color: '#64748b', fontSize: '0.74rem', borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '1.25rem' }}>
                     © 2026 VendorsDesk. All rights reserved. | Official Support: hellovendorsdesk@gmail.com
                 </div>
             </footer>

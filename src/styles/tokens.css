@@ -6,53 +6,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Outfit:wght@600;700;800&display=swap');
 
 :root {
-    /* Canvas & Surface Colors */
-    --vd-canvas: #f8fafc;
-    --vd-canvas-subtle: #f1f5f9;
-    --vd-surface: #ffffff;
-    --vd-surface-hover: #f8fafc;
-    --vd-surface-active: #f1f5f9;
+    /* Canvas & Surface Colors - Obsidian Dark-Tech */
+    --vd-canvas: #080b11;
+    --vd-canvas-subtle: #0c1019;
+    --vd-surface: #0d121f;
+    --vd-surface-hover: #131b2e;
+    --vd-surface-active: #1a243d;
 
     /* Borders & Dividers */
-    --vd-border-subtle: #e2e8f0;
-    --vd-border-strong: #cbd5e1;
-    --vd-border-focus: #2563eb;
+    --vd-border-subtle: rgba(255, 255, 255, 0.08);
+    --vd-border-strong: rgba(255, 255, 255, 0.16);
+    --vd-border-focus: #38bdf8;
 
     /* Text Hierarchy */
-    --vd-text-primary: #0f172a;
-    --vd-text-secondary: #475569;
+    --vd-text-primary: #f8fafc;
+    --vd-text-secondary: #94a3b8;
     --vd-text-muted: #64748b;
-    --vd-text-inverse: #ffffff;
+    --vd-text-inverse: #080b11;
 
-    /* Brand Precision Accents */
-    --vd-brand-50: #eff6ff;
-    --vd-brand-100: #dbeafe;
-    --vd-brand-500: #3b82f6;
-    --vd-brand-600: #2563eb;
-    --vd-brand-700: #1d4ed8;
+    /* Brand Precision Accents - Electric Cyan & Sapphire */
+    --vd-brand-50: rgba(56, 189, 248, 0.08);
+    --vd-brand-100: rgba(56, 189, 248, 0.15);
+    --vd-brand-500: #38bdf8;
+    --vd-brand-600: #0284c7;
+    --vd-brand-700: #0369a1;
 
     /* Semantic Status Colors */
-    --vd-success-bg: #ecfdf5;
-    --vd-success-border: #a7f3d0;
-    --vd-success-text: #065f46;
-    --vd-success: #10b981;
+    --vd-success-bg: rgba(52, 211, 153, 0.1);
+    --vd-success-border: rgba(52, 211, 153, 0.25);
+    --vd-success-text: #34d399;
+    --vd-success: #34d399;
 
-    --vd-warning-bg: #fffbeb;
-    --vd-warning-border: #fde68a;
-    --vd-warning-text: #92400e;
-    --vd-warning: #f59e0b;
+    --vd-warning-bg: rgba(251, 191, 36, 0.1);
+    --vd-warning-border: rgba(251, 191, 36, 0.25);
+    --vd-warning-text: #fbbf24;
+    --vd-warning: #fbbf24;
 
-    --vd-danger-bg: #fef2f2;
-    --vd-danger-border: #fecaca;
-    --vd-danger-text: #991b1b;
-    --vd-danger: #ef4444;
+    --vd-danger-bg: rgba(248, 113, 113, 0.1);
+    --vd-danger-border: rgba(248, 113, 113, 0.25);
+    --vd-danger-text: #f87171;
+    --vd-danger: #f87171;
 
     /* Soft Structural Shadows */
-    --vd-shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-    --vd-shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.05);
-    --vd-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-    --vd-shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
-    --vd-shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+    --vd-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --vd-shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+    --vd-shadow-md: 0 6px 12px -2px rgba(0, 0, 0, 0.5);
+    --vd-shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.6);
+    --vd-shadow-xl: 0 24px 48px -8px rgba(0, 0, 0, 0.7);
 
     /* Radii */
     --vd-radius-sm: 6px;
@@ -171,15 +171,15 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0;
     height: calc(64px + env(safe-area-inset-bottom, 0px));
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(13, 18, 31, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid var(--vd-border-subtle);
     z-index: 900;
     padding: 0 0.5rem env(safe-area-inset-bottom, 0px) 0.5rem;
     align-items: center;
     justify-content: space-around;
-    box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.05);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .vd-bottom-nav-item {
@@ -201,11 +201,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .vd-bottom-nav-item.active {
-    color: var(--vd-brand-600);
+    color: #38bdf8;
 }
 
 .vd-bottom-nav-item.active svg {
-    stroke: var(--vd-brand-600);
+    stroke: #38bdf8;
 }
 
 @media (max-width: 1024px) {
