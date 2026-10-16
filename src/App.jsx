@@ -166,12 +166,8 @@ function AppContent() {
         );
     }
 
-    // 2. On app.vendorsdesk.in: If not logged in, ask for credentials or redirect to vendorsdesk.in if modal closed
+    // 2. On app.vendorsdesk.in: If not logged in, render marketing/tools preview and provide login modal
     if (!currentUser) {
-        if (!authModalOpen && window.location.hostname.includes('vendorsdesk.in')) {
-            window.location.href = 'https://vendorsdesk.in';
-            return null;
-        }
         return (
             <>
                 <MarketingLandingPage 
