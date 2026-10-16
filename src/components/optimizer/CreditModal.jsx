@@ -3,7 +3,11 @@ import { CreditCard, X, Gem } from 'lucide-react';
 
 export default function CreditModal({ onClose, onNavigateToBilling }) {
     return (
-        <div className="lightbox-modal" onClick={onClose}>
+        <div className="lightbox-modal" onClick={onClose} style={{
+            position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+            background: 'rgba(8, 11, 17, 0.85)', backdropFilter: 'blur(16px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 99999
+        }}>
             <div 
                 className="lightbox-content-box" 
                 onClick={(e) => e.stopPropagation()} 
@@ -12,15 +16,21 @@ export default function CreditModal({ onClose, onNavigateToBilling }) {
                     padding: '2.25rem 2rem', 
                     textAlign: 'center', 
                     borderRadius: '24px', 
-                    background: '#ffffff', 
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                    background: '#0d121f', 
+                    border: '1px solid rgba(255, 255, 255, 0.12)',
+                    boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.08)',
                     position: 'relative'
                 }}
             >
                 <button 
                     className="lightbox-close" 
                     onClick={onClose}
-                    style={{ position: 'absolute', top: '16px', right: '16px' }}
+                    style={{ 
+                        position: 'absolute', top: '16px', right: '16px',
+                        background: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(255, 255, 255, 0.1)',
+                        color: '#94a3b8', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                    }}
                 >
                     ✕
                 </button>
@@ -28,36 +38,39 @@ export default function CreditModal({ onClose, onNavigateToBilling }) {
                     width: '64px',
                     height: '64px',
                     borderRadius: '20px',
-                    background: '#eff6ff',
+                    background: 'rgba(56, 189, 248, 0.12)',
+                    border: '1px solid rgba(56, 189, 248, 0.25)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     margin: '0 auto 1rem'
                 }}>
-                    <Gem size={32} color="#2563eb" />
+                    <Gem size={30} color="#38bdf8" />
                 </div>
-                <h3 style={{ fontFamily: 'Outfit, sans-serif', fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>
+                <h3 style={{ fontFamily: 'Outfit, sans-serif', fontSize: '1.45rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.5rem' }}>
                     Out of Credits!
                 </h3>
-                <p style={{ fontSize: '0.9rem', color: '#64748b', lineHeight: '1.6', marginBottom: '1.75rem' }}>
-                    You have <strong>0 query credits</strong> remaining.<br />
+                <p style={{ fontSize: '0.9rem', color: '#94a3b8', lineHeight: '1.6', marginBottom: '1.75rem' }}>
+                    You have <strong style={{ color: '#38bdf8' }}>0 query credits</strong> remaining.<br />
                     To generate more image variations and check live Meesho shipping rates, please choose a plan.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     <button 
-                        className="btn-submit-form" 
+                        className="btn-primary" 
                         style={{ 
                             padding: '0.85rem', 
-                            borderRadius: '12px', 
+                            borderRadius: '9999px', 
                             fontSize: '0.95rem', 
                             fontWeight: 700, 
-                            background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)', 
-                            boxShadow: '0 4px 15px rgba(37, 99, 235, 0.3)', 
+                            background: '#ffffff', 
+                            color: '#080b11',
+                            boxShadow: '0 4px 20px rgba(255, 255, 255, 0.18)', 
                             cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            gap: '0.5rem'
+                            gap: '0.5rem',
+                            border: 'none'
                         }}
                         onClick={() => {
                             onClose();
@@ -69,7 +82,7 @@ export default function CreditModal({ onClose, onNavigateToBilling }) {
                     </button>
                     <button 
                         type="button"
-                        style={{ padding: '0.65rem', borderRadius: '12px', background: '#f8fafc', color: '#64748b', border: '1px solid #cbd5e1', cursor: 'pointer', fontWeight: 600 }}
+                        style={{ padding: '0.75rem', borderRadius: '9999px', background: 'rgba(255, 255, 255, 0.05)', color: '#94a3b8', border: '1px solid rgba(255, 255, 255, 0.1)', cursor: 'pointer', fontWeight: 600 }}
                         onClick={onClose}
                     >
                         Dismiss

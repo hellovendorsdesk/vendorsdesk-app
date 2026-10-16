@@ -71,9 +71,9 @@ export default function AuthModal() {
                 left: 0,
                 width: '100vw',
                 height: '100vh',
-                background: 'rgba(15, 23, 42, 0.75)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
+                background: 'rgba(8, 11, 17, 0.85)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -85,16 +85,16 @@ export default function AuthModal() {
                 position: 'relative',
                 width: '100%',
                 maxWidth: '440px',
-                background: '#ffffff',
-                border: '1px solid #cbd5e1',
+                background: '#0d121f',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
                 borderRadius: '24px',
                 padding: '2.25rem 2rem',
-                boxShadow: '0 25px 60px -15px rgba(15, 23, 42, 0.35)',
+                boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 40px rgba(56, 189, 248, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '1.25rem',
                 fontFamily: 'Inter, sans-serif',
-                color: '#0f172a'
+                color: '#f8fafc'
             }}>
                 {/* Close Modal Button */}
                 <button 
@@ -102,36 +102,60 @@ export default function AuthModal() {
                     onClick={handleCloseAuthModal}
                     style={{
                         position: 'absolute', top: '1.2rem', right: '1.2rem',
-                        background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '50%',
+                        background: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '50%',
                         width: '32px', height: '32px', cursor: 'pointer',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontWeight: 'bold', color: '#64748b', fontSize: '0.9rem',
+                        fontWeight: 'bold', color: '#94a3b8', fontSize: '0.9rem',
                         transition: 'all 0.2s', zIndex: 10
                     }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = '#e2e8f0'; e.currentTarget.style.color = '#0f172a'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#64748b'; }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)'; e.currentTarget.style.color = '#ffffff'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'; e.currentTarget.style.color = '#94a3b8'; }}
                     title="Close"
                 >
                     ✕
                 </button>
 
                 {/* Brand Icon Header */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', marginBottom: '0.2rem' }}>
                     <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} onError={(e) => { e.target.style.display = 'none'; }} />
-                    <span style={{ fontSize: '1.35rem', fontWeight: 800, fontFamily: 'Outfit', color: '#0f172a', letterSpacing: '-0.02em' }}>VendorsDesk</span>
+                    <span style={{ fontSize: '1.35rem', fontWeight: 800, fontFamily: 'Outfit', color: '#ffffff', letterSpacing: '-0.02em' }}>VendorsDesk</span>
                 </div>
 
                 {/* Segmented Auth Mode Tabs */}
-                <div style={{ display: 'flex', background: '#f1f5f9', borderRadius: '12px', padding: '0.25rem', border: '1px solid #e2e8f0' }}>
-                    <button className={`auth-tab-btn ${authMode === 'login' ? 'active' : ''}`} onClick={() => { setAuthMode('login'); setAuthError(''); }}>Sign In</button>
-                    <button className={`auth-tab-btn ${authMode === 'signup' ? 'active' : ''}`} onClick={() => { setAuthMode('signup'); setAuthError(''); }}>Sign Up</button>
+                <div style={{ display: 'flex', background: 'rgba(255, 255, 255, 0.04)', borderRadius: '12px', padding: '0.25rem', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                    <button 
+                        className={`auth-tab-btn ${authMode === 'login' ? 'active' : ''}`} 
+                        onClick={() => { setAuthMode('login'); setAuthError(''); }}
+                        style={{
+                            flex: 1, padding: '0.55rem', borderRadius: '10px', fontSize: '0.88rem', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s',
+                            background: authMode === 'login' ? '#ffffff' : 'transparent',
+                            color: authMode === 'login' ? '#080b11' : '#94a3b8',
+                            border: 'none',
+                            boxShadow: authMode === 'login' ? '0 2px 8px rgba(0, 0, 0, 0.3)' : 'none'
+                        }}
+                    >
+                        Sign In
+                    </button>
+                    <button 
+                        className={`auth-tab-btn ${authMode === 'signup' ? 'active' : ''}`} 
+                        onClick={() => { setAuthMode('signup'); setAuthError(''); }}
+                        style={{
+                            flex: 1, padding: '0.55rem', borderRadius: '10px', fontSize: '0.88rem', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s',
+                            background: authMode === 'signup' ? '#ffffff' : 'transparent',
+                            color: authMode === 'signup' ? '#080b11' : '#94a3b8',
+                            border: 'none',
+                            boxShadow: authMode === 'signup' ? '0 2px 8px rgba(0, 0, 0, 0.3)' : 'none'
+                        }}
+                    >
+                        Sign Up
+                    </button>
                 </div>
 
                 <div style={{ textAlign: 'center' }}>
-                    <h3 style={{ fontSize: '1.35rem', fontFamily: 'Outfit', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.2rem' }}>
+                    <h3 style={{ fontSize: '1.35rem', fontFamily: 'Outfit', fontWeight: 700, color: '#ffffff', marginBottom: '0.25rem' }}>
                         {authMode === 'login' ? 'Welcome Back!' : 'Create your Account'}
                     </h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                    <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>
                         {authMode === 'login' ? 'Sign in to access your shipping optimizer dashboard' : 'Register and get 3 free credits immediately'}
                     </p>
                 </div>
@@ -139,49 +163,91 @@ export default function AuthModal() {
                 <form onSubmit={handleAuthSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                     {authMode === 'signup' && (
                         <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
-                            <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Full Name</label>
-                            <input type="text" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} required style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                            <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#94a3b8' }}>Full Name</label>
+                            <input 
+                                type="text" 
+                                placeholder="John Doe" 
+                                value={name} 
+                                onChange={(e) => setName(e.target.value)} 
+                                required 
+                                style={{ 
+                                    padding: '0.75rem 1rem', fontSize: '0.9rem', borderRadius: '12px',
+                                    background: '#080b11', color: '#ffffff', border: '1px solid rgba(255, 255, 255, 0.12)'
+                                }} 
+                            />
                         </div>
                     )}
                     <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
-                        <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Email Address</label>
-                        <input type="email" placeholder="john@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                        <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#94a3b8' }}>Email Address</label>
+                        <input 
+                            type="email" 
+                            placeholder="john@email.com" 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)} 
+                            required 
+                            style={{ 
+                                padding: '0.75rem 1rem', fontSize: '0.9rem', borderRadius: '12px',
+                                background: '#080b11', color: '#ffffff', border: '1px solid rgba(255, 255, 255, 0.12)'
+                            }} 
+                        />
                     </div>
                     <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
-                        <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Password</label>
-                        <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                        <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#94a3b8' }}>Password</label>
+                        <input 
+                            type="password" 
+                            placeholder="••••••••" 
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)} 
+                            required 
+                            style={{ 
+                                padding: '0.75rem 1rem', fontSize: '0.9rem', borderRadius: '12px',
+                                background: '#080b11', color: '#ffffff', border: '1px solid rgba(255, 255, 255, 0.12)'
+                            }} 
+                        />
                     </div>
                     {authMode === 'signup' && (
                         <div className="form-group" style={{ marginBottom: 0, gap: '0.35rem' }}>
-                            <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#475569' }}>Referral Code (Optional)</label>
-                            <input type="text" placeholder="REF123" value={referralCodeInput} onChange={(e) => setReferralCodeInput(e.target.value)} style={{ padding: '0.65rem 0.85rem', fontSize: '0.9rem', borderRadius: '10px' }} />
+                            <label style={{ fontWeight: 600, fontSize: '0.8rem', color: '#94a3b8' }}>Referral Code (Optional)</label>
+                            <input 
+                                type="text" 
+                                placeholder="REF123" 
+                                value={referralCodeInput} 
+                                onChange={(e) => setReferralCodeInput(e.target.value)} 
+                                style={{ 
+                                    padding: '0.75rem 1rem', fontSize: '0.9rem', borderRadius: '12px',
+                                    background: '#080b11', color: '#ffffff', border: '1px solid rgba(255, 255, 255, 0.12)'
+                                }} 
+                            />
                         </div>
                     )}
 
-                    {authError && <div style={{ color: 'var(--danger)', fontSize: '0.82rem', textAlign: 'center', background: 'rgba(220, 38, 38, 0.08)', padding: '0.5rem', borderRadius: '8px', border: '1px solid rgba(220, 38, 38, 0.2)' }}>{authError}</div>}
+                    {authError && <div style={{ color: '#ef4444', fontSize: '0.82rem', textAlign: 'center', background: 'rgba(239, 68, 68, 0.1)', padding: '0.5rem', borderRadius: '8px', border: '1px solid rgba(239, 68, 68, 0.25)' }}>{authError}</div>}
                     <button 
-                        className="btn-submit-form" 
+                        className="btn-primary" 
                         type="submit" 
                         disabled={isAuthSubmitting}
                         style={{ 
-                            padding: '0.75rem', 
-                            borderRadius: '10px', 
+                            padding: '0.85rem', 
+                            borderRadius: '9999px', 
                             fontSize: '0.95rem', 
                             fontWeight: 700, 
-                            marginTop: '0.35rem', 
-                            background: isAuthSubmitting ? '#94a3b8' : 'linear-gradient(135deg, #2563eb, #4f46e5)', 
-                            boxShadow: isAuthSubmitting ? 'none' : '0 4px 14px rgba(37, 99, 235, 0.3)',
+                            marginTop: '0.5rem', 
+                            background: '#ffffff',
+                            color: '#080b11',
+                            border: 'none',
+                            boxShadow: '0 4px 20px rgba(255, 255, 255, 0.18)',
                             cursor: isAuthSubmitting ? 'not-allowed' : 'pointer',
                             opacity: isAuthSubmitting ? 0.75 : 1,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            gap: '0.5rem'
+                            gap: '0.5rem',
+                            transition: 'all 0.2s'
                         }}
                     >
                         {isAuthSubmitting ? (
                             <>
-                                <span style={{ width: '16px', height: '16px', border: '2px solid #ffffff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                                <span style={{ width: '16px', height: '16px', border: '2px solid #080b11', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
                                 {authMode === 'login' ? 'Signing In...' : 'Creating Account...'}
                             </>
                         ) : (
@@ -191,9 +257,9 @@ export default function AuthModal() {
                 </form>
 
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', margin: '0.2rem 0' }}>
-                    <hr style={{ width: '38%', opacity: 0.2 }} />
-                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600 }}>OR</span>
-                    <hr style={{ width: '38%', opacity: 0.2 }} />
+                    <hr style={{ width: '38%', borderColor: 'rgba(255, 255, 255, 0.1)', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 700 }}>OR</span>
+                    <hr style={{ width: '38%', borderColor: 'rgba(255, 255, 255, 0.1)', borderStyle: 'solid', borderWidth: '1px 0 0 0' }} />
                 </div>
 
                 {/* Google Sign In Wrapper */}
