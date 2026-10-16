@@ -1,0 +1,215 @@
+/**
+ * VendorsDesk Modern Precision Design Tokens
+ * Clean, High-Contrast Modern SaaS Theme (Linear / Stripe Inspired)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Outfit:wght@600;700;800&display=swap');
+
+:root {
+    /* Canvas & Surface Colors - Obsidian Dark-Tech */
+    --vd-canvas: #080b11;
+    --vd-canvas-subtle: #0c1019;
+    --vd-surface: #0d121f;
+    --vd-surface-hover: #131b2e;
+    --vd-surface-active: #1a243d;
+
+    /* Borders & Dividers */
+    --vd-border-subtle: rgba(255, 255, 255, 0.08);
+    --vd-border-strong: rgba(255, 255, 255, 0.16);
+    --vd-border-focus: #38bdf8;
+
+    /* Text Hierarchy */
+    --vd-text-primary: #f8fafc;
+    --vd-text-secondary: #94a3b8;
+    --vd-text-muted: #64748b;
+    --vd-text-inverse: #080b11;
+
+    /* Brand Precision Accents - Electric Cyan & Sapphire */
+    --vd-brand-50: rgba(56, 189, 248, 0.08);
+    --vd-brand-100: rgba(56, 189, 248, 0.15);
+    --vd-brand-500: #38bdf8;
+    --vd-brand-600: #0284c7;
+    --vd-brand-700: #0369a1;
+
+    /* Semantic Status Colors */
+    --vd-success-bg: rgba(52, 211, 153, 0.1);
+    --vd-success-border: rgba(52, 211, 153, 0.25);
+    --vd-success-text: #34d399;
+    --vd-success: #34d399;
+
+    --vd-warning-bg: rgba(251, 191, 36, 0.1);
+    --vd-warning-border: rgba(251, 191, 36, 0.25);
+    --vd-warning-text: #fbbf24;
+    --vd-warning: #fbbf24;
+
+    --vd-danger-bg: rgba(248, 113, 113, 0.1);
+    --vd-danger-border: rgba(248, 113, 113, 0.25);
+    --vd-danger-text: #f87171;
+    --vd-danger: #f87171;
+
+    /* Soft Structural Shadows */
+    --vd-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --vd-shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+    --vd-shadow-md: 0 6px 12px -2px rgba(0, 0, 0, 0.5);
+    --vd-shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.6);
+    --vd-shadow-xl: 0 24px 48px -8px rgba(0, 0, 0, 0.7);
+
+    /* Radii */
+    --vd-radius-sm: 6px;
+    --vd-radius-md: 10px;
+    --vd-radius-lg: 14px;
+    --vd-radius-xl: 20px;
+    --vd-radius-full: 9999px;
+
+    /* Transitions */
+    --vd-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --vd-transition-smooth: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--vd-canvas);
+    color: var(--vd-text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+    color: var(--vd-text-primary);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* Reusable UI Components */
+.vd-card {
+    background: var(--vd-surface);
+    border: 1px solid var(--vd-border-subtle);
+    border-radius: var(--vd-radius-lg);
+    box-shadow: var(--vd-shadow-sm);
+    transition: border-color var(--vd-transition-fast), box-shadow var(--vd-transition-fast);
+}
+
+.vd-card:hover {
+    border-color: var(--vd-border-strong);
+    box-shadow: var(--vd-shadow-md);
+}
+
+/* Modern Primary Button */
+.vd-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--vd-radius-md);
+    cursor: pointer;
+    transition: all var(--vd-transition-fast);
+    border: 1px solid transparent;
+    text-decoration: none;
+    user-select: none;
+    min-height: 40px;
+}
+
+.vd-btn-primary {
+    background: var(--vd-brand-600);
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.vd-btn-primary:hover {
+    background: var(--vd-brand-700);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.vd-btn-secondary {
+    background: var(--vd-surface);
+    color: var(--vd-text-primary);
+    border-color: var(--vd-border-strong);
+}
+
+.vd-btn-secondary:hover {
+    background: var(--vd-canvas-subtle);
+    border-color: var(--vd-text-muted);
+}
+
+/* Modern Form Controls */
+.vd-input {
+    width: 100%;
+    padding: 0.65rem 0.875rem;
+    border-radius: var(--vd-radius-md);
+    border: 1px solid var(--vd-border-strong);
+    background: var(--vd-surface);
+    color: var(--vd-text-primary);
+    font-size: 0.875rem;
+    font-family: inherit;
+    transition: border-color var(--vd-transition-fast), box-shadow var(--vd-transition-fast);
+    outline: none;
+}
+
+.vd-input:focus {
+    border-color: var(--vd-border-focus);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Mobile Bottom Navigation Bar */
+.vd-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(64px + env(safe-area-inset-bottom, 0px));
+    background: rgba(13, 18, 31, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--vd-border-subtle);
+    z-index: 900;
+    padding: 0 0.5rem env(safe-area-inset-bottom, 0px) 0.5rem;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.vd-bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    color: var(--vd-text-muted);
+    font-size: 0.68rem;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--vd-radius-sm);
+    min-width: 54px;
+    transition: color var(--vd-transition-fast);
+}
+
+.vd-bottom-nav-item.active {
+    color: #38bdf8;
+}
+
+.vd-bottom-nav-item.active svg {
+    stroke: #38bdf8;
+}
+
+@media (max-width: 1024px) {
+    .vd-bottom-nav {
+        display: flex;
+    }
+}

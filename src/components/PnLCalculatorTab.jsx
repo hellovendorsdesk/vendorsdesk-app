@@ -231,7 +231,7 @@ export default function PnLCalculatorTab() {
                     </div>
 
                     {/* Dynamic SKU Cards Grid */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '1.5rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 290px), 1fr))', gap: '1.5rem' }}>
                         {filteredSkus.map(sku => (
                             <PnLSkuCard 
                                 key={sku}

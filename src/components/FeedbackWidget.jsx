@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MessageSquare, X, CheckCircle2, Send } from 'lucide-react';
 
 export default function FeedbackWidget({ currentUser }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +59,7 @@ export default function FeedbackWidget({ currentUser }) {
     };
 
     return (
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999 }}>
+        <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 9999 }}>
             
             {/* Floating Trigger Button */}
             {!isOpen && (
@@ -67,158 +68,147 @@ export default function FeedbackWidget({ currentUser }) {
                     style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '0.6rem',
-                        padding: '0.75rem 1.25rem',
-                        borderRadius: '30px',
-                        background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                        gap: '0.5rem',
+                        padding: '0.65rem 1.15rem',
+                        borderRadius: '9999px',
+                        background: '#0d121f',
                         color: '#ffffff',
-                        border: '1px solid rgba(255, 255, 255, 0.3)',
-                        fontSize: '0.88rem',
-                        fontWeight: 800,
-                        fontFamily: 'Outfit, sans-serif',
+                        border: '1px solid rgba(255, 255, 255, 0.15)',
+                        fontSize: '0.82rem',
+                        fontWeight: 700,
+                        fontFamily: 'Plus Jakarta Sans, sans-serif',
                         cursor: 'pointer',
-                        boxShadow: '0 10px 25px -5px rgba(37, 99, 235, 0.45)',
-                        transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+                        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.15)',
+                        transition: 'transform 0.2s ease, box-shadow 0.2s ease'
                     }}
-                    className="card-hover-lift"
                 >
-                    <span style={{ fontSize: '1.1rem' }}>💬</span>
-                    <span>Feedback & Suggestions</span>
+                    <MessageSquare size={16} color="#38bdf8" />
+                    <span>Feedback</span>
                 </button>
             )}
 
-            {/* Glassmorphic Modal Window */}
+            {/* Modal Window */}
             {isOpen && (
                 <div style={{
-                    width: '380px',
+                    width: '360px',
                     maxWidth: 'calc(100vw - 32px)',
-                    background: '#ffffff',
-                    border: '1px solid #cbd5e1',
+                    background: '#0d121f',
+                    border: '1px solid rgba(255, 255, 255, 0.12)',
                     borderRadius: '20px',
-                    padding: '1.5rem',
-                    boxShadow: '0 25px 50px -12px rgba(15, 23, 42, 0.25)',
+                    padding: '1.25rem',
+                    boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '1rem',
-                    fontFamily: 'Inter, sans-serif'
+                    gap: '0.85rem',
+                    fontFamily: 'Inter, sans-serif',
+                    color: '#ffffff'
                 }}>
                     {/* Header */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', pb: '0.75rem', paddingBottom: '0.75rem' }}>
-                        <div>
-                            <h3 style={{ fontFamily: 'Outfit', fontSize: '1.15rem', fontWeight: 800, margin: 0, color: '#0f172a' }}>
-                                💬 Feedback & Suggestions
-                            </h3>
-                            <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>
-                                Help us improve VendorsDesk for e-commerce sellers
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '0.65rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <MessageSquare size={18} color="#38bdf8" />
+                            <div>
+                                <h3 style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: '1rem', fontWeight: 800, margin: 0, color: '#ffffff' }}>
+                                    Send Feedback
+                                </h3>
+                                <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
+                                    Help us improve VendorsDesk for sellers
+                                </div>
                             </div>
                         </div>
                         <button
                             onClick={() => setIsOpen(false)}
-                            style={{ background: '#f1f5f9', border: 'none', borderRadius: '50%', width: '28px', height: '28px', cursor: 'pointer', fontWeight: 800, color: '#64748b' }}
+                            style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#94a3b8' }}
                         >
-                            ✕
+                            <X size={15} />
                         </button>
                     </div>
 
                     {submittedSuccess ? (
-                        <div style={{ textAlign: 'center', padding: '1.5rem 0', color: '#10b981' }}>
-                            <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>✅</div>
-                            <h4 style={{ fontFamily: 'Outfit', fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.35rem' }}>Feedback Received!</h4>
-                            <p style={{ fontSize: '0.85rem', color: '#475569', margin: 0 }}>Thank you! Our engineering team has received your suggestion.</p>
+                        <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
+                            <CheckCircle2 size={40} color="#34d399" style={{ margin: '0 auto 0.5rem auto' }} />
+                            <h4 style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: '1.1rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.25rem' }}>
+                                Thank You!
+                            </h4>
+                            <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0 }}>
+                                Your feedback was submitted directly to our engineering team.
+                            </p>
                         </div>
                     ) : (
-                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                            
-                            {/* Star Rating */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                                <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569' }}>Rate Your Experience:</label>
-                                <div style={{ display: 'flex', gap: '0.35rem' }}>
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <button
-                                            key={star}
-                                            type="button"
-                                            onClick={() => setRating(star)}
-                                            style={{
-                                                background: 'none',
-                                                border: 'none',
-                                                fontSize: '1.4rem',
-                                                cursor: 'pointer',
-                                                filter: star <= rating ? 'none' : 'grayscale(100%) opacity(0.3)'
-                                            }}
-                                        >
-                                            ⭐
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Category Selector */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                                <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569' }}>Category:</label>
-                                <select
-                                    value={category}
-                                    onChange={(e) => setCategory(e.target.value)}
-                                    style={{ width: '100%', padding: '0.55rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.82rem', fontWeight: 700, background: '#ffffff', color: '#0f172a' }}
-                                >
-                                    <option value="feature_suggestion">💡 Feature Suggestion</option>
-                                    <option value="bug_report">🐛 Bug Report</option>
-                                    <option value="ui_improvement">🎨 UI / Layout Improvement</option>
-                                    <option value="general_feedback">💬 General Feedback</option>
-                                </select>
-                            </div>
-
-                            {/* Email */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                                <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569' }}>Your Email:</label>
-                                <input
-                                    type="email"
-                                    placeholder="seller@example.com"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                    style={{ width: '100%', padding: '0.55rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.82rem', background: '#ffffff', color: '#0f172a' }}
-                                />
-                            </div>
-
-                            {/* Subject */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                                <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569' }}>Title / Subject:</label>
-                                <input
-                                    type="text"
-                                    placeholder="e.g. Add Excel bulk export for P&L"
-                                    value={subject}
-                                    onChange={(e) => setSubject(e.target.value)}
-                                    required
-                                    style={{ width: '100%', padding: '0.55rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.82rem', background: '#ffffff', color: '#0f172a' }}
-                                />
-                            </div>
-
-                            {/* Detailed Message */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                                <label style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569' }}>Detailed Suggestion / Feedback:</label>
-                                <textarea
-                                    rows="3"
-                                    placeholder="Describe your suggestion or issue in detail..."
-                                    value={message}
-                                    onChange={(e) => setMessage(e.target.value)}
-                                    required
-                                    style={{ width: '100%', padding: '0.55rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.82rem', background: '#ffffff', color: '#0f172a', resize: 'vertical' }}
-                                />
-                            </div>
-
+                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                             {errorMsg && (
-                                <div style={{ color: '#ef4444', fontSize: '0.75rem', fontWeight: 700 }}>
+                                <div style={{ background: 'rgba(248, 113, 113, 0.1)', border: '1px solid rgba(248, 113, 113, 0.25)', color: '#f87171', padding: '0.5rem 0.75rem', borderRadius: '8px', fontSize: '0.78rem' }}>
                                     {errorMsg}
                                 </div>
                             )}
 
-                            <button
-                                type="submit"
+                            <div>
+                                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', marginBottom: '0.25rem' }}>Category</label>
+                                <select 
+                                    value={category} 
+                                    onChange={(e) => setCategory(e.target.value)}
+                                    style={{ width: '100%', padding: '0.5rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.12)', background: 'rgba(255, 255, 255, 0.03)', color: '#ffffff', fontSize: '0.82rem' }}
+                                >
+                                    <option value="feature_suggestion">Feature Suggestion</option>
+                                    <option value="bug_report">Bug Report / Error</option>
+                                    <option value="rate_accuracy">Shipping Rate Discrepancy</option>
+                                    <option value="other">General Feedback</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', marginBottom: '0.25rem' }}>Your Email</label>
+                                <input 
+                                    type="email" 
+                                    value={email} 
+                                    onChange={(e) => setEmail(e.target.value)} 
+                                    placeholder="seller@example.com"
+                                    style={{ width: '100%', padding: '0.5rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.12)', background: 'rgba(255, 255, 255, 0.03)', color: '#ffffff', fontSize: '0.82rem', boxSizing: 'border-box' }}
+                                />
+                            </div>
+
+                            <div>
+                                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', marginBottom: '0.25rem' }}>Topic / Subject</label>
+                                <input 
+                                    type="text" 
+                                    value={subject} 
+                                    onChange={(e) => setSubject(e.target.value)} 
+                                    placeholder="e.g. Saree weight calculation issue"
+                                    style={{ width: '100%', padding: '0.5rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.12)', background: 'rgba(255, 255, 255, 0.03)', color: '#ffffff', fontSize: '0.82rem', boxSizing: 'border-box' }}
+                                />
+                            </div>
+
+                            <div>
+                                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', marginBottom: '0.25rem' }}>Details</label>
+                                <textarea 
+                                    rows={3} 
+                                    value={message} 
+                                    onChange={(e) => setMessage(e.target.value)} 
+                                    placeholder="Describe your suggestion or issue..."
+                                    style={{ width: '100%', padding: '0.5rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.12)', background: 'rgba(255, 255, 255, 0.03)', color: '#ffffff', fontSize: '0.82rem', boxSizing: 'border-box', resize: 'none' }}
+                                />
+                            </div>
+
+                            <button 
+                                type="submit" 
                                 disabled={isSubmitting}
-                                className="btn-submit-form"
-                                style={{ width: '100%', padding: '0.65rem', borderRadius: '10px', fontSize: '0.88rem', marginTop: '0.25rem' }}
+                                className="btn-primary"
+                                style={{
+                                    width: '100%',
+                                    padding: '0.65rem',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '0.45rem',
+                                    fontSize: '0.85rem',
+                                    background: '#ffffff',
+                                    color: '#080b11',
+                                    borderRadius: '9999px',
+                                    fontWeight: 700
+                                }}
                             >
-                                {isSubmitting ? 'Submitting...' : '🚀 Submit Feedback'}
+                                <Send size={14} />
+                                <span>{isSubmitting ? 'Submitting...' : 'Send Feedback'}</span>
                             </button>
                         </form>
                     )}

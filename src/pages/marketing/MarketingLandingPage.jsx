@@ -1,7 +1,29 @@
 import React, { useState } from 'react';
+import { 
+    Layers, 
+    ChevronDown, 
+    Menu, 
+    X, 
+    ShieldCheck, 
+    ArrowRight, 
+    Sparkles, 
+    CreditCard, 
+    Headphones, 
+    Image, 
+    TrendingDown, 
+    FileSpreadsheet, 
+    Printer, 
+    Lock, 
+    RotateCcw, 
+    FileText, 
+    Mail,
+    Plus,
+    Minus
+} from 'lucide-react';
 import BulkBackgroundRemoverTab from '../../components/BulkBackgroundRemoverTab';
 import FreeImageGeneratorTab from '../../components/FreeImageGeneratorTab';
 import PnLCalculatorTab from '../../components/PnLCalculatorTab';
+import ListingTemplatesTab from '../../components/ListingTemplatesTab';
 import MeeshoShippingRatesPage from './MeeshoShippingRatesPage';
 import MeeshoLabelExporterPage from './MeeshoLabelExporterPage';
 import PricingAffiliatePage from './PricingAffiliatePage';
@@ -18,30 +40,36 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
     };
 
     const validTabs = [
-        'home', 'bg-remover', 'free-image-generator', 'meesho-shipping-rates', 
+        'home', 'templates', 'bg-remover', 'free-image-generator', 'meesho-shipping-rates', 
         'pnl-calculator', 'meesho-image-generator', 'meesho-label-exporter', 
-        'pricing', 'privacy-policy', 'refund-policy', 'terms-of-service', 'contact-us'
+        'pricing', 'billing', 'privacy-policy', 'refund-policy', 'terms-of-service', 'contact-us',
+        'optimizer', 'label-exporter', 'calculator', 'affiliate'
     ];
 
     return (
-        <div style={{ minHeight: '100vh', width: '100vw', background: 'var(--bg-gradient)', color: 'var(--text-primary)', overflowX: 'hidden' }}>
+        <div style={{ minHeight: '100vh', width: '100%', maxWidth: '100vw', background: '#080b11', color: '#f8fafc', overflowX: 'hidden' }}>
             
-            {/* Header / Navbar */}
+            {/* ── Header / Floating Island Navbar ────────────────────────── */}
             <header className="site-header" style={{
-                background: 'rgba(255, 255, 255, 0.88)',
+                background: 'rgba(13, 18, 31, 0.85)',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
-                borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
-                boxShadow: '0 4px 25px rgba(15, 23, 42, 0.05)',
-                padding: '0.75rem 3%',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06)',
+                padding: '0.65rem 1.25rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 position: 'sticky',
-                top: 0,
-                zIndex: 990
+                top: '0.75rem',
+                zIndex: 990,
+                width: 'calc(100% - 1.5rem)',
+                maxWidth: '1140px',
+                margin: '0.5rem auto 1rem auto',
+                borderRadius: '9999px',
+                boxSizing: 'border-box'
             }}>
-                {/* Left Official Brand Logo */}
+                {/* Brand Logo */}
                 <div 
                     style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', cursor: 'pointer' }}
                     onClick={() => { onTabChange('meesho-shipping-rates'); setMobileMenuOpen(false); }}
@@ -49,16 +77,17 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                     <img 
                         src="/logo-icon.png" 
                         alt="VendorsDesk Official Logo" 
-                        style={{ height: '38px', width: 'auto', objectFit: 'contain' }} 
+                        style={{ height: '32px', width: 'auto', objectFit: 'contain' }} 
+                        onError={(e) => { e.target.style.display = 'none'; }}
                     />
-                    <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.45rem', letterSpacing: '-0.02em', color: '#0f172a' }}>
+                    <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em', color: '#ffffff' }}>
                         VendorsDesk
                     </span>
                 </div>
                 
-                {/* Desktop Navigation Links (Center) */}
-                <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    {/* 🧰 Free Tools Dropdown */}
+                {/* Desktop Navigation Links */}
+                <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    {/* Free Tools Dropdown */}
                     <div 
                         className="nav-dropdown-wrapper"
                         onMouseEnter={() => setIsToolsDropdownOpen(true)}
@@ -71,173 +100,178 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '0.4rem',
-                                fontWeight: 800,
+                                gap: '0.45rem',
+                                fontWeight: 700,
                                 fontSize: '0.85rem',
-                                padding: '0.55rem 0.85rem',
-                                borderRadius: '12px',
-                                background: 'rgba(37, 99, 235, 0.06)',
-                                border: '1px solid rgba(37, 99, 235, 0.15)',
-                                color: '#2563eb'
+                                padding: '0.5rem 0.95rem',
+                                borderRadius: '9999px',
+                                background: 'rgba(255, 255, 255, 0.05)',
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                color: '#ffffff',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease'
                             }}
                         >
-                            <span>🧰 Free Tools</span>
-                            <span style={{ fontSize: '0.6rem', background: '#10b981', color: '#ffffff', padding: '0.12rem 0.4rem', borderRadius: '6px', fontWeight: 800 }}>5 SUITE</span>
-                            <span style={{ fontSize: '0.7rem', transition: 'transform 0.2s', transform: isToolsDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
+                            <Layers size={15} color="#38bdf8" />
+                            <span>Free Tools</span>
+                            <span style={{ fontSize: '0.65rem', background: 'rgba(56, 189, 248, 0.12)', color: '#38bdf8', border: '1px solid rgba(56, 189, 248, 0.25)', padding: '0.1rem 0.4rem', borderRadius: '6px', fontWeight: 700 }}>5 SUITE</span>
+                            <ChevronDown size={14} color="#94a3b8" style={{ transition: 'transform 0.2s', transform: isToolsDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
                         </button>
 
                         {isToolsDropdownOpen && (
                             <div style={{
                                 position: 'absolute',
-                                top: '100%',
+                                top: 'calc(100% + 10px)',
                                 left: 0,
-                                width: '340px',
-                                background: '#ffffff',
-                                border: '1px solid #cbd5e1',
+                                width: '330px',
+                                background: 'rgba(13, 18, 31, 0.96)',
+                                backdropFilter: 'blur(24px)',
+                                WebkitBackdropFilter: 'blur(24px)',
+                                border: '1px solid rgba(255, 255, 255, 0.12)',
                                 borderRadius: '18px',
-                                boxShadow: '0 25px 50px -12px rgba(15, 23, 42, 0.18)',
-                                padding: '0.75rem',
+                                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06)',
+                                padding: '0.65rem',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: '0.4rem',
+                                gap: '0.35rem',
                                 zIndex: 1000,
                             }}>
-                                {/* Tool 1: Background Remover */}
-                                <div 
-                                    onClick={() => { onTabChange('bg-remover'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.85rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem' }}
-                                >
-                                    <span style={{ fontSize: '1.3rem' }}>🖼️</span>
-                                    <div>
-                                        <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Bulk HD Background Remover</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Remove & transparent image backgrounds.</div>
-                                    </div>
-                                </div>
-
-                                {/* Tool 2: Free Image Generator */}
-                                <div 
-                                    onClick={() => { onTabChange('free-image-generator'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.85rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem' }}
-                                >
-                                    <span style={{ fontSize: '1.3rem' }}>🆓</span>
-                                    <div>
-                                        <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Free Image Variation Generator</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Generate catalog borders & badges for free.</div>
-                                    </div>
-                                </div>
-
-                                {/* Tool 3: Rate & Freight Optimizer */}
                                 <div 
                                     onClick={() => { onTabChange('meesho-shipping-rates'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.85rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem' }}
+                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: activeTab === 'meesho-shipping-rates' ? 'rgba(56, 189, 248, 0.1)' : 'transparent', transition: 'background 0.15s ease' }}
                                 >
-                                    <span style={{ fontSize: '1.3rem' }}>⚡</span>
+                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <TrendingDown size={17} color="#38bdf8" />
+                                    </div>
                                     <div>
-                                        <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Meesho Shipping Rate Optimizer</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Check & audit lowest freight slab tiers.</div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Freight &amp; Slab Optimizer</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Audit lowest courier freight slabs</div>
                                     </div>
                                 </div>
 
-                                {/* Tool 4: Excel P&L Settlement Calculator */}
                                 <div 
-                                    onClick={() => { onTabChange('pnl-calculator'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.85rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem' }}
+                                    onClick={() => { onTabChange('free-image-generator'); setIsToolsDropdownOpen(false); }}
+                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: 'transparent', transition: 'background 0.15s ease' }}
                                 >
-                                    <span style={{ fontSize: '1.3rem' }}>📊</span>
+                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Image size={17} color="#38bdf8" />
+                                    </div>
                                     <div>
-                                        <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Excel P&L Settlement Calculator</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Upload settlement sheet & audit net profits.</div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Anti-Duplicate Image Studio</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Bypass duplicate listing bans</div>
                                     </div>
                                 </div>
 
-                                {/* Tool 5: Bulk Label Crop & Exporter */}
                                 <div 
                                     onClick={() => { onTabChange('meesho-label-exporter'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.85rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem' }}
+                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: 'transparent', transition: 'background 0.15s ease' }}
                                 >
-                                    <span style={{ fontSize: '1.3rem' }}>📋</span>
+                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Printer size={17} color="#38bdf8" />
+                                    </div>
                                     <div>
-                                        <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}>Bulk PDF Label Crop & SKU Sorter</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>Crop 4x6 thermal shipping labels by SKU.</div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>4×6 Thermal Label Cropper</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Organize PDF invoices by SKU</div>
+                                    </div>
+                                </div>
+
+                                <div 
+                                    onClick={() => { onTabChange('pnl-calculator'); setIsToolsDropdownOpen(false); }}
+                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: 'transparent', transition: 'background 0.15s ease' }}
+                                >
+                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <FileSpreadsheet size={17} color="#38bdf8" />
+                                    </div>
+                                    <div>
+                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Net P&amp;L Settlement Sheet</div>
+                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Track real returns &amp; deduction margins</div>
                                     </div>
                                 </div>
                             </div>
                         )}
                     </div>
 
-                    {/* Featured Shortcut Link: Pricing */}
                     <button 
-                        className="nav-link"
-                        onClick={() => {
-                            const el = document.getElementById('pricing-affiliate-section');
-                            if (el) el.scrollIntoView({ behavior: 'smooth' });
-                            else onTabChange('pricing');
+                        className={`nav-link ${activeTab === 'pricing' ? 'active' : ''}`}
+                        onClick={() => onTabChange('pricing')}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.4rem',
+                            fontWeight: 600,
+                            fontSize: '0.85rem',
+                            padding: '0.55rem 0.85rem',
+                            borderRadius: '9999px',
+                            background: 'transparent',
+                            border: '1px solid transparent',
+                            color: activeTab === 'pricing' ? '#38bdf8' : '#94a3b8',
+                            cursor: 'pointer'
                         }}
-                        style={{ fontWeight: 700, padding: '0.45rem 0.75rem', borderRadius: '10px', fontSize: '0.85rem', color: '#475569' }}
                     >
-                        💎 Pricing & Affiliate
+                        <CreditCard size={15} />
+                        <span>Pricing &amp; Affiliate</span>
                     </button>
 
-                    {/* Contact & Support Link */}
                     <button 
-                        className="nav-link"
+                        className={`nav-link ${activeTab === 'contact-us' ? 'active' : ''}`}
                         onClick={() => onTabChange('contact-us')}
-                        style={{ fontWeight: 700, padding: '0.45rem 0.75rem', borderRadius: '10px', fontSize: '0.85rem', color: '#475569' }}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.4rem',
+                            fontWeight: 600,
+                            fontSize: '0.85rem',
+                            padding: '0.55rem 0.85rem',
+                            borderRadius: '9999px',
+                            background: 'transparent',
+                            border: '1px solid transparent',
+                            color: activeTab === 'contact-us' ? '#38bdf8' : '#94a3b8',
+                            cursor: 'pointer'
+                        }}
                     >
-                        📞 Contact & Support
+                        <Headphones size={15} />
+                        <span>Support</span>
                     </button>
                 </nav>
 
-                {/* Desktop Action Buttons (Right) */}
-                <div className="desktop-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                {/* Right CTA Actions */}
+                <div className="desktop-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                     {currentUser ? (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                            <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#475569', background: '#f1f5f9', padding: '0.4rem 0.85rem', borderRadius: '10px' }}>
-                                💎 {currentUser.credits} Credits
-                            </span>
-                            <button 
-                                className="btn-get-started card-hover-lift" 
-                                style={{ padding: '0.65rem 1.35rem', borderRadius: '12px', background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)', boxShadow: '0 4px 18px rgba(37, 99, 235, 0.35)', fontWeight: 800 }} 
-                                onClick={onGoToDashboard}
-                            >
-                                ⚡ Go to App Dashboard
-                            </button>
-                        </div>
+                        <button 
+                            className="btn-primary" 
+                            onClick={onGoToDashboard}
+                            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem' }}
+                        >
+                            <span>Open Console</span>
+                            <ArrowRight size={15} />
+                        </button>
                     ) : (
                         <>
                             <button 
-                                className="btn-signin card-hover-lift" 
+                                className="btn-action" 
                                 onClick={onLogin}
-                                style={{
-                                    background: '#ffffff',
-                                    border: '1px solid #cbd5e1',
-                                    color: '#0f172a',
-                                    padding: '0.6rem 1.25rem',
-                                    borderRadius: '12px',
-                                    fontWeight: 800,
-                                    fontSize: '0.88rem',
-                                    cursor: 'pointer',
-                                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-                                }}
+                                style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }}
                             >
                                 Sign In
                             </button>
                             <button 
-                                className="btn-get-started card-hover-lift" 
+                                className="btn-primary" 
                                 onClick={onRegister}
                                 style={{
-                                    background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
-                                    border: 'none',
-                                    color: '#ffffff',
-                                    padding: '0.6rem 1.45rem',
-                                    borderRadius: '12px',
-                                    fontWeight: 800,
-                                    fontSize: '0.88rem',
-                                    cursor: 'pointer',
-                                    boxShadow: '0 4px 18px rgba(37, 99, 235, 0.35)'
+                                    padding: '0.55rem 1.25rem',
+                                    fontSize: '0.85rem',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.45rem',
+                                    background: '#ffffff',
+                                    color: '#080b11',
+                                    borderRadius: '9999px',
+                                    fontWeight: 700,
+                                    boxShadow: '0 0 25px rgba(255, 255, 255, 0.2)'
                                 }}
                             >
-                                Get Started
+                                <Sparkles size={14} color="#080b11" />
+                                <span>Get Started</span>
                             </button>
                         </>
                     )}
@@ -248,134 +282,276 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                     className="mobile-hamburger-btn"
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     aria-label="Toggle Menu"
+                    style={{
+                        display: 'none',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.12)',
+                        borderRadius: '10px',
+                        width: '40px',
+                        height: '40px',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        color: '#ffffff'
+                    }}
                 >
-                    {mobileMenuOpen ? '✕' : '☰'}
+                    {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                 </button>
 
                 {/* Mobile Menu Drawer */}
                 {mobileMenuOpen && (
-                    <div className="mobile-menu-drawer">
-                        <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0.4rem 0.75rem' }}>
-                            🧰 FREE SUPPLIER TOOLS
+                    <div className="mobile-menu-drawer" style={{
+                        position: 'absolute',
+                        top: 'calc(100% + 10px)',
+                        left: 0,
+                        right: 0,
+                        background: 'rgba(13, 18, 31, 0.98)',
+                        backdropFilter: 'blur(24px)',
+                        WebkitBackdropFilter: 'blur(24px)',
+                        border: '1px solid rgba(255, 255, 255, 0.12)',
+                        borderRadius: '20px',
+                        padding: '1.25rem',
+                        boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8)',
+                        zIndex: 999,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.65rem'
+                    }}>
+                        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0.2rem 0.5rem' }}>
+                            Supplier Growth Tools
                         </div>
-                        <button 
-                            className={`mobile-nav-link ${activeTab === 'free-image-generator' ? 'active' : ''}`}
-                            onClick={() => { onTabChange('free-image-generator'); setMobileMenuOpen(false); }}
-                        >
-                            🖼️ Free Image Variation Generator (100% Free)
-                        </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'meesho-shipping-rates' ? 'active' : ''}`}
                             onClick={() => { onTabChange('meesho-shipping-rates'); setMobileMenuOpen(false); }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'meesho-shipping-rates' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'meesho-shipping-rates' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'meesho-shipping-rates' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
                         >
-                            ⚡ Rate & Freight Optimizer
+                            <TrendingDown size={16} color="#38bdf8" />
+                            <span>Freight &amp; Rate Optimizer</span>
                         </button>
                         <button 
-                            className={`mobile-nav-link ${activeTab === 'pnl-calculator' ? 'active' : ''}`}
-                            onClick={() => { onTabChange('pnl-calculator'); setMobileMenuOpen(false); }}
+                            className={`mobile-nav-link ${activeTab === 'free-image-generator' ? 'active' : ''}`}
+                            onClick={() => { onTabChange('free-image-generator'); setMobileMenuOpen(false); }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'free-image-generator' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'free-image-generator' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'free-image-generator' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
                         >
-                            📊 Excel P&L Settlement Calculator
+                            <Image size={16} color="#38bdf8" />
+                            <span>Anti-Duplicate Catalog Studio</span>
                         </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'meesho-label-exporter' ? 'active' : ''}`}
                             onClick={() => { onTabChange('meesho-label-exporter'); setMobileMenuOpen(false); }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'meesho-label-exporter' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'meesho-label-exporter' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'meesho-label-exporter' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
                         >
-                            📋 Bulk Thermal Label Exporter (4x6 Crop)
+                            <Printer size={16} color="#38bdf8" />
+                            <span>4×6 Thermal Label Cropper</span>
+                        </button>
+                        <button 
+                            className={`mobile-nav-link ${activeTab === 'pnl-calculator' ? 'active' : ''}`}
+                            onClick={() => { onTabChange('pnl-calculator'); setMobileMenuOpen(false); }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'pnl-calculator' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'pnl-calculator' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'pnl-calculator' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
+                        >
+                            <FileSpreadsheet size={16} color="#38bdf8" />
+                            <span>P&amp;L Settlement Sheet</span>
                         </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'pricing' ? 'active' : ''}`}
                             onClick={() => { onTabChange('pricing'); setMobileMenuOpen(false); }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'pricing' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'pricing' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'pricing' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
+                            }}
                         >
-                            💎 Pricing & Affiliate
+                            <CreditCard size={16} color="#94a3b8" />
+                            <span>Pricing &amp; Affiliate</span>
                         </button>
                         <button 
                             className={`mobile-nav-link ${activeTab === 'contact-us' ? 'active' : ''}`}
                             onClick={() => { onTabChange('contact-us'); setMobileMenuOpen(false); }}
-                        >
-                            📞 Contact & Support
-                        </button>
-
-                        <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '0.4rem 0' }} />
-
-                        <button 
-                            className="btn-signin-mobile" 
-                            onClick={(e) => { 
-                                e.preventDefault();
-                                e.stopPropagation(); 
-                                onLogin(); 
-                                setTimeout(() => setMobileMenuOpen(false), 50); 
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.6rem',
+                                background: activeTab === 'contact-us' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.03)',
+                                border: activeTab === 'contact-us' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.07)',
+                                color: activeTab === 'contact-us' ? '#38bdf8' : '#ffffff',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '12px'
                             }}
                         >
-                            Sign In
+                            <Headphones size={16} color="#94a3b8" />
+                            <span>Contact &amp; Support</span>
                         </button>
-                        <button 
-                            className="btn-get-started-mobile" 
-                            onClick={(e) => { 
-                                e.preventDefault();
-                                e.stopPropagation(); 
-                                onRegister(); 
-                                setTimeout(() => setMobileMenuOpen(false), 50); 
-                            }}
-                        >
-                            ⚡ Get Started (3 Free Credits)
-                        </button>
+
+                        <hr style={{ border: 'none', borderTop: '1px solid rgba(255, 255, 255, 0.08)', margin: '0.5rem 0' }} />
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                            <button 
+                                className="btn-action" 
+                                onClick={(e) => { 
+                                    e.preventDefault(); 
+                                    onLogin(); 
+                                    setMobileMenuOpen(false); 
+                                }}
+                                style={{ width: '100%', justifyContent: 'center' }}
+                            >
+                                Sign In
+                            </button>
+                            <button 
+                                className="btn-primary" 
+                                onClick={(e) => { 
+                                    e.preventDefault(); 
+                                    onRegister(); 
+                                    setMobileMenuOpen(false); 
+                                }}
+                                style={{ width: '100%', justifyContent: 'center', background: '#ffffff', color: '#080b11', fontWeight: 700 }}
+                            >
+                                Get Started (3 Free Credits)
+                            </button>
+                        </div>
                     </div>
                 )}
             </header>
 
-            {/* Conditionally Render Subpages */}
-            {activeTab === 'bg-remover' && <div style={{ padding: '2.5rem 5%' }}><BulkBackgroundRemoverTab /></div>}
-            {activeTab === 'free-image-generator' && <div style={{ padding: '2.5rem 5%' }}><FreeImageGeneratorTab onRegister={onRegister} /></div>}
-            {(activeTab === 'meesho-shipping-rates' || activeTab === 'home') && <MeeshoShippingRatesPage onRegister={onRegister} />}
-            {activeTab === 'pnl-calculator' && <div style={{ padding: '2.5rem 5%' }}><PnLCalculatorTab /></div>}
-            {activeTab === 'meesho-label-exporter' && <MeeshoLabelExporterPage onRegister={onRegister} />}
-            {activeTab === 'pricing' && <PricingAffiliatePage onRegister={onRegister} />}
+            {/* ── Subpages Routing ───────────────────────────────────────── */}
+            {activeTab === 'templates' && <div style={{ padding: '2rem 1.25rem' }}><ListingTemplatesTab /></div>}
+            {activeTab === 'bg-remover' && <div style={{ padding: '2rem 1.25rem' }}><BulkBackgroundRemoverTab /></div>}
+            {(activeTab === 'free-image-generator' || activeTab === 'meesho-image-generator') && <div style={{ padding: '2rem 1.25rem' }}><FreeImageGeneratorTab onRegister={onRegister} /></div>}
+            {(activeTab === 'meesho-shipping-rates' || activeTab === 'home' || activeTab === 'optimizer' || activeTab === 'calculator') && <MeeshoShippingRatesPage onRegister={onRegister} />}
+            {activeTab === 'pnl-calculator' && <div style={{ padding: '2rem 1.25rem' }}><PnLCalculatorTab /></div>}
+            {(activeTab === 'meesho-label-exporter' || activeTab === 'label-exporter') && <MeeshoLabelExporterPage onRegister={onRegister} />}
+            {(activeTab === 'pricing' || activeTab === 'affiliate' || activeTab === 'billing') && <PricingAffiliatePage onRegister={onRegister} />}
             {activeTab === 'privacy-policy' && <PrivacyPolicyPage />}
             {activeTab === 'refund-policy' && <RefundPolicyPage />}
             {activeTab === 'terms-of-service' && <TermsOfServicePage />}
             {activeTab === 'contact-us' && <ContactUsPage />}
 
-            {/* Custom 404 Not Found Page */}
             {!validTabs.includes(activeTab) && (
                 <NotFoundPage onReturnHome={() => onTabChange('meesho-shipping-rates')} />
             )}
 
-            {/* General FAQs Accordion Section */}
+            {/* ── FAQs Accordion Section ─────────────────────────────────── */}
             {(activeTab === 'meesho-shipping-rates' || activeTab === 'home') && (
-                <section id="faqs" style={{ padding: '5rem 5% 6rem 5%', maxWidth: '800px', margin: '0 auto', borderTop: '1px solid #e2e8f0' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-                        <h2 style={{ fontFamily: 'Outfit', fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.75rem', color: '#0f172a' }}>Frequently Asked Questions</h2>
-                        <p style={{ color: '#475569', fontSize: '0.95rem' }}>Answers to common e-commerce logistics and duplicate listing queries.</p>
+                <section id="faqs" style={{ padding: '4.5rem 1.25rem 5rem 1.25rem', maxWidth: '820px', margin: '0 auto', boxSizing: 'border-box' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+                        <div style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.4rem',
+                            background: 'rgba(56, 189, 248, 0.08)',
+                            border: '1px solid rgba(56, 189, 248, 0.22)',
+                            color: '#38bdf8',
+                            padding: '0.3rem 0.85rem',
+                            borderRadius: '9999px',
+                            fontSize: '0.72rem',
+                            fontWeight: 700,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.05em',
+                            marginBottom: '0.75rem'
+                        }}>
+                            <Sparkles size={12} color="#38bdf8" />
+                            <span>Frequently Asked Questions</span>
+                        </div>
+                        <h2 style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', margin: 0 }}>
+                            Clear Answers for Sellers
+                        </h2>
                     </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                         {[
                             {
                                 q: "What is VendorsDesk and how does it optimize Meesho shipping?",
-                                a: "VendorsDesk is an e-commerce auditing tool that cross-references actual product variation weights against the shipping rate matrixes logged by logistics partners on the Meesho Supplier Panel, flagging shipping charge leakages."
+                                a: "VendorsDesk cross-references actual packaged product variation weights against the shipping rate slabs logged by logistics partners on the Meesho Supplier Panel, flagging and fixing wrongful shipping charge leakages."
                             },
                             {
                                 q: "Is it secure to link my Meesho account or session keys?",
-                                a: "Absolutely. We do not store master logins or developer API keys. Everything is routed using secure personal session handshake configurations, ensuring full compliance and avoiding Cloudflare blocks."
+                                a: "Absolutely. We do not store master passwords or sensitive credentials. All checks are processed client-side with encrypted payloads, ensuring complete panel compliance."
                             },
                             {
                                 q: "How does the SKU-wise Return Risk Auditor work?",
-                                a: "Our SKU Return Risk Auditor pulls product payouts and matches them with RTO returns records, identifying listings that produce negative profits due to high return penalty charges."
+                                a: "Our SKU Return Risk Auditor pulls actual product payouts and matches them with RTO returns records, identifying listings that produce negative profits due to excessive return penalties."
                             },
                             {
                                 q: "How do I claim my 3 free query credits?",
-                                a: "Simply sign up with an email ID or Google login. 3 free credits will be credited instantly to your account balance, allowing you to test shipping checks immediately."
+                                a: "Simply sign up with your email ID. 3 credits are added instantly to your balance so you can test freight slab auditing and label cropping right away."
                             }
                         ].map((faq, idx) => {
                             const isOpen = !!faqOpen[idx];
                             return (
-                                <div key={idx} style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '1.25rem', cursor: 'pointer' }} onClick={() => toggleFaq(idx)}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <strong style={{ fontSize: '0.95rem', color: '#0f172a', fontWeight: 600 }}>{faq.q}</strong>
-                                        <span style={{ fontSize: '1rem', color: '#2563eb', fontWeight: 'bold' }}>{isOpen ? '−' : '+'}</span>
+                                <div 
+                                    key={idx} 
+                                    style={{ 
+                                        background: isOpen ? 'rgba(56, 189, 248, 0.03)' : 'rgba(255, 255, 255, 0.02)', 
+                                        border: isOpen ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(255, 255, 255, 0.08)', 
+                                        borderRadius: '16px', 
+                                        padding: '1.15rem 1.25rem', 
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s ease',
+                                        boxShadow: isOpen ? '0 10px 30px rgba(0, 0, 0, 0.4)' : 'none'
+                                    }} 
+                                    onClick={() => toggleFaq(idx)}
+                                >
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+                                        <strong style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: 700, lineHeight: '1.4' }}>
+                                            {faq.q}
+                                        </strong>
+                                        <div style={{
+                                            width: '26px',
+                                            height: '26px',
+                                            borderRadius: '6px',
+                                            background: isOpen ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255, 255, 255, 0.04)',
+                                            border: '1px solid rgba(255, 255, 255, 0.08)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            color: '#38bdf8',
+                                            flexShrink: 0
+                                        }}>
+                                            {isOpen ? <Minus size={15} /> : <Plus size={15} />}
+                                        </div>
                                     </div>
                                     {isOpen && (
-                                        <div style={{ marginTop: '0.75rem', fontSize: '0.85rem', color: '#475569', lineHeight: '1.6', borderTop: '1px solid #cbd5e1', paddingTop: '0.75rem' }}>
+                                        <div style={{ marginTop: '0.75rem', fontSize: '0.88rem', color: '#94a3b8', lineHeight: '1.6', borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '0.75rem' }}>
                                             {faq.a}
                                         </div>
                                     )}
@@ -386,46 +562,54 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                 </section>
             )}
 
-            {/* Footer */}
-            <footer style={{ padding: '4rem 5% 3rem 5%', background: '#ffffff', borderTop: '1px solid #e2e8f0', textAlign: 'center' }}>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                    <span style={{ fontSize: '1.5rem' }}>⚡</span>
-                    <span style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: '1.2rem', color: '#0f172a' }}>VendorsDesk</span>
+            {/* ── Modern Obsidian Footer ──────────────────────────────────── */}
+            <footer style={{ padding: '3.5rem 1.25rem 2.5rem 1.25rem', background: '#05070b', borderTop: '1px solid rgba(255, 255, 255, 0.08)', textAlign: 'center', boxSizing: 'border-box' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+                    <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Sparkles size={16} color="#38bdf8" />
+                    </div>
+                    <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 800, fontSize: '1.15rem', color: '#ffffff' }}>
+                        VendorsDesk
+                    </span>
                 </div>
                 
-                <p style={{ color: '#475569', fontSize: '0.8rem', maxWidth: '600px', margin: '0 auto 1.5rem auto', lineHeight: '1.5' }}>
-                    VendorsDesk is an independent SaaS optimization tool. We are not officially affiliated with Meesho Inc or logistics providers. All audits are derived dynamically via secure user tokens.
+                <p style={{ color: '#94a3b8', fontSize: '0.82rem', maxWidth: '580px', margin: '0 auto 1.5rem auto', lineHeight: '1.6' }}>
+                    VendorsDesk is an independent optimization platform for e-commerce suppliers. All audits are derived dynamically via secure user tokens.
                 </p>
 
-                {/* Footer Legal & Policy Links */}
-                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '2rem', fontSize: '0.85rem' }}>
+                {/* Legal & Policy Links */}
+                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '1.25rem', rowGap: '0.65rem', marginBottom: '1.75rem', fontSize: '0.82rem' }}>
                     <button 
                         onClick={() => { onTabChange('privacy-policy'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                        style={{ background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontWeight: 600 }}
+                        style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
-                        🔒 Privacy Policy
+                        <Lock size={13} />
+                        <span>Privacy Policy</span>
                     </button>
                     <button 
                         onClick={() => { onTabChange('refund-policy'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                        style={{ background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontWeight: 600 }}
+                        style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
-                        🔄 Refund & Cancellation Policy
+                        <RotateCcw size={13} />
+                        <span>Refund Policy</span>
                     </button>
                     <button 
                         onClick={() => { onTabChange('terms-of-service'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                        style={{ background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontWeight: 600 }}
+                        style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
-                        📜 Terms of Service
+                        <FileText size={13} />
+                        <span>Terms of Service</span>
                     </button>
                     <button 
                         onClick={() => { onTabChange('contact-us'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                        style={{ background: 'none', border: 'none', color: '#2563eb', cursor: 'pointer', fontWeight: 600 }}
+                        style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
-                        ✉️ Contact Support
+                        <Mail size={13} />
+                        <span>Contact Support</span>
                     </button>
                 </div>
 
-                <div style={{ color: '#64748b', fontSize: '0.75rem', borderTop: '1px solid #e2e8f0', paddingTop: '1.5rem' }}>
+                <div style={{ color: '#64748b', fontSize: '0.74rem', borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '1.25rem' }}>
                     © 2026 VendorsDesk. All rights reserved. | Official Support: hellovendorsdesk@gmail.com
                 </div>
             </footer>

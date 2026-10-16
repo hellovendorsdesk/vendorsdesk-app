@@ -1,14 +1,19 @@
-# Robots.txt for VendorsDesk (https://vendorsdesk.in)
+# Robots.txt for VendorsDesk (https://www.vendorsdesk.in)
 User-agent: *
 Allow: /
-Allow: /background-remover
 Allow: /free-image-generator
+Allow: /bg-remover
+Allow: /background-remover
+Allow: /meesho-shipping-rates
 Allow: /rate-optimizer
 Allow: /pnl-calculator
+Allow: /meesho-label-exporter
 Allow: /label-exporter
-Allow: /margin-calculator
 Allow: /pricing
-Allow: /affiliate
+Allow: /privacy-policy
+Allow: /refund-policy
+Allow: /terms-of-service
+Allow: /contact-us
 
 # AI Search Engines & Web Crawler User Agents
 User-agent: GPTBot
@@ -30,4 +35,4 @@ User-agent: Bingbot
 Allow: /
 
 # Sitemap Location
-Sitemap: https://vendorsdesk.in/sitemap.xml
+Sitemap: https://www.vendorsdesk.in/sitemap.xml
