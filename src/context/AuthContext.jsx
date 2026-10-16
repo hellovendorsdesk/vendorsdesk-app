@@ -88,11 +88,6 @@ export function AuthProvider({ children }) {
     const handleCloseAuthModal = () => {
         setAuthModalOpen(false);
         setAuthError('');
-        if (isAppDomain && !currentUser) {
-            if (window.location.hostname.includes('vendorsdesk.in')) {
-                window.location.href = 'https://vendorsdesk.in';
-            }
-        }
     };
 
     const handleLogout = () => {
