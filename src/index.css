@@ -8,6 +8,7 @@
 @import './styles/tokens.css';
 
 :root {
+    color-scheme: dark;
     --bg-gradient: #080b11;
     --bg-color: #080b11;
     --card-bg: rgba(13, 18, 31, 0.9);
@@ -26,6 +27,55 @@
     --warning: #fbbf24;
     --success: #34d399;
     --info: #38bdf8;
+}
+
+
+/* ==========================================================================
+   Obsidian Dark-Tech Precision Scrollbar
+   ========================================================================== */
+
+/* Modern standard scrollbar for Firefox & compliant browsers */
+html, body, * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+}
+
+/* WebKit / Chromium custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #38bdf8;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+@media (max-width: 640px) {
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
 }
 
 * {
