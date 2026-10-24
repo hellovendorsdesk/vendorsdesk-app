@@ -110,9 +110,13 @@ export default function AppSidebar({
                     <button 
                         className={`sidebar-link ${activePage === 'free-image-generator' ? 'active' : ''}`}
                         onClick={() => handleNavigate('free-image-generator')}
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
                     >
-                        <Sparkles size={18} />
-                        <span>AI Image Generator</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                            <Sparkles size={18} color="#0d9488" />
+                            <span>Meesho Image Studio</span>
+                        </div>
+                        <span style={{ fontSize: '0.65rem', background: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0', padding: '0.1rem 0.45rem', borderRadius: '6px', fontWeight: 800 }}>FREE</span>
                     </button>
 
                     <div className="sidebar-section-title">Billing & Account</div>

@@ -203,10 +203,10 @@ export default function DashboardShell({ activePage, setActivePage, navigateToPa
                             boxShadow: '0 4px 15px rgba(37, 99, 235, 0.08)'
                         }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                <span style={{ fontSize: '1.4rem' }}>⚠️</span>
+                                <span style={{ fontSize: '1.4rem' }}>✨</span>
                                 <div>
-                                    <strong style={{ fontSize: '0.9rem', color: '#1e40af', display: 'block' }}>You have 0 Credits remaining!</strong>
-                                    <span style={{ fontSize: '0.8rem', color: '#3b82f6' }}>If you want to generate image variations and check lower shipping rates, please purchase a plan.</span>
+                                    <strong style={{ fontSize: '0.9rem', color: '#1e40af', display: 'block' }}>Meesho Image Studio is 100% FREE!</strong>
+                                    <span style={{ fontSize: '0.8rem', color: '#3b82f6' }}>Generate unlimited catalog variations & anti-duplicate images free. For automated shipping rate checks, upgrade your plan.</span>
                                 </div>
                             </div>
                             <button 
