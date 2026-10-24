@@ -165,7 +165,11 @@ export default function OptimizerTab({ currentUser, onCreditsChange, onNavigateT
             return;
         }
 
-        // Image generation & variation optimization is 100% Free
+        if (currentUser && (currentUser.credits === undefined || currentUser.credits <= 0) && currentUser.tier !== 'enterprise' && currentUser.role !== 'admin') {
+            setShowCreditModal(true);
+            return;
+        }
+
         setIsOptimizing(true);
         setErrorMsg('');
         setResults([]);
