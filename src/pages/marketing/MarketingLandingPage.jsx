@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
     Layers, 
     ChevronDown, 
@@ -34,6 +34,49 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
     const [faqOpen, setFaqOpen] = useState({});
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isToolsDropdownOpen, setIsToolsDropdownOpen] = useState(false);
+    const [isToolsLockedOpen, setIsToolsLockedOpen] = useState(false);
+    const toolsRef = useRef(null);
+    const toolsTimerRef = useRef(null);
+
+    // Close dropdown on click outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (toolsRef.current && !toolsRef.current.contains(event.target)) {
+                setIsToolsDropdownOpen(false);
+                setIsToolsLockedOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            if (toolsTimerRef.current) clearTimeout(toolsTimerRef.current);
+        };
+    }, []);
+
+    const handleToolsMouseEnter = () => {
+        if (toolsTimerRef.current) clearTimeout(toolsTimerRef.current);
+        setIsToolsDropdownOpen(true);
+    };
+
+    const handleToolsMouseLeave = () => {
+        if (toolsTimerRef.current) clearTimeout(toolsTimerRef.current);
+        toolsTimerRef.current = setTimeout(() => {
+            if (!isToolsLockedOpen) {
+                setIsToolsDropdownOpen(false);
+            }
+        }, 350);
+    };
+
+    const handleToolsButtonClick = (e) => {
+        e.stopPropagation();
+        if (isToolsDropdownOpen && isToolsLockedOpen) {
+            setIsToolsDropdownOpen(false);
+            setIsToolsLockedOpen(false);
+        } else {
+            setIsToolsDropdownOpen(true);
+            setIsToolsLockedOpen(true);
+        }
+    };
 
     const toggleFaq = (idx) => {
         setFaqOpen(prev => ({ ...prev, [idx]: !prev[idx] }));
@@ -89,14 +132,15 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                 <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     {/* Free Tools Dropdown */}
                     <div 
+                        ref={toolsRef}
                         className="nav-dropdown-wrapper"
-                        onMouseEnter={() => setIsToolsDropdownOpen(true)}
-                        onMouseLeave={() => setIsToolsDropdownOpen(false)}
+                        onMouseEnter={handleToolsMouseEnter}
+                        onMouseLeave={handleToolsMouseLeave}
                         style={{ position: 'relative' }}
                     >
                         <button 
-                            className={`nav-link ${['free-image-generator', 'meesho-shipping-rates', 'pnl-calculator', 'meesho-label-exporter'].includes(activeTab) ? 'active' : ''}`}
-                            onClick={() => setIsToolsDropdownOpen(!isToolsDropdownOpen)}
+                            className={`nav-link ${['free-image-generator', 'meesho-shipping-rates', 'pnl-calculator', 'meesho-label-exporter', 'templates'].includes(activeTab) ? 'active' : ''}`}
+                            onClick={handleToolsButtonClick}
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
@@ -105,8 +149,8 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                                 fontSize: '0.85rem',
                                 padding: '0.5rem 0.95rem',
                                 borderRadius: '9999px',
-                                background: 'rgba(255, 255, 255, 0.05)',
-                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                background: isToolsDropdownOpen ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255, 255, 255, 0.05)',
+                                border: isToolsDropdownOpen ? '1px solid rgba(56, 189, 248, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
                                 color: '#ffffff',
                                 cursor: 'pointer',
                                 transition: 'all 0.2s ease'
@@ -119,72 +163,93 @@ export default function MarketingLandingPage({ currentUser, activeTab, onTabChan
                         </button>
 
                         {isToolsDropdownOpen && (
-                            <div style={{
-                                position: 'absolute',
-                                top: 'calc(100% + 10px)',
-                                left: 0,
-                                width: '330px',
-                                background: 'rgba(13, 18, 31, 0.96)',
-                                backdropFilter: 'blur(24px)',
-                                WebkitBackdropFilter: 'blur(24px)',
-                                border: '1px solid rgba(255, 255, 255, 0.12)',
-                                borderRadius: '18px',
-                                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06)',
-                                padding: '0.65rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '0.35rem',
-                                zIndex: 1000,
-                            }}>
-                                <div 
-                                    onClick={() => { onTabChange('meesho-shipping-rates'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: activeTab === 'meesho-shipping-rates' ? 'rgba(56, 189, 248, 0.1)' : 'transparent', transition: 'background 0.15s ease' }}
-                                >
-                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <TrendingDown size={17} color="#38bdf8" />
+                            <div 
+                                onMouseEnter={handleToolsMouseEnter}
+                                onMouseLeave={handleToolsMouseLeave}
+                                style={{
+                                    position: 'absolute',
+                                    top: '100%',
+                                    left: 0,
+                                    paddingTop: '8px',
+                                    zIndex: 1000,
+                                }}
+                            >
+                                <div style={{
+                                    width: '330px',
+                                    background: 'rgba(13, 18, 31, 0.98)',
+                                    backdropFilter: 'blur(24px)',
+                                    WebkitBackdropFilter: 'blur(24px)',
+                                    border: '1px solid rgba(255, 255, 255, 0.12)',
+                                    borderRadius: '18px',
+                                    boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.06)',
+                                    padding: '0.65rem',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '0.35rem',
+                                }}>
+                                    <div 
+                                        onClick={() => { onTabChange('meesho-shipping-rates'); setIsToolsDropdownOpen(false); setIsToolsLockedOpen(false); }}
+                                        style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: activeTab === 'meesho-shipping-rates' ? 'rgba(56, 189, 248, 0.1)' : 'transparent', transition: 'background 0.15s ease' }}
+                                    >
+                                        <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <TrendingDown size={17} color="#38bdf8" />
+                                        </div>
+                                        <div>
+                                            <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Freight &amp; Slab Optimizer</div>
+                                            <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Audit lowest courier freight slabs</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Freight &amp; Slab Optimizer</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Audit lowest courier freight slabs</div>
-                                    </div>
-                                </div>
 
-                                <div 
-                                    onClick={() => { onTabChange('free-image-generator'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: 'transparent', transition: 'background 0.15s ease' }}
-                                >
-                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <Image size={17} color="#38bdf8" />
+                                    <div 
+                                        onClick={() => { onTabChange('free-image-generator'); setIsToolsDropdownOpen(false); setIsToolsLockedOpen(false); }}
+                                        style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: activeTab === 'free-image-generator' ? 'rgba(56, 189, 248, 0.1)' : 'transparent', transition: 'background 0.15s ease' }}
+                                    >
+                                        <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <Image size={17} color="#38bdf8" />
+                                        </div>
+                                        <div>
+                                            <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Anti-Duplicate Image Studio</div>
+                                            <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Bypass duplicate listing bans</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Anti-Duplicate Image Studio</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Bypass duplicate listing bans</div>
-                                    </div>
-                                </div>
 
-                                <div 
-                                    onClick={() => { onTabChange('meesho-label-exporter'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: 'transparent', transition: 'background 0.15s ease' }}
-                                >
-                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <Printer size={17} color="#38bdf8" />
+                                    <div 
+                                        onClick={() => { onTabChange('meesho-label-exporter'); setIsToolsDropdownOpen(false); setIsToolsLockedOpen(false); }}
+                                        style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: activeTab === 'meesho-label-exporter' ? 'rgba(56, 189, 248, 0.1)' : 'transparent', transition: 'background 0.15s ease' }}
+                                    >
+                                        <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <Printer size={17} color="#38bdf8" />
+                                        </div>
+                                        <div>
+                                            <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>4×6 Thermal Label Cropper</div>
+                                            <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Organize PDF invoices by SKU</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>4×6 Thermal Label Cropper</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Organize PDF invoices by SKU</div>
-                                    </div>
-                                </div>
 
-                                <div 
-                                    onClick={() => { onTabChange('pnl-calculator'); setIsToolsDropdownOpen(false); }}
-                                    style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: 'transparent', transition: 'background 0.15s ease' }}
-                                >
-                                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <FileSpreadsheet size={17} color="#38bdf8" />
+                                    <div 
+                                        onClick={() => { onTabChange('pnl-calculator'); setIsToolsDropdownOpen(false); setIsToolsLockedOpen(false); }}
+                                        style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: activeTab === 'pnl-calculator' ? 'rgba(56, 189, 248, 0.1)' : 'transparent', transition: 'background 0.15s ease' }}
+                                    >
+                                        <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <FileSpreadsheet size={17} color="#38bdf8" />
+                                        </div>
+                                        <div>
+                                            <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Net P&amp;L Settlement Sheet</div>
+                                            <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Track real returns &amp; deduction margins</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>Net P&amp;L Settlement Sheet</div>
-                                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Track real returns &amp; deduction margins</div>
+
+                                    <div 
+                                        onClick={() => { onTabChange('templates'); setIsToolsDropdownOpen(false); setIsToolsLockedOpen(false); }}
+                                        style={{ padding: '0.65rem 0.75rem', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.65rem', background: activeTab === 'templates' ? 'rgba(56, 189, 248, 0.1)' : 'transparent', transition: 'background 0.15s ease' }}
+                                    >
+                                        <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <FileText size={17} color="#38bdf8" />
+                                        </div>
+                                        <div>
+                                            <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#ffffff' }}>AI Listing &amp; Catalog Writer</div>
+                                            <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>SEO bullet points &amp; compliant titles</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
