@@ -123,5 +123,34 @@ export const PAGE_PATHS = {
 };
 
 export const checkIsAppDomain = () => {
-    return window.location.hostname === 'app.vendorsdesk.in' || window.location.hostname.startsWith('app.');
+    const host = window.location.hostname.toLowerCase();
+    const port = window.location.port;
+    return (
+        host === 'app.venderdesk.in' ||
+        host === 'app.vendorsdesk.in' ||
+        host.startsWith('app.') ||
+        port === '5173'
+    );
+};
+
+export const getAppBaseUrl = () => {
+    const host = window.location.hostname.toLowerCase();
+    if (host.includes('venderdesk.in')) {
+        return 'https://app.venderdesk.in';
+    }
+    if (host.includes('vendorsdesk.in')) {
+        return 'https://app.vendorsdesk.in';
+    }
+    return 'http://localhost:5173';
+};
+
+export const getWebsiteBaseUrl = () => {
+    const host = window.location.hostname.toLowerCase();
+    if (host.includes('venderdesk.in')) {
+        return 'https://venderdesk.in';
+    }
+    if (host.includes('vendorsdesk.in')) {
+        return 'https://vendorsdesk.in';
+    }
+    return 'http://localhost:5175';
 };
