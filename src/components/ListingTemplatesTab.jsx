@@ -141,10 +141,10 @@ export default function ListingTemplatesTab() {
             {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
                 <div>
-                    <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.25rem 0' }}>
+                    <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', margin: '0 0 0.25rem 0' }}>
                         📦 Multi-Marketplace Listing Templates
                     </h1>
-                    <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0 }}>
+                    <p style={{ color: '#94a3b8', fontSize: '0.95rem', margin: 0 }}>
                         Save your product specifications once. VendorsDesk Chrome Extension will autofill listings across Meesho, Flipkart, and Amazon in 1-click.
                     </p>
                 </div>
@@ -181,21 +181,21 @@ export default function ListingTemplatesTab() {
 
             {/* Quick Metrics */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
+                <div style={{ background: '#ffffff', color: '#0f172a', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
                     <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Total Templates</div>
                     <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0f172a', marginTop: '0.2rem' }}>{templates.length}</div>
                 </div>
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
+                <div style={{ background: '#ffffff', color: '#0f172a', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
                     <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Total Fills Saved</div>
                     <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#10b981', marginTop: '0.2rem' }}>{totalAutofills}</div>
                 </div>
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
+                <div style={{ background: '#ffffff', color: '#0f172a', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
                     <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Time Saved</div>
                     <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#2563eb', marginTop: '0.2rem' }}>
                         {Math.round((totalAutofills * 15) / 60)} hrs
                     </div>
                 </div>
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
+                <div style={{ background: '#ffffff', color: '#0f172a', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
                     <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Supported Platforms</div>
                     <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginTop: '0.4rem', display: 'flex', gap: '0.4rem' }}>
                         <span>Meesho</span> · <span>Flipkart</span> · <span>Amazon</span>
@@ -242,7 +242,8 @@ export default function ListingTemplatesTab() {
                             borderRadius: '10px',
                             fontSize: '0.88rem',
                             outline: 'none',
-                            background: '#ffffff'
+                            background: '#ffffff',
+                            color: '#0f172a'
                         }}
                     />
                 </div>
@@ -250,12 +251,13 @@ export default function ListingTemplatesTab() {
 
             {/* Templates List */}
             {isLoading ? (
-                <div style={{ padding: '4rem', textAlign: 'center', color: '#64748b' }}>
+                <div style={{ padding: '4rem', textAlign: 'center', color: '#94a3b8' }}>
                     Loading your listing templates...
                 </div>
             ) : filteredTemplates.length === 0 ? (
                 <div style={{
                     background: '#ffffff',
+                    color: '#0f172a',
                     border: '1px dashed #cbd5e1',
                     borderRadius: '14px',
                     padding: '3.5rem 2rem',

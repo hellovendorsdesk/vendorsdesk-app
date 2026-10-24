@@ -17,6 +17,18 @@ export default function TemplateFormModal({
 
     if (!isOpen) return null;
 
+    const inputStyle = {
+        width: '100%',
+        boxSizing: 'border-box',
+        padding: '0.65rem',
+        border: '1px solid #cbd5e1',
+        borderRadius: '8px',
+        fontSize: '0.9rem',
+        outline: 'none',
+        color: '#0f172a',
+        background: '#ffffff'
+    };
+
     const toggleColor = (color) => {
         setFormData(prev => ({
             ...prev,
@@ -62,6 +74,7 @@ export default function TemplateFormModal({
         }}>
             <div style={{
                 background: '#ffffff',
+                color: '#0f172a',
                 width: '100%',
                 maxWidth: '680px',
                 maxHeight: '92vh',
@@ -112,7 +125,7 @@ export default function TemplateFormModal({
                 </div>
 
                 {/* Modal Form Body */}
-                <form onSubmit={onSave} style={{ padding: '1.25rem 1rem', overflowY: 'auto', overflowX: 'hidden', display: 'flex', flexDirection: 'column', gap: '1.15rem' }}>
+                <form onSubmit={onSave} style={{ padding: '1.25rem 1rem', overflowY: 'auto', overflowX: 'hidden', display: 'flex', flexDirection: 'column', gap: '1.15rem', color: '#0f172a' }}>
                     {formError && (
                         <div style={{ background: '#fee2e2', color: '#b91c1c', padding: '0.65rem 1rem', borderRadius: '8px', fontSize: '0.85rem', fontWeight: 600 }}>
                             {formError}
@@ -170,7 +183,7 @@ export default function TemplateFormModal({
                             placeholder="e.g. Women Pure Cotton Printed Straight Kurta"
                             value={formData.title}
                             onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                            style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                            style={inputStyle}
                         />
                     </div>
 
@@ -185,7 +198,7 @@ export default function TemplateFormModal({
                                 placeholder="e.g. Rangoli, Generic"
                                 value={formData.brand}
                                 onChange={(e) => setFormData(prev => ({ ...prev, brand: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                style={inputStyle}
                             />
                         </div>
                         <div>
@@ -197,7 +210,7 @@ export default function TemplateFormModal({
                                 placeholder="e.g. Sarees, Kurtas, Shoes"
                                 value={formData.category}
                                 onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                style={inputStyle}
                             />
                         </div>
                     </div>
@@ -213,7 +226,7 @@ export default function TemplateFormModal({
                                 placeholder="499"
                                 value={formData.sellingPrice}
                                 onChange={(e) => setFormData(prev => ({ ...prev, sellingPrice: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                style={inputStyle}
                             />
                         </div>
                         <div>
@@ -225,7 +238,7 @@ export default function TemplateFormModal({
                                 placeholder="999"
                                 value={formData.mrp}
                                 onChange={(e) => setFormData(prev => ({ ...prev, mrp: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                style={inputStyle}
                             />
                         </div>
                         <div>
@@ -237,7 +250,7 @@ export default function TemplateFormModal({
                                 placeholder="e.g. KRT-001-RED"
                                 value={formData.sku}
                                 onChange={(e) => setFormData(prev => ({ ...prev, sku: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                style={inputStyle}
                             />
                         </div>
                     </div>
@@ -253,7 +266,7 @@ export default function TemplateFormModal({
                                 placeholder="e.g. 6204"
                                 value={formData.hsnCode}
                                 onChange={(e) => setFormData(prev => ({ ...prev, hsnCode: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                style={inputStyle}
                             />
                         </div>
                         <div>
@@ -263,7 +276,7 @@ export default function TemplateFormModal({
                             <select
                                 value={formData.gstPercentage}
                                 onChange={(e) => setFormData(prev => ({ ...prev, gstPercentage: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none', background: '#ffffff' }}
+                                style={inputStyle}
                             >
                                 <option value="0">0%</option>
                                 <option value="5">5%</option>
@@ -281,7 +294,7 @@ export default function TemplateFormModal({
                                 placeholder="300"
                                 value={formData.weightGrams}
                                 onChange={(e) => setFormData(prev => ({ ...prev, weightGrams: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                style={inputStyle}
                             />
                         </div>
                     </div>
@@ -297,21 +310,21 @@ export default function TemplateFormModal({
                                 placeholder="Length (cm)"
                                 value={formData.packageLength}
                                 onChange={(e) => setFormData(prev => ({ ...prev, packageLength: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                style={inputStyle}
                             />
                             <input
                                 type="number"
                                 placeholder="Width (cm)"
                                 value={formData.packageWidth}
                                 onChange={(e) => setFormData(prev => ({ ...prev, packageWidth: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                style={inputStyle}
                             />
                             <input
                                 type="number"
                                 placeholder="Height (cm)"
                                 value={formData.packageHeight}
                                 onChange={(e) => setFormData(prev => ({ ...prev, packageHeight: e.target.value }))}
-                                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                style={inputStyle}
                             />
                         </div>
                     </div>
@@ -352,12 +365,12 @@ export default function TemplateFormModal({
                                 value={customColorInput}
                                 onChange={(e) => setCustomColorInput(e.target.value)}
                                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addCustomColor(); } }}
-                                style={{ flex: 1, padding: '0.5rem 0.75rem', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem' }}
+                                style={{ ...inputStyle, flex: 1, padding: '0.5rem 0.75rem' }}
                             />
                             <button
                                 type="button"
                                 onClick={addCustomColor}
-                                style={{ padding: '0.5rem 1rem', background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '6px', fontWeight: 600, fontSize: '0.85rem', cursor: 'pointer' }}
+                                style={{ padding: '0.5rem 1rem', background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', borderRadius: '6px', fontWeight: 600, fontSize: '0.85rem', cursor: 'pointer' }}
                             >
                                 + Add
                             </button>
@@ -405,7 +418,7 @@ export default function TemplateFormModal({
                             placeholder="Enter full product description..."
                             value={formData.description}
                             onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                            style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.88rem', outline: 'none' }}
+                            style={inputStyle}
                         />
                     </div>
 
@@ -419,7 +432,7 @@ export default function TemplateFormModal({
                             placeholder="100% Premium cotton fabric&#10;Hand wash recommended&#10;Includes matching mask"
                             value={formData.features}
                             onChange={(e) => setFormData(prev => ({ ...prev, features: e.target.value }))}
-                            style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.88rem', outline: 'none' }}
+                            style={inputStyle}
                         />
                     </div>
 
@@ -433,7 +446,7 @@ export default function TemplateFormModal({
                             placeholder="ethnic wear, kurti, cotton, festive wear"
                             value={formData.keywords}
                             onChange={(e) => setFormData(prev => ({ ...prev, keywords: e.target.value }))}
-                            style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.88rem', outline: 'none' }}
+                            style={inputStyle}
                         />
                     </div>
 
@@ -442,7 +455,7 @@ export default function TemplateFormModal({
                         <button
                             type="button"
                             onClick={onClose}
-                            style={{ padding: '0.65rem 1.2rem', background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }}
+                            style={{ padding: '0.65rem 1.2rem', background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }}
                         >
                             Cancel
                         </button>

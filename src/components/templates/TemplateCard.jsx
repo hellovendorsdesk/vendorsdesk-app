@@ -10,6 +10,7 @@ export default function TemplateCard({
     return (
         <div style={{
             background: '#ffffff',
+            color: '#0f172a',
             border: '1px solid #e2e8f0',
             borderRadius: '14px',
             padding: '1.25rem',
@@ -71,7 +72,7 @@ export default function TemplateCard({
                     </div>
                     <div>
                         <span style={{ color: '#64748b' }}>GST: </span>
-                        <span style={{ fontWeight: 600 }}>{template.gstPercentage || 0}%</span>
+                        <span style={{ fontWeight: 600, color: '#0f172a' }}>{template.gstPercentage || 0}%</span>
                     </div>
                 </div>
 
@@ -93,7 +94,7 @@ export default function TemplateCard({
                     <button
                         onClick={() => onDuplicate(template)}
                         title="Duplicate"
-                        style={{ background: '#f1f5f9', border: 'none', borderRadius: '6px', padding: '5px 8px', cursor: 'pointer', fontSize: '0.8rem' }}
+                        style={{ background: '#f1f5f9', color: '#334155', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '5px 8px', cursor: 'pointer', fontSize: '0.8rem' }}
                     >
                         📑 Copy
                     </button>

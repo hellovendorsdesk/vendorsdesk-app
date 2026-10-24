@@ -24,6 +24,7 @@ export default function InstallGuideModal({
         }}>
             <div style={{
                 background: '#ffffff',
+                color: '#0f172a',
                 width: '100%',
                 maxWidth: '560px',
                 borderRadius: '16px',
@@ -50,30 +51,30 @@ export default function InstallGuideModal({
                 </p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
-                    <div style={{ display: 'flex', gap: '0.8rem', background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', gap: '0.8rem', background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0', alignItems: 'center' }}>
                         <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2563eb', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
                             1
                         </span>
-                        <div style={{ fontSize: '0.88rem' }}>
-                            Open Chrome and navigate to <strong>chrome://extensions</strong> in the address bar.
+                        <div style={{ fontSize: '0.88rem', color: '#1e293b' }}>
+                            Open Chrome and navigate to <strong style={{ color: '#0f172a' }}>chrome://extensions</strong> in the address bar.
                         </div>
                     </div>
 
-                    <div style={{ display: 'flex', gap: '0.8rem', background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', gap: '0.8rem', background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0', alignItems: 'center' }}>
                         <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2563eb', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
                             2
                         </span>
-                        <div style={{ fontSize: '0.88rem' }}>
-                            Enable <strong>Developer mode</strong> using the toggle switch in the top-right corner.
+                        <div style={{ fontSize: '0.88rem', color: '#1e293b' }}>
+                            Enable <strong style={{ color: '#0f172a' }}>Developer mode</strong> using the toggle switch in the top-right corner.
                         </div>
                     </div>
 
-                    <div style={{ display: 'flex', gap: '0.8rem', background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', gap: '0.8rem', background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0', alignItems: 'center' }}>
                         <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2563eb', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
                             3
                         </span>
-                        <div style={{ fontSize: '0.88rem' }}>
-                            Click <strong>Load unpacked</strong> and select the <code>vendorsdesk-extension/</code> folder.
+                        <div style={{ fontSize: '0.88rem', color: '#1e293b' }}>
+                            Click <strong style={{ color: '#0f172a' }}>Load unpacked</strong> and select the <code style={{ background: '#e2e8f0', color: '#0f172a', padding: '2px 6px', borderRadius: '4px', fontSize: '0.82rem' }}>vendorsdesk-extension/</code> folder.
                         </div>
                     </div>
                 </div>
