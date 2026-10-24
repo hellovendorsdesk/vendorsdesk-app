@@ -25,3 +25,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local AI Knowledge Graph & Agent Configurations (Strictly Local - Never Push to Git)
+graphify-out/
+.agents/
+.claude/
+.codex/
+.cursor/
+.gemini/
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.gitattributes
