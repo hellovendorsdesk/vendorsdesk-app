@@ -50,7 +50,7 @@ const GRAPHIC_VARIATION_BATCHES = [
         { id: 'crimson_red_circle_bestseller', label: 'Crimson Red Frame + Circular Best Seller Seal', color: '#dc2626', badgeFile: 'stamp_red_bestseller_circle.png', position: 'top_right' },
         { id: 'violet_licensed_stamp', label: 'Violet Frame + Licensed Quality Seal Stamp', color: '#7c3aed', badgeFile: 'stamp_licensed.png', position: 'top_left' },
         { id: 'cyan_speedometer_delivery', label: 'Cyan Frame + Speedometer Fast Delivery Badge', color: '#06b6d4', badgeFile: 'badge_fast_delivery_speedometer.png', position: 'bottom_right' },
-        { id: 'dark_slate_navy_tag', label: 'Dark Slate Frame + Navy Motion Free Shipping Tag', color: '#1e293b', badgeFile: 'badge_free_shipping_navy.png', position: 'bottom_right' }
+        { id: 'dark_slate_navy_tag', label: 'Dark Slate Frame + Navy Motion Free Shipping Tag', color: '#f8fafc', badgeFile: 'badge_free_shipping_navy.png', position: 'bottom_right' }
     ],
 
     // Batch 3 ("Generate More" Click #2)
@@ -362,23 +362,23 @@ export default function FreeImageGeneratorTab() {
         <div style={{ width: '100%', maxWidth: '1040px', margin: '0 auto' }}>
             
             {/* Header & Upload Card */}
-            <div className="panel-card" style={{ padding: '1.25rem 1.5rem', marginBottom: '1rem', textAlign: 'center', background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.04), rgba(236, 72, 153, 0.04))', border: '1px solid rgba(37, 99, 235, 0.15)' }}>
-                <div style={{ background: 'rgba(37, 99, 235, 0.08)', color: '#2563eb', padding: '0.2rem 0.65rem', borderRadius: '20px', fontSize: '0.68rem', fontWeight: 800, display: 'inline-block', marginBottom: '0.4rem' }}>
+            <div className="panel-card" style={{ padding: '1.25rem 1.5rem', marginBottom: '1rem', textAlign: 'center', background: '#0f1422', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <div style={{ color: '#38bdf8', padding: '0.2rem 0.65rem', borderRadius: '20px', fontSize: '0.68rem', fontWeight: 800, display: 'inline-block', marginBottom: '0.4rem' }}>
                     🆓 100% FREE UNLIMITED GRAPHIC BADGE GENERATOR
                 </div>
-                <h2 style={{ fontFamily: 'Outfit', fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.35rem' }}>
+                <h2 style={{ fontFamily: 'Outfit', fontSize: '1.4rem', fontWeight: 800, color: '#f8fafc', marginBottom: '0.35rem' }}>
                     Meesho Catalog Image Graphic Badge Generator
                 </h2>
-                <p style={{ color: '#475569', fontSize: '0.82rem', maxWidth: '640px', margin: '0 auto 1rem auto', lineHeight: '1.5' }}>
+                <p style={{ color: '#94a3b8', fontSize: '0.82rem', maxWidth: '640px', margin: '0 auto 1rem auto', lineHeight: '1.5' }}>
                     Bypass Meesho duplicate listing filters with <strong>19 Real Graphic PNG Badges & Stamps</strong> (Best Seller, Premium Quality, 100% Original, Free Delivery, Fast Shipping). Click <strong>"Generate More Variations"</strong> continuously to unlock unlimited combinations for free!
                 </p>
 
                 {!imagePreview ? (
-                    <div className="upload-zone" onClick={() => fileInputRef.current.click()} style={{ maxWidth: '480px', margin: '0 auto', padding: '1.75rem 1.25rem', borderRadius: '16px', border: '2px dashed #3b82f6', background: '#ffffff', cursor: 'pointer' }}>
+                    <div className="upload-zone" onClick={() => fileInputRef.current.click()} style={{ maxWidth: '480px', margin: '0 auto', padding: '1.75rem 1.25rem', borderRadius: '16px', border: '1px dashed rgba(56, 189, 248, 0.35)', background: '#0f1422', cursor: 'pointer' }}>
                         <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" onChange={(e) => handleFile(e.target.files[0])} />
                         <div style={{ fontSize: '2.2rem', marginBottom: '0.35rem' }}>🖼️</div>
-                        <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a', marginBottom: '0.2rem' }}>Upload Product Photo</div>
-                        <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Supports PNG, JPG (Click or Drag & Drop)</div>
+                        <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#f8fafc', marginBottom: '0.2rem' }}>Upload Product Photo</div>
+                        <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Supports PNG, JPG (Click or Drag & Drop)</div>
                     </div>
                 ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'center' }}>
@@ -390,8 +390,8 @@ export default function FreeImageGeneratorTab() {
                         </div>
 
                         {/* Interactive Graphic Badge Selector Builder */}
-                        <div style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '1rem 1.25rem', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap', width: '100%', maxWidth: '780px', boxShadow: '0 4px 14px rgba(0,0,0,0.04)' }}>
-                            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', whiteSpace: 'nowrap' }}>Choose Graphic Badge:</div>
+                        <div style={{ background: '#0f1422', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '1rem 1.25rem', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap', width: '100%', maxWidth: '780px', boxShadow: '0 4px 14px rgba(0,0,0,0.04)' }}>
+                            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#f8fafc', whiteSpace: 'nowrap' }}>Choose Graphic Badge:</div>
                             
                             <input 
                                 type="file" 
@@ -404,7 +404,7 @@ export default function FreeImageGeneratorTab() {
                             <button
                                 className="btn-action"
                                 onClick={() => customBadgeInputRef.current.click()}
-                                style={{ padding: '0.45rem 0.75rem', fontSize: '0.78rem', fontWeight: 800, background: '#eff6ff', color: '#2563eb', border: '1px solid rgba(37,99,235,0.25)', borderRadius: '8px' }}
+                                style={{ padding: '0.45rem 0.75rem', fontSize: '0.78rem', fontWeight: 800, background: '#141a29', color: '#2563eb', border: '1px solid rgba(37,99,235,0.25)', borderRadius: '8px' }}
                             >
                                 📤 Upload Custom Badge
                             </button>
@@ -415,7 +415,7 @@ export default function FreeImageGeneratorTab() {
                                     const asset = badgeAssetList.find(b => b.id === e.target.value);
                                     if (asset) setSelectedBadgeAsset(asset);
                                 }}
-                                style={{ flexGrow: 1, padding: '0.5rem 0.75rem', fontSize: '0.85rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 600 }}
+                                style={{ flexGrow: 1, padding: '0.5rem 0.75rem', fontSize: '0.85rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: '#080b11', color: '#ffffff', fontWeight: 500 }}
                             >
                                 {badgeAssetList.map((b) => (
                                     <option key={b.id} value={b.id}>{b.name}</option>
@@ -425,7 +425,7 @@ export default function FreeImageGeneratorTab() {
                             <select
                                 value={selectedBadgePosition}
                                 onChange={(e) => setSelectedBadgePosition(e.target.value)}
-                                style={{ padding: '0.5rem 0.75rem', fontSize: '0.85rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 600 }}
+                                style={{ padding: '0.5rem 0.75rem', fontSize: '0.85rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: '#080b11', color: '#ffffff', fontWeight: 500 }}
                             >
                                 <option value="top_left">Top-Left</option>
                                 <option value="top_right">Top-Right</option>
@@ -458,7 +458,7 @@ export default function FreeImageGeneratorTab() {
             {generatedVariations.length > 0 && (
                 <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
-                        <h3 style={{ fontFamily: 'Outfit', fontSize: '1.3rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+                        <h3 style={{ fontFamily: 'Outfit', fontSize: '1.3rem', fontWeight: 700, color: '#f8fafc', margin: 0 }}>
                             ✨ Generated Graphic Catalog Variations ({generatedVariations.length})
                         </h3>
                         
@@ -468,7 +468,7 @@ export default function FreeImageGeneratorTab() {
                                 disabled={isZipping}
                                 onClick={handleDownloadAllZip}
                                 style={{
-                                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                    background: '#ffffff', color: '#080b11',
                                     padding: '0.55rem 1.25rem',
                                     borderRadius: '10px',
                                     fontWeight: 800,
@@ -487,11 +487,11 @@ export default function FreeImageGeneratorTab() {
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '1.25rem', marginBottom: '2.5rem' }}>
                         {generatedVariations.map((v) => (
-                            <div key={v.id} className="variation-card" style={{ background: '#ffffff', border: `2px solid ${v.color}`, borderRadius: '16px', overflow: 'hidden', padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.65rem', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-                                <div style={{ aspectRatio: '1 / 1', borderRadius: '10px', overflow: 'hidden', background: '#f8fafc' }}>
+                            <div key={v.id} className="variation-card" style={{ background: '#0f1422', border: `2px solid ${v.color}`, borderRadius: '16px', overflow: 'hidden', padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.65rem', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+                                <div style={{ aspectRatio: '1 / 1', borderRadius: '10px', overflow: 'hidden', background: '#141a29' }}>
                                     <img src={v.dataUrl} alt={v.label} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                                 </div>
-                                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', height: '2.2rem', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#f8fafc', height: '2.2rem', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                     {v.label}
                                 </div>
                                 <button
@@ -518,7 +518,7 @@ export default function FreeImageGeneratorTab() {
                                 fontSize: '1rem',
                                 fontWeight: 800,
                                 borderRadius: '14px',
-                                background: 'linear-gradient(135deg, #ec4899 0%, #2563eb 100%)',
+                                background: '#ffffff', color: '#080b11',
                                 boxShadow: '0 6px 20px rgba(236, 72, 153, 0.3)',
                                 cursor: (isGeneratingMore || isGenerating) ? 'not-allowed' : 'pointer',
                                 opacity: (isGeneratingMore || isGenerating) ? 0.75 : 1,

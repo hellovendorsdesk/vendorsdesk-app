@@ -31,8 +31,8 @@ export default function CategorySelector({
 
     return (
         <div className="form-group" style={{ marginBottom: 0 }}>
-            <label style={{ fontWeight: 600, marginBottom: '0.4rem', display: 'block', color: '#0f172a' }}>
-                Select Meesho Category
+            <label style={{ fontWeight: 500, fontSize: '0.85rem', marginBottom: '0.4rem', display: 'block', color: '#f8fafc' }}>
+                Select Meesho category
             </label>
             <div className={`searchable-select-container ${dropdownOpen ? 'open' : ''}`} ref={selectRef}>
                 <input 
@@ -45,14 +45,14 @@ export default function CategorySelector({
                         setSelectedCategory(null); 
                     }}
                     onFocus={() => setDropdownOpen(true)} 
-                    style={{ fontSize: '0.85rem', padding: '0.85rem 2.2rem 0.85rem 1rem', borderRadius: '12px' }} 
+                    style={{ fontSize: '0.85rem', padding: '0.85rem 2.2rem 0.85rem 1rem', borderRadius: '10px' }} 
                 />
                 <span className="dropdown-arrow" style={{ pointerEvents: 'none' }}>
-                    <ChevronDown size={16} color="#64748b" />
+                    <ChevronDown size={16} color="#94a3b8" />
                 </span>
 
                 {dropdownOpen && (
-                    <div className="category-dropdown" style={{ borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}>
+                    <div className="category-dropdown" style={{ borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
                         {visibleCategories.length > 0 ? (
                             visibleCategories.map(c => (
                                 <div 
@@ -66,14 +66,14 @@ export default function CategorySelector({
                                     style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                                 >
                                     <span>{c.label}</span>
-                                    <span style={{ fontSize: '0.75rem', color: '#64748b', background: '#f1f5f9', padding: '0.15rem 0.45rem', borderRadius: '4px' }}>
+                                    <span style={{ fontSize: '0.725rem', color: '#94a3b8', background: 'rgba(255, 255, 255, 0.06)', padding: '0.15rem 0.45rem', borderRadius: '4px' }}>
                                         ID: {c.key}
                                     </span>
                                 </div>
                             ))
                         ) : (
-                            <div style={{ padding: '1rem', textAlign: 'center', color: 'var(--text-secondary, #64748b)' }}>
-                                No matching categories found.
+                            <div style={{ padding: '1rem', textAlign: 'center', color: '#94a3b8' }}>
+                                No matching categories found
                             </div>
                         )}
                     </div>

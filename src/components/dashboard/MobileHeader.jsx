@@ -16,10 +16,10 @@ export default function MobileHeader({
                 <img 
                     src="/logo-icon.png" 
                     alt="VendorsDesk Logo" 
-                    style={{ height: '30px', width: 'auto' }} 
+                    style={{ height: '28px', width: 'auto' }} 
                     onError={(e) => { e.target.style.display = 'none'; }} 
                 />
-                <span style={{ fontFamily: 'Plus Jakarta Sans, Outfit, sans-serif', fontWeight: 800, fontSize: '1.2rem', color: '#0f172a' }}>
+                <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 600, fontSize: '1.15rem', color: '#ffffff', letterSpacing: '-0.02em' }}>
                     VendorsDesk
                 </span>
             </div>
@@ -29,13 +29,13 @@ export default function MobileHeader({
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.35rem',
-                        background: '#eff6ff', 
-                        color: '#2563eb', 
+                        background: 'rgba(56, 189, 248, 0.1)', 
+                        color: '#38bdf8', 
                         padding: '0.3rem 0.65rem', 
                         borderRadius: '8px', 
                         fontSize: '0.78rem', 
-                        fontWeight: 700,
-                        border: '1px solid #bfdbfe'
+                        fontWeight: 600,
+                        border: '1px solid rgba(56, 189, 248, 0.25)'
                     }}>
                         <Coins size={14} />
                         <span>{currentUser.credits}</span>
@@ -45,19 +45,19 @@ export default function MobileHeader({
                     onClick={() => setMobileNavOpen(!mobileNavOpen)}
                     aria-label="Toggle navigation menu"
                     style={{
-                        background: '#ffffff',
-                        border: '1px solid #cbd5e1',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.12)',
                         borderRadius: '8px',
-                        width: '38px',
-                        height: '38px',
+                        width: '36px',
+                        height: '36px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: 'pointer',
-                        color: '#0f172a'
+                        color: '#ffffff'
                     }}
                 >
-                    {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+                    {mobileNavOpen ? <X size={18} /> : <Menu size={18} />}
                 </button>
             </div>
         </header>

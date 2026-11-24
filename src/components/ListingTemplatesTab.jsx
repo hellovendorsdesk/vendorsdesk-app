@@ -194,10 +194,10 @@ export default function ListingTemplatesTab() {
             {/* Header / Hero */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
                 <div>
-                    <h1 style={{ fontSize: '1.85rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em', margin: '0 0 0.4rem 0' }}>
+                    <h1 style={{ fontSize: '1.85rem', fontWeight: 800, color: '#f8fafc', letterSpacing: '-0.02em', margin: '0 0 0.4rem 0' }}>
                         ⚡ Listing Templates & Autofill
                     </h1>
-                    <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0 }}>
+                    <p style={{ color: '#94a3b8', fontSize: '0.95rem', margin: 0 }}>
                         Save your product specifications once. VendorsDesk Chrome Extension will autofill listings across Meesho, Flipkart, and Amazon in 1-click.
                     </p>
                 </div>
@@ -205,8 +205,8 @@ export default function ListingTemplatesTab() {
                     <button
                         onClick={openCreateModal}
                         style={{
-                            background: '#2563eb',
-                            color: '#ffffff',
+                            background: '#ffffff',
+                            color: '#080b11',
                             fontWeight: 700,
                             padding: '0.75rem 1.4rem',
                             borderRadius: '10px',
@@ -253,7 +253,7 @@ export default function ListingTemplatesTab() {
                     </div>
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ fontWeight: 800, fontSize: '1.05rem', color: '#0f172a' }}>
+                            <span style={{ fontWeight: 800, fontSize: '1.05rem', color: '#f8fafc' }}>
                                 VendorsDesk Chrome Extension
                             </span>
                             <span style={{
@@ -267,7 +267,7 @@ export default function ListingTemplatesTab() {
                                 {extensionInstalled ? 'ACTIVE & SYNCED' : 'READY TO INSTALL'}
                             </span>
                         </div>
-                        <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: '#475569' }}>
+                        <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: '#94a3b8' }}>
                             {extensionInstalled 
                                 ? 'Autofill is enabled. When you open Meesho or Flipkart listing forms, the VendorsDesk floating widget will appear automatically.'
                                 : 'Install the VendorsDesk Extension to autofill product listings directly on Meesho Supplier Panel and Flipkart Seller Hub.'}
@@ -280,9 +280,9 @@ export default function ListingTemplatesTab() {
                         <button
                             onClick={syncTokenToExtension}
                             style={{
-                                background: '#ffffff',
-                                border: '1px solid #cbd5e1',
-                                color: '#0f172a',
+                                background: '#0f1422',
+                                border: '1px solid rgba(255, 255, 255, 0.12)',
+                                color: '#f8fafc',
                                 fontWeight: 700,
                                 padding: '0.55rem 1rem',
                                 borderRadius: '8px',
@@ -296,8 +296,8 @@ export default function ListingTemplatesTab() {
                         <button
                             onClick={() => setShowInstallModal(true)}
                             style={{
-                                background: '#2563eb',
-                                color: '#ffffff',
+                                background: '#ffffff',
+                                color: '#080b11',
                                 fontWeight: 700,
                                 padding: '0.6rem 1.2rem',
                                 borderRadius: '8px',
@@ -315,23 +315,23 @@ export default function ListingTemplatesTab() {
 
             {/* Quick Metrics */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Total Templates</div>
-                    <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0f172a', marginTop: '0.2rem' }}>{templates.length}</div>
+                <div style={{ background: '#0f1422', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '1rem 1.25rem' }}>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase' }}>Total Templates</div>
+                    <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#f8fafc', marginTop: '0.2rem' }}>{templates.length}</div>
                 </div>
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Total Fills Saved</div>
+                <div style={{ background: '#0f1422', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '1rem 1.25rem' }}>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase' }}>Total Fills Saved</div>
                     <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#10b981', marginTop: '0.2rem' }}>{totalAutofills}</div>
                 </div>
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Time Saved</div>
+                <div style={{ background: '#0f1422', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '1rem 1.25rem' }}>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase' }}>Time Saved</div>
                     <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#2563eb', marginTop: '0.2rem' }}>
                         {Math.round((totalAutofills * 15) / 60)} hrs
                     </div>
                 </div>
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem 1.25rem' }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Supported Platforms</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginTop: '0.4rem', display: 'flex', gap: '0.4rem' }}>
+                <div style={{ background: '#0f1422', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '1rem 1.25rem' }}>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase' }}>Supported Platforms</div>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#f8fafc', marginTop: '0.4rem', display: 'flex', gap: '0.4rem' }}>
                         <span>Meesho</span> · <span>Flipkart</span> · <span>Amazon</span>
                     </div>
                 </div>
@@ -339,7 +339,7 @@ export default function ListingTemplatesTab() {
 
             {/* Filter & Search Bar */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.8rem' }}>
-                <div style={{ display: 'flex', gap: '0.4rem', background: '#ffffff', padding: '4px', borderRadius: '10px', border: '1px solid #cbd5e1' }}>
+                <div style={{ display: 'flex', gap: '0.4rem', background: '#0f1422', padding: '4px', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
                     {['all', 'meesho', 'flipkart', 'amazon'].map(p => (
                         <button
                             key={p}
@@ -371,11 +371,11 @@ export default function ListingTemplatesTab() {
                         style={{
                             width: '100%',
                             padding: '0.6rem 1rem',
-                            border: '1px solid #cbd5e1',
+                            border: '1px solid rgba(255, 255, 255, 0.12)',
                             borderRadius: '10px',
                             fontSize: '0.88rem',
                             outline: 'none',
-                            background: '#ffffff'
+                            background: '#0f1422'
                         }}
                     />
                 </div>
@@ -383,12 +383,12 @@ export default function ListingTemplatesTab() {
 
             {/* Templates List */}
             {isLoading ? (
-                <div style={{ padding: '4rem', textAlign: 'center', color: '#64748b' }}>
+                <div style={{ padding: '4rem', textAlign: 'center', color: '#94a3b8' }}>
                     Loading your listing templates...
                 </div>
             ) : filteredTemplates.length === 0 ? (
                 <div style={{
-                    background: '#ffffff',
+                    background: '#0f1422',
                     border: '1px dashed #cbd5e1',
                     borderRadius: '14px',
                     padding: '3.5rem 2rem',
@@ -399,18 +399,18 @@ export default function ListingTemplatesTab() {
                     gap: '0.8rem'
                 }}>
                     <div style={{ fontSize: '2.5rem' }}>📋</div>
-                    <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+                    <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#f8fafc', margin: 0 }}>
                         {searchQuery ? 'No templates match your search' : 'No templates created yet'}
                     </h3>
-                    <p style={{ color: '#64748b', fontSize: '0.9rem', maxWidth: '440px', margin: 0 }}>
+                    <p style={{ color: '#94a3b8', fontSize: '0.9rem', maxWidth: '440px', margin: 0 }}>
                         Create your first product listing template to start autofilling forms across Meesho, Flipkart, and Amazon seller panels.
                     </p>
                     <button
                         onClick={openCreateModal}
                         style={{
                             marginTop: '0.5rem',
-                            background: '#2563eb',
-                            color: '#ffffff',
+                            background: '#ffffff',
+                            color: '#080b11',
                             fontWeight: 700,
                             padding: '0.65rem 1.4rem',
                             borderRadius: '8px',
@@ -427,8 +427,8 @@ export default function ListingTemplatesTab() {
                         <div
                             key={tpl._id}
                             style={{
-                                background: '#ffffff',
-                                border: '1px solid #e2e8f0',
+                                background: '#0f1422',
+                                border: '1px solid rgba(255, 255, 255, 0.08)',
                                 borderRadius: '12px',
                                 padding: '1.25rem',
                                 display: 'flex',
@@ -453,59 +453,59 @@ export default function ListingTemplatesTab() {
                                     }}>
                                         {tpl.platform === 'all' ? 'All Platforms' : tpl.platform}
                                     </span>
-                                    <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>
+                                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600 }}>
                                         ⚡ Used {tpl.usageCount || 0} times
                                     </span>
                                 </div>
 
-                                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0f172a', margin: '0 0 0.4rem 0', lineHeight: 1.3 }}>
+                                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#f8fafc', margin: '0 0 0.4rem 0', lineHeight: 1.3 }}>
                                     {tpl.title}
                                 </h3>
 
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.75rem' }}>
                                     {tpl.brand && (
-                                        <span style={{ fontSize: '0.75rem', background: '#f1f5f9', color: '#475569', padding: '2px 6px', borderRadius: '4px' }}>
+                                        <span style={{ fontSize: '0.75rem', background: '#141a29', color: '#94a3b8', padding: '2px 6px', borderRadius: '4px' }}>
                                             Brand: {tpl.brand}
                                         </span>
                                     )}
                                     {tpl.category && (
-                                        <span style={{ fontSize: '0.75rem', background: '#f1f5f9', color: '#475569', padding: '2px 6px', borderRadius: '4px' }}>
+                                        <span style={{ fontSize: '0.75rem', background: '#141a29', color: '#94a3b8', padding: '2px 6px', borderRadius: '4px' }}>
                                             {tpl.category}
                                         </span>
                                     )}
                                     {tpl.sku && (
-                                        <span style={{ fontSize: '0.75rem', background: '#f8fafc', color: '#64748b', padding: '2px 6px', borderRadius: '4px' }}>
+                                        <span style={{ fontSize: '0.75rem', background: '#141a29', color: '#94a3b8', padding: '2px 6px', borderRadius: '4px' }}>
                                             SKU: {tpl.sku}
                                         </span>
                                     )}
                                 </div>
 
-                                <div style={{ background: '#f8fafc', padding: '0.65rem 0.85rem', borderRadius: '8px', fontSize: '0.85rem', display: 'flex', justifyContent: 'space-between' }}>
+                                <div style={{ background: '#141a29', padding: '0.65rem 0.85rem', borderRadius: '8px', fontSize: '0.85rem', display: 'flex', justifyContent: 'space-between' }}>
                                     <div>
-                                        <span style={{ color: '#64748b' }}>Selling Price: </span>
+                                        <span style={{ color: '#94a3b8' }}>Selling Price: </span>
                                         <span style={{ fontWeight: 700, color: '#10b981' }}>₹{tpl.sellingPrice || 0}</span>
                                     </div>
                                     <div>
-                                        <span style={{ color: '#64748b' }}>MRP: </span>
-                                        <span style={{ fontWeight: 700, color: '#64748b', textDecoration: 'line-through' }}>₹{tpl.mrp || 0}</span>
+                                        <span style={{ color: '#94a3b8' }}>MRP: </span>
+                                        <span style={{ fontWeight: 700, color: '#94a3b8', textDecoration: 'line-through' }}>₹{tpl.mrp || 0}</span>
                                     </div>
                                     <div>
-                                        <span style={{ color: '#64748b' }}>GST: </span>
+                                        <span style={{ color: '#94a3b8' }}>GST: </span>
                                         <span style={{ fontWeight: 600 }}>{tpl.gstPercentage || 0}%</span>
                                     </div>
                                 </div>
 
                                 {tpl.colors && tpl.colors.length > 0 && (
-                                    <div style={{ marginTop: '0.6rem', fontSize: '0.75rem', color: '#64748b', display: 'flex', gap: '0.3rem', alignItems: 'center' }}>
+                                    <div style={{ marginTop: '0.6rem', fontSize: '0.75rem', color: '#94a3b8', display: 'flex', gap: '0.3rem', alignItems: 'center' }}>
                                         <span>Colors:</span>
                                         {tpl.colors.map(c => (
-                                            <span key={c} style={{ background: '#f1f5f9', padding: '1px 5px', borderRadius: '3px', color: '#0f172a' }}>{c}</span>
+                                            <span key={c} style={{ background: '#141a29', padding: '1px 5px', borderRadius: '3px', color: '#f8fafc' }}>{c}</span>
                                         ))}
                                     </div>
                                 )}
                             </div>
 
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '0.75rem' }}>
                                 <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
                                     Updated {new Date(tpl.updatedAt || tpl.createdAt).toLocaleDateString()}
                                 </div>
@@ -513,14 +513,14 @@ export default function ListingTemplatesTab() {
                                     <button
                                         onClick={() => handleDuplicateTemplate(tpl)}
                                         title="Duplicate"
-                                        style={{ background: '#f1f5f9', border: 'none', borderRadius: '6px', padding: '5px 8px', cursor: 'pointer', fontSize: '0.8rem' }}
+                                        style={{ background: '#141a29', border: 'none', borderRadius: '6px', padding: '5px 8px', cursor: 'pointer', fontSize: '0.8rem' }}
                                     >
                                         📑 Copy
                                     </button>
                                     <button
                                         onClick={() => openEditModal(tpl)}
                                         title="Edit"
-                                        style={{ background: '#f1f5f9', border: 'none', borderRadius: '6px', padding: '5px 10px', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, color: '#2563eb' }}
+                                        style={{ background: '#141a29', border: 'none', borderRadius: '6px', padding: '5px 10px', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, color: '#2563eb' }}
                                     >
                                         Edit
                                     </button>
@@ -546,7 +546,7 @@ export default function ListingTemplatesTab() {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'rgba(15, 23, 42, 0.65)',
+                    background: 'rgba(8, 11, 17, 0.85)',
                     backdropFilter: 'blur(6px)',
                     WebkitBackdropFilter: 'blur(6px)',
                     zIndex: 1100,
@@ -557,7 +557,7 @@ export default function ListingTemplatesTab() {
                     boxSizing: 'border-box'
                 }}>
                     <div style={{
-                        background: '#ffffff',
+                        background: '#0f1422',
                         width: '100%',
                         maxWidth: '680px',
                         maxHeight: '92vh',
@@ -570,18 +570,18 @@ export default function ListingTemplatesTab() {
                         {/* Modal Header */}
                         <div style={{
                             padding: '1rem 1.25rem',
-                            borderBottom: '1px solid #e2e8f0',
+                            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            background: '#f8fafc',
+                            background: '#141a29',
                             gap: '0.75rem'
                         }}>
                             <div style={{ minWidth: 0, flex: 1 }}>
-                                <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#f8fafc', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                     {editingTemplate ? 'Edit Listing Template' : 'Create Listing Template'}
                                 </h2>
-                                <p style={{ fontSize: '0.8rem', color: '#64748b', margin: '2px 0 0 0' }}>
+                                <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: '2px 0 0 0' }}>
                                     Configure repeatable specs for 1-click marketplace autofill.
                                 </p>
                             </div>
@@ -589,8 +589,8 @@ export default function ListingTemplatesTab() {
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
                                 style={{
-                                    background: '#f1f5f9',
-                                    border: '1px solid #cbd5e1',
+                                    background: '#141a29',
+                                    border: '1px solid rgba(255, 255, 255, 0.12)',
                                     borderRadius: '8px',
                                     width: '32px',
                                     height: '32px',
@@ -599,7 +599,7 @@ export default function ListingTemplatesTab() {
                                     justifyContent: 'center',
                                     fontSize: '1.1rem',
                                     cursor: 'pointer',
-                                    color: '#64748b',
+                                    color: '#94a3b8',
                                     flexShrink: 0
                                 }}
                             >
@@ -622,7 +622,7 @@ export default function ListingTemplatesTab() {
 
                             {/* Platform selector */}
                             <div>
-                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                     Target Marketplace
                                 </label>
                                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -657,7 +657,7 @@ export default function ListingTemplatesTab() {
 
                             {/* Title */}
                             <div>
-                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                     Product Title / Name *
                                 </label>
                                 <input
@@ -666,14 +666,14 @@ export default function ListingTemplatesTab() {
                                     placeholder="e.g. Women Pure Cotton Printed Straight Kurta"
                                     value={formData.title}
                                     onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                                    style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                    style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                 />
                             </div>
 
                             {/* Category & Brand */}
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '1rem' }}>
                                 <div>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                         Brand
                                     </label>
                                     <input
@@ -681,11 +681,11 @@ export default function ListingTemplatesTab() {
                                         placeholder="e.g. Rangoli, Generic"
                                         value={formData.brand}
                                         onChange={(e) => setFormData(prev => ({ ...prev, brand: e.target.value }))}
-                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                     />
                                 </div>
                                 <div>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                         Category
                                     </label>
                                     <input
@@ -693,7 +693,7 @@ export default function ListingTemplatesTab() {
                                         placeholder="e.g. Sarees, Kurtas, Shoes"
                                         value={formData.category}
                                         onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                     />
                                 </div>
                             </div>
@@ -701,7 +701,7 @@ export default function ListingTemplatesTab() {
                             {/* Pricing & SKU */}
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 130px), 1fr))', gap: '1rem' }}>
                                 <div>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                         Selling Price (₹)
                                     </label>
                                     <input
@@ -709,11 +709,11 @@ export default function ListingTemplatesTab() {
                                         placeholder="499"
                                         value={formData.sellingPrice}
                                         onChange={(e) => setFormData(prev => ({ ...prev, sellingPrice: e.target.value }))}
-                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                     />
                                 </div>
                                 <div>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                         MRP (₹)
                                     </label>
                                     <input
@@ -721,11 +721,11 @@ export default function ListingTemplatesTab() {
                                         placeholder="999"
                                         value={formData.mrp}
                                         onChange={(e) => setFormData(prev => ({ ...prev, mrp: e.target.value }))}
-                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                     />
                                 </div>
                                 <div>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                         SKU / Style Code
                                     </label>
                                     <input
@@ -733,7 +733,7 @@ export default function ListingTemplatesTab() {
                                         placeholder="e.g. KRT-001-RED"
                                         value={formData.sku}
                                         onChange={(e) => setFormData(prev => ({ ...prev, sku: e.target.value }))}
-                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                     />
                                 </div>
                             </div>
@@ -741,7 +741,7 @@ export default function ListingTemplatesTab() {
                             {/* Tax & Weight */}
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 130px), 1fr))', gap: '1rem' }}>
                                 <div>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                         HSN Code
                                     </label>
                                     <input
@@ -749,17 +749,17 @@ export default function ListingTemplatesTab() {
                                         placeholder="e.g. 6204"
                                         value={formData.hsnCode}
                                         onChange={(e) => setFormData(prev => ({ ...prev, hsnCode: e.target.value }))}
-                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                     />
                                 </div>
                                 <div>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                         GST %
                                     </label>
                                     <select
                                         value={formData.gstPercentage}
                                         onChange={(e) => setFormData(prev => ({ ...prev, gstPercentage: e.target.value }))}
-                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none', background: '#ffffff' }}
+                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none', background: '#080b11', color: '#ffffff' }}
                                     >
                                         <option value="0">0%</option>
                                         <option value="5">5%</option>
@@ -769,7 +769,7 @@ export default function ListingTemplatesTab() {
                                     </select>
                                 </div>
                                 <div>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                         Weight (Grams)
                                     </label>
                                     <input
@@ -777,14 +777,14 @@ export default function ListingTemplatesTab() {
                                         placeholder="300"
                                         value={formData.weightGrams}
                                         onChange={(e) => setFormData(prev => ({ ...prev, weightGrams: e.target.value }))}
-                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                        style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                     />
                                 </div>
                             </div>
 
                             {/* Dimensions */}
                             <div>
-                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                     Package Dimensions (L × W × H in CM)
                                 </label>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 85px), 1fr))', gap: '0.75rem' }}>
@@ -793,28 +793,28 @@ export default function ListingTemplatesTab() {
                                         placeholder="Length (cm)"
                                         value={formData.packageLength}
                                         onChange={(e) => setFormData(prev => ({ ...prev, packageLength: e.target.value }))}
-                                        style={{ padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                        style={{ padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                     />
                                     <input
                                         type="number"
                                         placeholder="Width (cm)"
                                         value={formData.packageWidth}
                                         onChange={(e) => setFormData(prev => ({ ...prev, packageWidth: e.target.value }))}
-                                        style={{ padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                        style={{ padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                     />
                                     <input
                                         type="number"
                                         placeholder="Height (cm)"
                                         value={formData.packageHeight}
                                         onChange={(e) => setFormData(prev => ({ ...prev, packageHeight: e.target.value }))}
-                                        style={{ padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
+                                        style={{ padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.9rem', outline: 'none' }}
                                     />
                                 </div>
                             </div>
 
                             {/* Colors */}
                             <div>
-                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                     Available Colors
                                 </label>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.5rem' }}>
@@ -848,12 +848,12 @@ export default function ListingTemplatesTab() {
                                         value={customColorInput}
                                         onChange={(e) => setCustomColorInput(e.target.value)}
                                         onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addCustomColor(); } }}
-                                        style={{ flex: 1, padding: '0.5rem 0.75rem', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem' }}
+                                        style={{ flex: 1, padding: '0.5rem 0.75rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '6px', fontSize: '0.85rem' }}
                                     />
                                     <button
                                         type="button"
                                         onClick={addCustomColor}
-                                        style={{ padding: '0.5rem 1rem', background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '6px', fontWeight: 600, fontSize: '0.85rem', cursor: 'pointer' }}
+                                        style={{ padding: '0.5rem 1rem', background: '#141a29', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '6px', fontWeight: 600, fontSize: '0.85rem', cursor: 'pointer' }}
                                     >
                                         + Add
                                     </button>
@@ -862,7 +862,7 @@ export default function ListingTemplatesTab() {
 
                             {/* Sizes */}
                             <div>
-                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                     Available Sizes
                                 </label>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
@@ -893,7 +893,7 @@ export default function ListingTemplatesTab() {
 
                             {/* Description */}
                             <div>
-                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                     Product Description
                                 </label>
                                 <textarea
@@ -901,13 +901,13 @@ export default function ListingTemplatesTab() {
                                     placeholder="Enter full product description..."
                                     value={formData.description}
                                     onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                                    style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.88rem', outline: 'none' }}
+                                    style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.88rem', outline: 'none' }}
                                 />
                             </div>
 
                             {/* Bullet Features */}
                             <div>
-                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                     Key Features (one per line)
                                 </label>
                                 <textarea
@@ -915,13 +915,13 @@ export default function ListingTemplatesTab() {
                                     placeholder="100% Premium cotton fabric&#10;Hand wash recommended&#10;Includes matching mask"
                                     value={formData.features}
                                     onChange={(e) => setFormData(prev => ({ ...prev, features: e.target.value }))}
-                                    style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.88rem', outline: 'none' }}
+                                    style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.88rem', outline: 'none' }}
                                 />
                             </div>
 
                             {/* Keywords */}
                             <div>
-                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
                                     Keywords (comma-separated)
                                 </label>
                                 <input
@@ -929,7 +929,7 @@ export default function ListingTemplatesTab() {
                                     placeholder="ethnic wear, kurti, cotton, festive wear"
                                     value={formData.keywords}
                                     onChange={(e) => setFormData(prev => ({ ...prev, keywords: e.target.value }))}
-                                    style={{ width: '100%', padding: '0.65rem', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.88rem', outline: 'none' }}
+                                    style={{ width: '100%', padding: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontSize: '0.88rem', outline: 'none' }}
                                 />
                             </div>
 
@@ -938,7 +938,7 @@ export default function ListingTemplatesTab() {
                                 <button
                                     type="button"
                                     onClick={() => setIsModalOpen(false)}
-                                    style={{ padding: '0.65rem 1.2rem', background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }}
+                                    style={{ padding: '0.65rem 1.2rem', background: '#141a29', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }}
                                 >
                                     Cancel
                                 </button>
@@ -947,8 +947,8 @@ export default function ListingTemplatesTab() {
                                     disabled={isSaving}
                                     style={{
                                         padding: '0.65rem 1.6rem',
-                                        background: '#2563eb',
-                                        color: '#ffffff',
+                                        background: '#ffffff',
+                                        color: '#080b11',
                                         border: 'none',
                                         borderRadius: '8px',
                                         fontWeight: 700,
@@ -972,7 +972,7 @@ export default function ListingTemplatesTab() {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'rgba(15, 23, 42, 0.6)',
+                    background: 'rgba(8, 11, 17, 0.85)',
                     backdropFilter: 'blur(4px)',
                     zIndex: 1000,
                     display: 'flex',
@@ -981,7 +981,7 @@ export default function ListingTemplatesTab() {
                     padding: '1.5rem'
                 }}>
                     <div style={{
-                        background: '#ffffff',
+                        background: '#0f1422',
                         width: '100%',
                         maxWidth: '560px',
                         borderRadius: '16px',
@@ -992,24 +992,24 @@ export default function ListingTemplatesTab() {
                         gap: '1.2rem'
                     }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                            <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#f8fafc', margin: 0 }}>
                                 📦 Install VendorsDesk Chrome Extension
                             </h2>
                             <button
                                 onClick={() => setShowInstallModal(false)}
-                                style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer', color: '#64748b' }}
+                                style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer', color: '#94a3b8' }}
                             >
                                 ×
                             </button>
                         </div>
 
-                        <p style={{ fontSize: '0.9rem', color: '#475569', margin: 0 }}>
+                        <p style={{ fontSize: '0.9rem', color: '#94a3b8', margin: 0 }}>
                             Follow these simple 3 steps to install the VendorsDesk Assistant in Google Chrome:
                         </p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
-                            <div style={{ display: 'flex', gap: '0.8rem', background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2563eb', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
+                            <div style={{ display: 'flex', gap: '0.8rem', background: '#141a29', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#ffffff', color: '#080b11', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
                                     1
                                 </span>
                                 <div style={{ fontSize: '0.88rem' }}>
@@ -1017,8 +1017,8 @@ export default function ListingTemplatesTab() {
                                 </div>
                             </div>
 
-                            <div style={{ display: 'flex', gap: '0.8rem', background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2563eb', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
+                            <div style={{ display: 'flex', gap: '0.8rem', background: '#141a29', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#ffffff', color: '#080b11', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
                                     2
                                 </span>
                                 <div style={{ fontSize: '0.88rem' }}>
@@ -1026,8 +1026,8 @@ export default function ListingTemplatesTab() {
                                 </div>
                             </div>
 
-                            <div style={{ display: 'flex', gap: '0.8rem', background: '#f8fafc', padding: '0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2563eb', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
+                            <div style={{ display: 'flex', gap: '0.8rem', background: '#141a29', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#ffffff', color: '#080b11', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
                                     3
                                 </span>
                                 <div style={{ fontSize: '0.88rem' }}>
@@ -1045,8 +1045,8 @@ export default function ListingTemplatesTab() {
                             style={{
                                 width: '100%',
                                 padding: '0.75rem',
-                                background: '#2563eb',
-                                color: '#ffffff',
+                                background: '#ffffff',
+                                color: '#080b11',
                                 border: 'none',
                                 borderRadius: '8px',
                                 fontWeight: 700,
