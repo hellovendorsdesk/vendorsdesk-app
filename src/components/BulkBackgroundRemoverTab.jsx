@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-    renderCompositeWithBadge
-} from '../services/image/imageProcessor';
-import { exportImagesAsZip } from '../services/image/zipService';
+import JSZip from 'jszip';
 import {
     GRAPHIC_BADGES,
     MAGIC_BACKGROUNDS,
@@ -83,17 +80,212 @@ export default function BulkBackgroundRemoverTab() {
         if (uploadedImages.length === 0) setActiveIndex(0);
     };
 
-    // Composite render delegated to pure domain imageProcessor service
-    const renderComposite = async (item, bgObj, borderObj, badgeObj, pos) => {
-        return renderComposite(item, bgObj, borderObj, badgeObj, pos, {
-            subjectScale,
-            subjectOffsetX,
-            subjectOffsetY,
-            subjectFlipH,
-            onIsolated: (isolatedCanvas) => {
+    // Edge-Aware Subject Isolation (Background Remover Engine)
+    const isolateSubject = (imgElement) => {
+        const width = imgElement.naturalWidth || imgElement.width || 800;
+        const height = imgElement.naturalHeight || imgElement.height || 800;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(imgElement, 0, 0, width, height);
+
+        const imgData = ctx.getImageData(0, 0, width, height);
+        const data = imgData.data;
+
+        // Sample background color from outer perimeter corners
+        let rSum = 0, gSum = 0, bSum = 0, count = 0;
+        const corners = [
+            [2, 2], [width - 3, 2], [2, height - 3], [width - 3, height - 3],
+            [10, 10], [width - 11, 10], [10, height - 11], [width - 11, height - 11]
+        ];
+
+        corners.forEach(([cx, cy]) => {
+            const idx = (cy * width + cx) * 4;
+            rSum += data[idx];
+            gSum += data[idx + 1];
+            bSum += data[idx + 2];
+            count++;
+        });
+
+        const bgR = rSum / count;
+        const bgG = gSum / count;
+        const bgB = bSum / count;
+        const tolerance = 46;
+
+        for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+
+            const diff = Math.sqrt(
+                Math.pow(r - bgR, 2) +
+                Math.pow(g - bgG, 2) +
+                Math.pow(b - bgB, 2)
+            );
+
+            if (diff < tolerance) {
+                data[i + 3] = 0; // Transparent background
+            } else if (diff < tolerance + 24) {
+                const alphaRatio = (diff - tolerance) / 24;
+                data[i + 3] = Math.round(255 * alphaRatio); // Smooth edge feathering
+            }
+        }
+
+        ctx.putImageData(imgData, 0, 0);
+        return canvas;
+    };
+
+    // Helper: Load Image as Promise
+    const loadImage = (src) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => resolve(img);
+            img.onerror = (e) => reject(e);
+            img.src = src;
+        });
+    };
+
+    // Full Composite Render (Subject + Background + Border Frame + PNG Graphic Badge)
+    const renderCompositeWithBadge = async (item, bgObj, borderObj, badgeObj, pos) => {
+        if (!item) return null;
+
+        try {
+            const mainImg = await loadImage(item.originalUrl);
+            const width = mainImg.naturalWidth || 800;
+            const height = mainImg.naturalHeight || 800;
+
+            let isolatedCanvas = item.isolatedCanvas;
+            if (!isolatedCanvas) {
+                isolatedCanvas = isolateSubject(mainImg);
                 setUploadedImages(prev => prev.map(p => p.id === item.id ? { ...p, isolatedCanvas } : p));
             }
-        });
+
+            const outCanvas = document.createElement('canvas');
+            outCanvas.width = width;
+            outCanvas.height = height;
+            const outCtx = outCanvas.getContext('2d');
+
+            // 1. Draw 4-Edge Solid Border Frame if selected
+            let drawX = 0, drawY = 0, drawW = width, drawH = height;
+            if (borderObj && borderObj.value) {
+                const borderWidth = Math.max(16, Math.round(Math.min(width, height) * 0.035));
+                
+                // Fill entire canvas base with border color
+                outCtx.fillStyle = borderObj.value;
+                outCtx.fillRect(0, 0, width, height);
+
+                drawX = borderWidth;
+                drawY = borderWidth;
+                drawW = width - (borderWidth * 2);
+                drawH = height - (borderWidth * 2);
+            }
+
+            // Save context and clip all inner drawing (background & subject) inside 4 borders
+            outCtx.save();
+            outCtx.beginPath();
+            outCtx.rect(drawX, drawY, drawW, drawH);
+            outCtx.clip();
+
+            // 2. Draw Background inside inner clipped bounds
+            if (bgObj.type === 'color') {
+                if (bgObj.value !== 'transparent') {
+                    outCtx.fillStyle = bgObj.value;
+                    outCtx.fillRect(drawX, drawY, drawW, drawH);
+                }
+            } else if (bgObj.type === 'image' && bgObj.url) {
+                try {
+                    const bgImg = await loadImage(bgObj.url);
+                    const bgAspect = bgImg.width / bgImg.height;
+                    const outAspect = drawW / drawH;
+                    let renderW, renderH, renderX, renderY;
+
+                    if (bgAspect > outAspect) {
+                        renderH = drawH;
+                        renderW = drawH * bgAspect;
+                        renderX = drawX + (drawW - renderW) / 2;
+                        renderY = drawY;
+                    } else {
+                        renderW = drawW;
+                        renderH = drawW / bgAspect;
+                        renderX = drawX;
+                        renderY = drawY + (drawH - renderH) / 2;
+                    }
+
+                    outCtx.drawImage(bgImg, renderX, renderY, renderW, renderH);
+                } catch(e) {
+                    outCtx.fillStyle = '#f8fafc';
+                    outCtx.fillRect(drawX, drawY, drawW, drawH);
+                }
+            }
+
+            // 3. Composite Ground Contact Shadow
+            if (bgObj.value !== 'transparent') {
+                outCtx.save();
+                outCtx.filter = 'blur(16px)';
+                outCtx.fillStyle = 'rgba(0, 0, 0, 0.26)';
+                outCtx.beginPath();
+                outCtx.ellipse(width / 2, height * 0.88, width * 0.34, height * 0.05, 0, 0, Math.PI * 2);
+                outCtx.fill();
+                outCtx.restore();
+            }
+
+            // 4. Overlay Isolated Subject Product with Interactive Scale & Move Transforms
+            outCtx.save();
+            const scaleFactor = (subjectScale || 100) / 100;
+            const offX = ((subjectOffsetX || 0) / 100) * drawW;
+            const offY = ((subjectOffsetY || 0) / 100) * drawH;
+
+            const subjW = drawW * scaleFactor;
+            const subjH = drawH * scaleFactor;
+            const subjX = drawX + (drawW - subjW) / 2 + offX;
+            const subjY = drawY + (drawH - subjH) / 2 + offY;
+
+            if (subjectFlipH) {
+                outCtx.translate(subjX + subjW / 2, subjY + subjH / 2);
+                outCtx.scale(-1, 1);
+                outCtx.drawImage(isolatedCanvas, -subjW / 2, -subjH / 2, subjW, subjH);
+            } else {
+                outCtx.drawImage(isolatedCanvas, subjX, subjY, subjW, subjH);
+            }
+            outCtx.restore();
+
+            // Restore clipping context to allow badge overlay on top
+            outCtx.restore();
+
+            // 5. Overlay Real PNG Graphic Badge if selected
+            if (badgeObj && badgeObj.path) {
+                try {
+                    const badgeImg = await loadImage(badgeObj.path);
+                    const bSize = Math.round(width * 0.22);
+                    let bx = drawX + 16, by = drawY + 16;
+
+                    if (pos === 'top_right') {
+                        bx = drawX + drawW - bSize - 16;
+                    } else if (pos === 'bottom_left') {
+                        by = drawY + drawH - bSize - 16;
+                    } else if (pos === 'bottom_right') {
+                        bx = drawX + drawW - bSize - 16;
+                        by = drawY + drawH - bSize - 16;
+                    } else if (pos === 'top_center') {
+                        bx = drawX + (drawW - bSize) / 2;
+                    }
+
+                    outCtx.save();
+                    outCtx.shadowColor = 'rgba(0, 0, 0, 0.25)';
+                    outCtx.shadowBlur = 12;
+                    outCtx.drawImage(badgeImg, bx, by, bSize, bSize);
+                    outCtx.restore();
+                } catch(e) {}
+            }
+
+            return outCanvas.toDataURL(bgObj.value === 'transparent' ? 'image/png' : 'image/jpeg', 0.92);
+        } catch (err) {
+            console.error('Composite render error:', err);
+            return null;
+        }
     };
 
     // Live Render active image when any parameter changes
@@ -103,7 +295,7 @@ export default function BulkBackgroundRemoverTab() {
 
         const currentBg = customBgImage ? { type: 'image', url: customBgImage } : selectedBg;
 
-        renderComposite(currentItem, currentBg, borderColor, selectedBadge, badgePosition).then(url => {
+        renderCompositeWithBadge(currentItem, currentBg, borderColor, selectedBadge, badgePosition).then(url => {
             if (isMounted && url) {
                 setRenderedPreviewUrl(url);
                 setUploadedImages(prev => prev.map((p, idx) => idx === activeIndex ? { ...p, processedUrl: url } : p));
@@ -131,7 +323,7 @@ export default function BulkBackgroundRemoverTab() {
             const posList = ['top_left', 'top_right', 'bottom_left', 'bottom_right', 'top_center'];
             const pos = posList[i % posList.length];
 
-            const url = await renderComposite(currentItem, bg, border, badge, pos);
+            const url = await renderCompositeWithBadge(currentItem, bg, border, badge, pos);
 
             if (url) {
                 newVariations.push({
@@ -169,7 +361,7 @@ export default function BulkBackgroundRemoverTab() {
             const posList = ['top_left', 'top_right', 'bottom_left', 'bottom_right', 'top_center'];
             const pos = posList[idx % posList.length];
 
-            const url = await renderComposite(currentItem, bg, border, badge, pos);
+            const url = await renderCompositeWithBadge(currentItem, bg, border, badge, pos);
 
             if (url) {
                 newBatch.push({
@@ -208,10 +400,24 @@ export default function BulkBackgroundRemoverTab() {
 
         setIsZipping(true);
         try {
-            await exportImagesAsZip({
-                items: itemsToZip,
-                zipFileName: `vendorsdesk_studio_photos_${itemsToZip.length}_bundle.zip`
+            const zip = new JSZip();
+            const folder = zip.folder("vendorsdesk_studio_backgrounds_bundle");
+
+            itemsToZip.forEach((item, idx) => {
+                const dataUrl = item.imageUrl || item.processedUrl;
+                if (dataUrl) {
+                    const base64Data = dataUrl.split(',')[1];
+                    folder.file(`studio_variation_${idx + 1}.jpg`, base64Data, { base64: true });
+                }
             });
+
+            const content = await zip.generateAsync({ type: 'blob' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(content);
+            link.download = `vendorsdesk_studio_photos_${itemsToZip.length}_bundle.zip`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
         } catch (err) {
             console.error('Zip export error:', err);
             alert('Failed to generate ZIP archive.');
@@ -221,19 +427,19 @@ export default function BulkBackgroundRemoverTab() {
     };
 
     return (
-        <div style={{ width: '100%', maxWidth: '1080px', margin: '0 auto', color: '#0f172a', fontFamily: 'Inter, sans-serif' }}>
+        <div style={{ width: '100%', maxWidth: '1080px', margin: '0 auto', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }}>
             
             {/* Sleek Integrated Studio Header Card */}
             <div style={{
-                background: '#ffffff',
+                background: '#0f1422',
                 borderRadius: '16px',
-                border: '1px solid #cbd5e1',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
                 padding: '0.85rem 1.25rem',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginBottom: '1rem',
-                boxShadow: '0 4px 20px rgba(15, 23, 42, 0.04)',
+                boxShadow: 'none',
                 flexWrap: 'wrap',
                 gap: '0.75rem'
             }}>
@@ -242,7 +448,7 @@ export default function BulkBackgroundRemoverTab() {
                         width: '36px',
                         height: '36px',
                         borderRadius: '10px',
-                        background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                        background: '#ffffff', color: '#080b11',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -253,10 +459,10 @@ export default function BulkBackgroundRemoverTab() {
                         🖼️
                     </div>
                     <div>
-                        <h1 style={{ fontFamily: 'Outfit', fontSize: '1.15rem', fontWeight: 800, margin: 0, color: '#0f172a', letterSpacing: '-0.015em' }}>
+                        <h1 style={{ fontFamily: 'Outfit', fontSize: '1.15rem', fontWeight: 800, margin: 0, color: '#f8fafc', letterSpacing: '-0.015em' }}>
                             AI Studio & Background Generator
                         </h1>
-                        <div style={{ fontSize: '0.74rem', color: '#64748b', fontWeight: 500 }}>
+                        <div style={{ fontSize: '0.74rem', color: '#94a3b8', fontWeight: 500 }}>
                             1-Click Background Removal • Live Studio Backdrops • 19 Graphic PNG Badges
                         </div>
                     </div>
@@ -285,7 +491,7 @@ export default function BulkBackgroundRemoverTab() {
                             disabled={isZipping}
                             onClick={handleExportZip}
                             style={{
-                                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                background: '#ffffff', color: '#080b11',
                                 padding: '0.5rem 1.1rem',
                                 borderRadius: '9px',
                                 fontWeight: 800,
@@ -306,8 +512,8 @@ export default function BulkBackgroundRemoverTab() {
                     style={{
                         padding: '2rem 1.25rem',
                         borderRadius: '18px',
-                        border: '2px dashed #2563eb',
-                        background: '#ffffff',
+                        border: '1px dashed rgba(56, 189, 248, 0.35)',
+                        background: '#0f1422',
                         cursor: 'pointer',
                         textAlign: 'center',
                         maxWidth: '520px',
@@ -316,10 +522,10 @@ export default function BulkBackgroundRemoverTab() {
                     }}
                 >
                     <div style={{ fontSize: '2.2rem', marginBottom: '0.4rem' }}>🖼️</div>
-                    <h2 style={{ fontFamily: 'Outfit', fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.35rem' }}>
+                    <h2 style={{ fontFamily: 'Outfit', fontSize: '1.15rem', fontWeight: 800, color: '#f8fafc', marginBottom: '0.35rem' }}>
                         Upload Product Photos to Remove & Change Background Live
                     </h2>
-                    <p style={{ fontSize: '0.8rem', color: '#64748b', maxWidth: '440px', margin: '0 auto 1.1rem auto', lineHeight: '1.5' }}>
+                    <p style={{ fontSize: '0.8rem', color: '#94a3b8', maxWidth: '440px', margin: '0 auto 1.1rem auto', lineHeight: '1.5' }}>
                         Supports Kurti, Saree, Shoes, Watches, Bags & Electronics. Select up to 40 images to remove original backdrops, apply 19 Real Graphic Badges, and generate dynamic studio collections!
                     </p>
                     <button
@@ -338,16 +544,16 @@ export default function BulkBackgroundRemoverTab() {
                         {/* LEFT PANEL: Live Preview Canvas */}
                         <div className="bg-remover-canvas-col" style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', width: '100%' }}>
                             <div style={{
-                                background: '#ffffff',
+                                background: '#0f1422',
                                 borderRadius: '18px',
-                                border: '1px solid #cbd5e1',
+                                border: '1px solid rgba(255, 255, 255, 0.08)',
                                 padding: '0.85rem',
-                                boxShadow: '0 10px 30px rgba(15, 23, 42, 0.05)',
+                                boxShadow: 'none',
                                 position: 'relative'
                             }}>
                                 {/* Card Subheader */}
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.65rem', padding: '0 0.2rem' }}>
-                                    <span style={{ fontWeight: 800, fontSize: '0.82rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                    <span style={{ fontWeight: 800, fontSize: '0.82rem', color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                                         <span>🖼️</span> Live Studio Canvas
                                     </span>
                                     <span style={{ background: 'rgba(37, 99, 235, 0.1)', color: '#2563eb', fontSize: '0.65rem', fontWeight: 800, padding: '0.15rem 0.5rem', borderRadius: '6px' }}>
@@ -375,7 +581,7 @@ export default function BulkBackgroundRemoverTab() {
                                             style={{ maxWidth: '100%', maxHeight: '440px', width: 'auto', height: 'auto', objectFit: 'contain', borderRadius: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }}
                                         />
                                     ) : (
-                                        <div style={{ textAlign: 'center', color: '#64748b' }}>
+                                        <div style={{ textAlign: 'center', color: '#94a3b8' }}>
                                             <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>⏳</div>
                                             <div style={{ fontSize: '0.85rem', fontWeight: 600 }}>Isolating subject & generating live studio...</div>
                                         </div>
@@ -384,8 +590,8 @@ export default function BulkBackgroundRemoverTab() {
 
                                 {/* Left Action Footer */}
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem', padding: '0 0.5rem', gap: '0.75rem', flexWrap: 'wrap' }}>
-                                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                        Photo {activeIndex + 1} of {uploadedImages.length}: <span style={{ color: '#0f172a' }}>{currentItem.name}</span>
+                                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                        Photo {activeIndex + 1} of {uploadedImages.length}: <span style={{ color: '#f8fafc' }}>{currentItem.name}</span>
                                     </div>
 
                                     <button
@@ -400,9 +606,9 @@ export default function BulkBackgroundRemoverTab() {
 
                             {/* Bottom Multi-Image Switcher Strip */}
                             <div style={{
-                                background: '#ffffff',
+                                background: '#0f1422',
                                 borderRadius: '16px',
-                                border: '1px solid #cbd5e1',
+                                border: '1px solid rgba(255, 255, 255, 0.08)',
                                 padding: '0.75rem 1rem',
                                 display: 'flex',
                                 alignItems: 'center',
@@ -415,8 +621,8 @@ export default function BulkBackgroundRemoverTab() {
                                         width: '56px',
                                         height: '56px',
                                         borderRadius: '12px',
-                                        border: '2px dashed #3b82f6',
-                                        background: '#eff6ff',
+                                        border: '1px dashed rgba(56, 189, 248, 0.35)',
+                                        background: '#141a29',
                                         color: '#3b82f6',
                                         fontSize: '1.4rem',
                                         cursor: 'pointer',
@@ -443,7 +649,7 @@ export default function BulkBackgroundRemoverTab() {
                                             cursor: 'pointer',
                                             flexShrink: 0,
                                             boxShadow: activeIndex === idx ? '0 0 0 2px rgba(59, 130, 246, 0.3)' : 'none',
-                                            background: '#f8fafc'
+                                            background: '#141a29'
                                         }}
                                     >
                                         <img src={img.processedUrl || img.originalUrl} alt={img.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -454,19 +660,19 @@ export default function BulkBackgroundRemoverTab() {
 
                         {/* RIGHT PANEL: Category Tabs & Interactive Studio + Graphic Badge Controls */}
                         <div style={{
-                            background: '#ffffff',
+                            background: '#0f1422',
                             borderRadius: '24px',
-                            border: '1px solid #cbd5e1',
+                            border: '1px solid rgba(255, 255, 255, 0.08)',
                             padding: '1.25rem',
-                            boxShadow: '0 20px 40px -15px rgba(15, 23, 42, 0.08)',
+                            boxShadow: 'none',
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '1.25rem'
                         }}>
                             {/* 1. GRAPHIC BADGES & BORDER SELECTOR BOX (WITH CUSTOM USER BADGE UPLOAD) */}
-                            <div style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%)', border: '1px solid #cbd5e1', borderRadius: '16px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                            <div style={{ background: '#141a29', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '16px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <label style={{ fontSize: '0.85rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                                    <label style={{ fontSize: '0.85rem', fontWeight: 800, color: '#f8fafc', margin: 0 }}>
                                         🏷️ Choose Graphic Badge & Frame:
                                     </label>
                                     
@@ -481,7 +687,7 @@ export default function BulkBackgroundRemoverTab() {
                                     <button
                                         className="btn-action"
                                         onClick={() => customBadgeInputRef.current.click()}
-                                        style={{ padding: '0.25rem 0.65rem', fontSize: '0.72rem', fontWeight: 800, background: '#eff6ff', color: '#2563eb', border: '1px solid rgba(37,99,235,0.25)', borderRadius: '8px' }}
+                                        style={{ padding: '0.25rem 0.65rem', fontSize: '0.72rem', fontWeight: 800, background: '#141a29', color: '#2563eb', border: '1px solid rgba(37,99,235,0.25)', borderRadius: '8px' }}
                                     >
                                         📤 Upload Custom Badge
                                     </button>
@@ -493,7 +699,7 @@ export default function BulkBackgroundRemoverTab() {
                                         const b = graphicBadgeList.find(item => item.id === e.target.value);
                                         if (b) setSelectedBadge(b);
                                     }}
-                                    style={{ width: '100%', padding: '0.65rem 0.85rem', fontSize: '0.85rem', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 700 }}
+                                    style={{ width: '100%', padding: '0.65rem 0.85rem', fontSize: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)', background: '#080b11', color: '#ffffff', fontWeight: 500 }}
                                 >
                                     {graphicBadgeList.map(b => (
                                         <option key={b.id} value={b.id}>{b.name}</option>
@@ -502,13 +708,13 @@ export default function BulkBackgroundRemoverTab() {
 
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                                     <div>
-                                        <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', display: 'block', marginBottom: '0.35rem' }}>
+                                        <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', display: 'block', marginBottom: '0.35rem' }}>
                                             Badge Placement:
                                         </label>
                                         <select
                                             value={badgePosition}
                                             onChange={(e) => setBadgePosition(e.target.value)}
-                                            style={{ width: '100%', padding: '0.55rem 0.75rem', fontSize: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 700 }}
+                                            style={{ width: '100%', padding: '0.55rem 0.75rem', fontSize: '0.8rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: '#080b11', color: '#ffffff', fontWeight: 500 }}
                                         >
                                             <option value="top_left">Top-Left</option>
                                             <option value="top_right">Top-Right</option>
@@ -519,7 +725,7 @@ export default function BulkBackgroundRemoverTab() {
                                     </div>
 
                                     <div>
-                                        <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', display: 'block', marginBottom: '0.35rem' }}>
+                                        <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', display: 'block', marginBottom: '0.35rem' }}>
                                             Frame Border Color:
                                         </label>
                                         <select
@@ -528,7 +734,7 @@ export default function BulkBackgroundRemoverTab() {
                                                 const bc = BORDER_COLORS.find(item => item.id === e.target.value);
                                                 if (bc) setBorderColor(bc);
                                             }}
-                                            style={{ width: '100%', padding: '0.55rem 0.75rem', fontSize: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 700 }}
+                                            style={{ width: '100%', padding: '0.55rem 0.75rem', fontSize: '0.8rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: '#080b11', color: '#ffffff', fontWeight: 500 }}
                                         >
                                             {BORDER_COLORS.map(bc => (
                                                 <option key={bc.id} value={bc.id}>{bc.name}</option>
@@ -539,14 +745,14 @@ export default function BulkBackgroundRemoverTab() {
                             </div>
 
                             {/* 2. INTERACTIVE SUBJECT SCALE & MOVE TRANSFORM CONTROLS */}
-                            <div style={{ background: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '16px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                            <div style={{ background: '#141a29', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '16px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <label style={{ fontSize: '0.85rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                                    <label style={{ fontSize: '0.85rem', fontWeight: 800, color: '#f8fafc', margin: 0 }}>
                                         🔍 Move & Resize Subject Product:
                                     </label>
                                     <button
                                         onClick={() => { setSubjectScale(100); setSubjectOffsetX(0); setSubjectOffsetY(0); setSubjectFlipH(false); }}
-                                        style={{ padding: '0.2rem 0.5rem', fontSize: '0.7rem', fontWeight: 700, background: '#ffffff', color: '#64748b', border: '1px solid #cbd5e1', borderRadius: '6px', cursor: 'pointer' }}
+                                        style={{ padding: '0.2rem 0.5rem', fontSize: '0.7rem', fontWeight: 700, background: '#0f1422', color: '#94a3b8', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '6px', cursor: 'pointer' }}
                                     >
                                         ↺ Reset
                                     </button>
@@ -554,7 +760,7 @@ export default function BulkBackgroundRemoverTab() {
 
                                 {/* Subject Scale/Size Slider */}
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: '#475569' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8' }}>
                                         <span>Size / Scale:</span>
                                         <span>{subjectScale}%</span>
                                     </div>
@@ -564,14 +770,14 @@ export default function BulkBackgroundRemoverTab() {
                                         max="180" 
                                         value={subjectScale} 
                                         onChange={(e) => setSubjectScale(Number(e.target.value))} 
-                                        style={{ width: '100%', accentColor: '#2563eb', cursor: 'pointer' }} 
+                                        style={{ width: '100%', accentColor: '#38bdf8', cursor: 'pointer' }} 
                                     />
                                 </div>
 
                                 {/* Move X (Horizontal) & Move Y (Vertical) */}
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: '#475569' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8' }}>
                                             <span>Move Left / Right:</span>
                                             <span>{subjectOffsetX > 0 ? `+${subjectOffsetX}%` : `${subjectOffsetX}%`}</span>
                                         </div>
@@ -581,12 +787,12 @@ export default function BulkBackgroundRemoverTab() {
                                             max="40" 
                                             value={subjectOffsetX} 
                                             onChange={(e) => setSubjectOffsetX(Number(e.target.value))} 
-                                            style={{ width: '100%', accentColor: '#2563eb', cursor: 'pointer' }} 
+                                            style={{ width: '100%', accentColor: '#38bdf8', cursor: 'pointer' }} 
                                         />
                                     </div>
 
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: '#475569' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8' }}>
                                             <span>Move Up / Down:</span>
                                             <span>{subjectOffsetY > 0 ? `+${subjectOffsetY}%` : `${subjectOffsetY}%`}</span>
                                         </div>
@@ -596,25 +802,25 @@ export default function BulkBackgroundRemoverTab() {
                                             max="40" 
                                             value={subjectOffsetY} 
                                             onChange={(e) => setSubjectOffsetY(Number(e.target.value))} 
-                                            style={{ width: '100%', accentColor: '#2563eb', cursor: 'pointer' }} 
+                                            style={{ width: '100%', accentColor: '#38bdf8', cursor: 'pointer' }} 
                                         />
                                     </div>
                                 </div>
 
                                 {/* Flip Horizontal Toggle */}
-                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#0f172a', cursor: 'pointer', marginTop: '0.2rem' }}>
+                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#f8fafc', cursor: 'pointer', marginTop: '0.2rem' }}>
                                     <input 
                                         type="checkbox" 
                                         checked={subjectFlipH} 
                                         onChange={(e) => setSubjectFlipH(e.target.checked)} 
-                                        style={{ width: '16px', height: '16px', accentColor: '#2563eb', cursor: 'pointer' }} 
+                                        style={{ width: '16px', height: '16px', accentColor: '#38bdf8', cursor: 'pointer' }} 
                                     />
                                     ↔️ Flip Subject Horizontally (Mirror View)
                                 </label>
                             </div>
 
                             {/* 3. STUDIO BACKDROP CATEGORY SELECTOR TABS */}
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.4rem', background: '#f1f5f9', padding: '0.35rem', borderRadius: '14px' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.4rem', background: '#090b10', padding: '0.35rem', borderRadius: '14px' }}>
                                 <button
                                     onClick={() => { setActiveTab('magic'); setCustomBgImage(null); }}
                                     style={{
@@ -624,8 +830,8 @@ export default function BulkBackgroundRemoverTab() {
                                         fontSize: '0.88rem',
                                         fontWeight: 800,
                                         cursor: 'pointer',
-                                        background: activeTab === 'magic' ? '#ffffff' : 'transparent',
-                                        color: activeTab === 'magic' ? '#0f172a' : '#64748b',
+                                        background: activeTab === 'magic' ? '#141a29' : 'transparent',
+                                        color: activeTab === 'magic' ? '#f8fafc' : '#94a3b8',
                                         boxShadow: activeTab === 'magic' ? '0 2px 8px rgba(0,0,0,0.08)' : 'none'
                                     }}
                                 >
@@ -640,8 +846,8 @@ export default function BulkBackgroundRemoverTab() {
                                         fontSize: '0.88rem',
                                         fontWeight: 800,
                                         cursor: 'pointer',
-                                        background: activeTab === 'photo' ? '#ffffff' : 'transparent',
-                                        color: activeTab === 'photo' ? '#0f172a' : '#64748b',
+                                        background: activeTab === 'photo' ? '#141a29' : 'transparent',
+                                        color: activeTab === 'photo' ? '#f8fafc' : '#94a3b8',
                                         boxShadow: activeTab === 'photo' ? '0 2px 8px rgba(0,0,0,0.08)' : 'none'
                                     }}
                                 >
@@ -656,8 +862,8 @@ export default function BulkBackgroundRemoverTab() {
                                         fontSize: '0.88rem',
                                         fontWeight: 800,
                                         cursor: 'pointer',
-                                        background: activeTab === 'color' ? '#ffffff' : 'transparent',
-                                        color: activeTab === 'color' ? '#0f172a' : '#64748b',
+                                        background: activeTab === 'color' ? '#141a29' : 'transparent',
+                                        color: activeTab === 'color' ? '#f8fafc' : '#94a3b8',
                                         boxShadow: activeTab === 'color' ? '0 2px 8px rgba(0,0,0,0.08)' : 'none'
                                     }}
                                 >
@@ -668,7 +874,7 @@ export default function BulkBackgroundRemoverTab() {
                             {/* TAB 1: MAGIC BACKGROUND PRESETS */}
                             {activeTab === 'magic' && (
                                 <div>
-                                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: '#64748b', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
+                                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: '#94a3b8', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
                                         Click Scene Backdrop to Apply Live:
                                     </div>
 
@@ -721,7 +927,7 @@ export default function BulkBackgroundRemoverTab() {
                             {/* TAB 2: PHOTO (UPLOAD CUSTOM BACKGROUND) */}
                             {activeTab === 'photo' && (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>
+                                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>
                                         Upload Custom Backdrop Image:
                                     </div>
 
@@ -745,8 +951,8 @@ export default function BulkBackgroundRemoverTab() {
                                         style={{
                                             padding: '1.25rem',
                                             borderRadius: '16px',
-                                            border: '2px dashed #3b82f6',
-                                            background: '#eff6ff',
+                                            border: '1px dashed rgba(56, 189, 248, 0.35)',
+                                            background: '#141a29',
                                             color: '#2563eb',
                                             fontWeight: 800,
                                             fontSize: '0.9rem',
@@ -762,7 +968,7 @@ export default function BulkBackgroundRemoverTab() {
 
                                     {customBgImage && (
                                         <div style={{ marginTop: '0.5rem' }}>
-                                            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.4rem' }}>
+                                            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#f8fafc', marginBottom: '0.4rem' }}>
                                                 Active Custom Background Preview:
                                             </div>
                                             <div style={{ width: '100%', height: '140px', borderRadius: '14px', overflow: 'hidden', border: '2px solid #3b82f6' }}>
@@ -776,7 +982,7 @@ export default function BulkBackgroundRemoverTab() {
                             {/* TAB 3: COLOR BACKDROPS */}
                             {activeTab === 'color' && (
                                 <div>
-                                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: '#64748b', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
+                                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: '#94a3b8', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
                                         Solid Studio Colors:
                                     </div>
 
@@ -812,22 +1018,22 @@ export default function BulkBackgroundRemoverTab() {
                             )}
 
                             {/* 3. DYNAMIC MULTI-VARIATION QUANTITY GENERATOR BOX */}
-                            <div style={{ background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(124, 58, 237, 0.05))', border: '1px solid rgba(37, 99, 235, 0.2)', borderRadius: '16px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: 'auto' }}>
-                                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div style={{ background: '#141a29', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '16px', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: 'auto' }}>
+                                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <span>⚡ Dynamic Studio Collection Generator:</span>
                                 </div>
 
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#475569', whiteSpace: 'nowrap' }}>Quantity:</label>
+                                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', whiteSpace: 'nowrap' }}>Quantity:</label>
                                     <input
                                         type="number"
                                         min="1"
                                         max="60"
                                         value={numVariationsInput}
                                         onChange={(e) => setNumVariationsInput(e.target.value)}
-                                        style={{ width: '80px', padding: '0.45rem 0.65rem', fontSize: '0.85rem', fontWeight: 800, borderRadius: '8px', border: '1px solid #cbd5e1', textAlign: 'center' }}
+                                        style={{ width: '80px', padding: '0.45rem 0.65rem', fontSize: '0.85rem', fontWeight: 800, borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', textAlign: 'center' }}
                                     />
-                                    <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>unique studio photos</span>
+                                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600 }}>unique studio photos</span>
                                 </div>
 
                                 <button
@@ -840,7 +1046,7 @@ export default function BulkBackgroundRemoverTab() {
                                         borderRadius: '12px',
                                         fontSize: '0.85rem',
                                         fontWeight: 800,
-                                        background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                                        background: '#ffffff', color: '#080b11',
                                         boxShadow: '0 4px 15px rgba(37, 99, 235, 0.25)'
                                     }}
                                 >
@@ -854,13 +1060,13 @@ export default function BulkBackgroundRemoverTab() {
 
                     {/* BOTTOM SECTION: DYNAMIC GENERATED VARIATIONS GRID (WHEN USER GENERATES COLLECTION) */}
                     {dynamicVariations.length > 0 && (
-                        <div style={{ background: '#ffffff', borderRadius: '24px', border: '1px solid #cbd5e1', padding: '1.5rem', boxShadow: '0 20px 40px -15px rgba(15, 23, 42, 0.08)' }}>
+                        <div style={{ background: '#0f1422', borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '1.5rem', boxShadow: 'none' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
                                 <div>
-                                    <h3 style={{ fontFamily: 'Outfit', fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                                    <h3 style={{ fontFamily: 'Outfit', fontSize: '1.4rem', fontWeight: 800, color: '#f8fafc', margin: 0 }}>
                                         🎨 Dynamic Studio Variations Collection ({dynamicVariations.length} Photos)
                                     </h3>
-                                    <p style={{ fontSize: '0.8rem', color: '#64748b', margin: '0.25rem 0 0 0' }}>
+                                    <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: '0.25rem 0 0 0' }}>
                                         Generated dynamically with unique studio backdrops, border colors & graphic PNG badges.
                                     </p>
                                 </div>
@@ -880,7 +1086,7 @@ export default function BulkBackgroundRemoverTab() {
                                         disabled={isZipping}
                                         onClick={handleExportZip}
                                         style={{
-                                            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                            background: '#ffffff', color: '#080b11',
                                             padding: '0.6rem 1.3rem',
                                             fontSize: '0.82rem',
                                             fontWeight: 800,
@@ -898,17 +1104,17 @@ export default function BulkBackgroundRemoverTab() {
                                     <div
                                         key={varItem.id}
                                         className="panel-card"
-                                        style={{ padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.65rem', border: '1px solid #cbd5e1' }}
+                                        style={{ padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.65rem', border: '1px solid rgba(255, 255, 255, 0.08)' }}
                                     >
-                                        <div style={{ aspectRatio: '4 / 5', borderRadius: '14px', overflow: 'hidden', background: '#f8fafc' }}>
+                                        <div style={{ aspectRatio: '4 / 5', borderRadius: '14px', overflow: 'hidden', background: '#141a29' }}>
                                             <img src={varItem.imageUrl} alt={varItem.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                                         </div>
 
-                                        <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#0f172a' }}>
+                                        <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#f8fafc' }}>
                                             {idx + 1}. {varItem.bgName}
                                         </div>
 
-                                        <div style={{ fontSize: '0.68rem', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                        <div style={{ fontSize: '0.68rem', color: '#94a3b8', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                             {varItem.badgeName}
                                         </div>
 

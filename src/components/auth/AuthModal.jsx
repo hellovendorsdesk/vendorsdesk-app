@@ -45,7 +45,7 @@ export default function AuthModal() {
                             { theme: "outline", size: "large", width: 340 }
                         );
                     } else if (isLocalhost && btnContainer) {
-                        btnContainer.innerHTML = '<div style="font-size:0.75rem; color:#64748b; background:#f8fafc; padding:0.45rem 0.85rem; border-radius:8px; border:1px solid #e2e8f0; font-weight:600; text-align:center;">⚡ Google 1-Click Login Active on Production (vendorsdesk.in)</div>';
+                        btnContainer.innerHTML = '<div style="font-size:0.75rem; color:#94a3b8; background:#090b10; padding:0.45rem 0.85rem; border-radius:8px; border:1px solid rgba(255,255,255,0.08); font-weight:500; text-align:center;">Google 1-click login enabled on live domain (vendorsdesk.in)</div>';
                     }
                 } catch (e) {
                     console.warn("Google Sign-In initialization skipped/not allowed on this origin:", e.message);

@@ -12,8 +12,9 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(2, 6, 23, 0.88)',
-            backdropFilter: 'blur(12px)',
+            backgroundColor: 'rgba(8, 11, 17, 0.85)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
             zIndex: 9999,
             display: 'flex',
             alignItems: 'center',
@@ -21,25 +22,25 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
             padding: '1.5rem'
         }}>
             <div style={{
-                background: '#0f172a',
+                background: '#0d121f',
                 border: '1px solid rgba(255, 255, 255, 0.12)',
-                borderRadius: '24px',
+                borderRadius: '16px',
                 width: '100%',
                 maxWidth: '780px',
                 maxHeight: '88vh',
                 display: 'flex',
                 flexDirection: 'column',
-                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8)',
+                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.85)',
                 overflow: 'hidden'
             }}>
                 {/* Modal Header */}
                 <div style={{
-                    padding: '1.5rem 1.75rem',
+                    padding: '1.25rem 1.75rem',
                     borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
                     display: 'flex',
-                    justify: 'space-between',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
-                    background: 'rgba(30, 41, 59, 0.6)'
+                    background: '#0f1422'
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
                         <img src="/logo-icon.png" alt="VendorsDesk" style={{ width: '36px', height: '36px', borderRadius: '10px' }} />
@@ -75,7 +76,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
                 {/* Document Navigation Tabs */}
                 <div style={{
                     display: 'flex',
-                    background: '#020617',
+                    background: '#090b10',
                     padding: '0.5rem 1.75rem',
                     gap: '0.5rem',
                     borderBottom: '1px solid rgba(255, 255, 255, 0.06)',

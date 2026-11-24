@@ -118,9 +118,9 @@ export default function NotificationProvider({ children }) {
                         position: 'fixed',
                         top: 0, left: 0, right: 0, bottom: 0,
                         zIndex: 999999,
-                        background: 'rgba(15, 23, 42, 0.75)',
-                        backdropFilter: 'blur(12px)',
-                        WebkitBackdropFilter: 'blur(12px)',
+                        background: 'rgba(8, 11, 17, 0.85)',
+                        backdropFilter: 'blur(16px)',
+                        WebkitBackdropFilter: 'blur(16px)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -130,34 +130,34 @@ export default function NotificationProvider({ children }) {
                 >
                     <div 
                         style={{
-                            background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%)',
+                            background: '#0d121f',
                             border: '1px solid rgba(255, 255, 255, 0.12)',
-                            borderRadius: '20px',
+                            borderRadius: '16px',
                             padding: '1.75rem',
                             maxWidth: '440px',
                             width: '100%',
-                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
+                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)',
                             color: '#ffffff',
                             fontFamily: "'Outfit', 'Inter', sans-serif"
                         }}
                     >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
                             <div style={{ 
-                                width: '42px', height: '42px', borderRadius: '12px', 
+                                width: '40px', height: '40px', borderRadius: '10px', 
                                 background: `${getBorderColor(modal.type)}20`,
                                 border: `1px solid ${getBorderColor(modal.type)}40`,
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                fontSize: '1.3rem'
+                                fontSize: '1.2rem'
                             }}>
                                 {getIcon(modal.type)}
                             </div>
                             <div>
-                                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, color: '#f8fafc' }}>{modal.title}</h3>
+                                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 600, color: '#f8fafc' }}>{modal.title}</h3>
                                 <p style={{ margin: 0, fontSize: '0.75rem', color: '#94a3b8' }}>VendorsDesk System Notification</p>
                             </div>
                         </div>
 
-                        <div style={{ fontSize: '0.9rem', color: '#cbd5e1', lineHeight: 1.5, marginBottom: '1.5rem', background: 'rgba(0,0,0,0.2)', padding: '1rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ fontSize: '0.875rem', color: '#94a3b8', lineHeight: 1.5, marginBottom: '1.5rem', background: '#141a29', padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
                             {modal.message}
                         </div>
 
@@ -165,12 +165,12 @@ export default function NotificationProvider({ children }) {
                             <button
                                 onClick={() => setModal(null)}
                                 style={{
-                                    background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
-                                    color: '#ffffff',
+                                    background: '#ffffff',
+                                    color: '#080b11',
                                     border: 'none',
-                                    padding: '0.65rem 1.5rem',
-                                    borderRadius: '10px',
-                                    fontWeight: 700,
+                                    padding: '0.6rem 1.4rem',
+                                    borderRadius: '8px',
+                                    fontWeight: 500,
                                     fontSize: '0.85rem',
                                     cursor: 'pointer',
                                     boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)'

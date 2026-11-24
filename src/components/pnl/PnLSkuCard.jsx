@@ -32,23 +32,23 @@ export default function PnLSkuCard({ sku, matrix, priceVal, onPriceChange, onSav
         return (
             <svg viewBox="0 0 100 100" style={{ width: '90px', height: '90px', transform: 'rotate(-90deg)', borderRadius: '50%' }}>
                 {slices}
-                <circle cx="50" cy="50" r="24" fill="#ffffff" />
+                <circle cx="50" cy="50" r="24" fill="#0f1422" />
             </svg>
         );
     };
 
     return (
-        <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem', border: '1px solid #e2e8f0', borderRadius: '16px', background: '#ffffff' }}>
+        <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '14px', background: '#0f1422', padding: '1.25rem' }}>
             
             {/* SKU Header */}
             <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.65rem', marginBottom: '0.85rem' }}>
-                    <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a', wordBreak: 'break-all', maxWidth: '68%' }} title={sku}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '0.65rem', marginBottom: '0.85rem' }}>
+                    <div style={{ fontWeight: 600, fontSize: '0.9rem', color: '#f8fafc', wordBreak: 'break-all', maxWidth: '68%' }} title={sku}>
                         {sku}
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '0.65rem', color: '#64748b', fontWeight: 700 }}>SETTLEMENT</div>
-                        <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#2563eb', fontFamily: 'Outfit' }}>₹{m.totalSettlement.toLocaleString()}</div>
+                        <div style={{ fontSize: '0.65rem', color: '#94a3b8', fontWeight: 500 }}>Settlement</div>
+                        <div style={{ fontSize: '1.05rem', fontWeight: 600, color: '#38bdf8' }}>₹{m.totalSettlement.toLocaleString()}</div>
                     </div>
                 </div>
 
@@ -59,12 +59,12 @@ export default function PnLSkuCard({ sku, matrix, priceVal, onPriceChange, onSav
                             const [qty, amt] = matrix[k] || [0, 0];
                             if (qty === 0 && amt === 0) return null;
                             return (
-                                <div key={k} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dotted #e2e8f0', paddingBottom: '0.15rem' }}>
-                                    <span style={{ color: '#475569', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                                <div key={k} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dotted rgba(255, 255, 255, 0.08)', paddingBottom: '0.15rem' }}>
+                                    <span style={{ color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                                         <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: STATUS_COLORS[k] }} />
                                         {k}
                                     </span>
-                                    <span style={{ fontWeight: 700 }}>{qty} <small style={{ color: STATUS_COLORS[k] }}>(₹{Math.round(amt)})</small></span>
+                                    <span style={{ fontWeight: 600, color: '#f8fafc' }}>{qty} <small style={{ color: STATUS_COLORS[k] }}>(₹{Math.round(amt)})</small></span>
                                 </div>
                             );
                         })}
@@ -77,34 +77,34 @@ export default function PnLSkuCard({ sku, matrix, priceVal, onPriceChange, onSav
             </div>
 
             {/* Purchase Cost Input & Profit Recalculation */}
-            <div style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+            <div style={{ background: '#141a29', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'nowrap' }}>
-                    <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', whiteSpace: 'nowrap', flexShrink: 0 }}>Purchase Price (₹):</label>
+                    <label style={{ fontSize: '0.75rem', fontWeight: 500, color: '#94a3b8', whiteSpace: 'nowrap', flexShrink: 0 }}>Purchase price (₹):</label>
                     <input 
                         type="number" 
-                        placeholder="Enter Cost"
+                        placeholder="Cost"
                         value={priceVal !== undefined ? priceVal : ''}
                         onChange={(e) => onPriceChange(e.target.value)}
-                        style={{ flexGrow: 1, minWidth: '70px', padding: '0.4rem 0.6rem', fontSize: '0.85rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontWeight: 700 }}
+                        style={{ flexGrow: 1, minWidth: '70px', padding: '0.4rem 0.6rem', fontSize: '0.85rem', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.12)', background: '#080b11', color: '#ffffff', fontWeight: 500 }}
                     />
                     <button 
-                        className="btn-action btn-action-primary" 
-                        style={{ padding: '0.45rem 0.85rem', fontSize: '0.75rem', fontWeight: 700, whiteSpace: 'nowrap', flexShrink: 0, minWidth: '85px' }}
+                        className="btn-action" 
+                        style={{ padding: '0.45rem 0.85rem', fontSize: '0.75rem', fontWeight: 500, whiteSpace: 'nowrap', flexShrink: 0, minWidth: '70px', background: '#ffffff', color: '#080b11', border: 'none', borderRadius: '6px' }}
                         onClick={() => onSavePrice(sku, priceVal)}
                     >
-                        Save Profit
+                        Save
                     </button>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #cbd5e1', paddingTop: '0.5rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '0.5rem' }}>
                     <div>
-                        <span style={{ fontSize: '0.7rem', color: '#64748b', display: 'block' }}>COGS ({m.totalCogsQty} Delivered/Shipped):</span>
-                        <strong style={{ fontSize: '0.85rem', color: '#475569' }}>₹{m.totalPurchaseCost.toLocaleString()}</strong>
+                        <span style={{ fontSize: '0.7rem', color: '#94a3b8', display: 'block' }}>COGS ({m.totalCogsQty} Delivered/Shipped):</span>
+                        <strong style={{ fontSize: '0.85rem', color: '#f8fafc', fontWeight: 600 }}>₹{m.totalPurchaseCost.toLocaleString()}</strong>
                     </div>
 
                     <div style={{ textAlign: 'right' }}>
-                        <span style={{ fontSize: '0.7rem', color: '#64748b', display: 'block' }}>SKU Net Profit:</span>
-                        <strong style={{ fontSize: '1.1rem', color: m.netProfit >= 0 ? '#059669' : '#dc2626', fontFamily: 'Outfit' }}>
+                        <span style={{ fontSize: '0.7rem', color: '#94a3b8', display: 'block' }}>SKU net profit:</span>
+                        <strong style={{ fontSize: '1.05rem', color: m.netProfit >= 0 ? '#34d399' : '#f87171', fontWeight: 600 }}>
                             ₹{m.netProfit.toLocaleString()}
                         </strong>
                     </div>

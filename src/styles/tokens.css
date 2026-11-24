@@ -1,68 +1,70 @@
 /**
- * VendorsDesk Modern Precision Design Tokens
- * Clean, High-Contrast Modern SaaS Theme (Linear / Stripe Inspired)
+ * VendorsDesk Modern Precision Design Tokens (Unslop Standard)
+ * Clean, High-Contrast Industrial Dark-Tech Theme for E-Commerce Utility
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Outfit:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
 
 :root {
-    /* Canvas & Surface Colors - Obsidian Dark-Tech */
+    /* Canvas & Surface Colors - Obsidian Dark-Tech Ramp */
+    --vd-canvas-deep: #0c0e14;
     --vd-canvas: #080b11;
-    --vd-canvas-subtle: #0c1019;
-    --vd-surface: #0d121f;
-    --vd-surface-hover: #131b2e;
-    --vd-surface-active: #1a243d;
+    --vd-canvas-subtle: #0b0e17;
+    --vd-surface: #0f1422;
+    --vd-surface-hover: #151c2e;
+    --vd-surface-active: #1d273f;
+    --vd-surface-raised: #182238;
 
-    /* Borders & Dividers */
+    /* Borders & Hairlines (6-10% Opacity Unslop Standard) */
     --vd-border-subtle: rgba(255, 255, 255, 0.08);
     --vd-border-strong: rgba(255, 255, 255, 0.16);
     --vd-border-focus: #38bdf8;
 
-    /* Text Hierarchy */
+    /* 3 Text Roles from 1 Ramp */
     --vd-text-primary: #f8fafc;
     --vd-text-secondary: #94a3b8;
     --vd-text-muted: #64748b;
     --vd-text-inverse: #080b11;
 
-    /* Brand Precision Accents - Electric Cyan & Sapphire */
+    /* One Primary Brand Accent (Electric Cyan) */
     --vd-brand-50: rgba(56, 189, 248, 0.08);
     --vd-brand-100: rgba(56, 189, 248, 0.15);
     --vd-brand-500: #38bdf8;
     --vd-brand-600: #0284c7;
     --vd-brand-700: #0369a1;
 
-    /* Semantic Status Colors */
-    --vd-success-bg: rgba(52, 211, 153, 0.1);
-    --vd-success-border: rgba(52, 211, 153, 0.25);
+    /* Semantic Status Colors (Toned to sit inside dark neutral canvas) */
+    --vd-success-bg: rgba(52, 211, 153, 0.08);
+    --vd-success-border: rgba(52, 211, 153, 0.22);
     --vd-success-text: #34d399;
     --vd-success: #34d399;
 
-    --vd-warning-bg: rgba(251, 191, 36, 0.1);
-    --vd-warning-border: rgba(251, 191, 36, 0.25);
+    --vd-warning-bg: rgba(251, 191, 36, 0.08);
+    --vd-warning-border: rgba(251, 191, 36, 0.22);
     --vd-warning-text: #fbbf24;
     --vd-warning: #fbbf24;
 
-    --vd-danger-bg: rgba(248, 113, 113, 0.1);
-    --vd-danger-border: rgba(248, 113, 113, 0.25);
+    --vd-danger-bg: rgba(248, 113, 113, 0.08);
+    --vd-danger-border: rgba(248, 113, 113, 0.22);
     --vd-danger-text: #f87171;
     --vd-danger: #f87171;
 
-    /* Soft Structural Shadows */
-    --vd-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --vd-shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
-    --vd-shadow-md: 0 6px 12px -2px rgba(0, 0, 0, 0.5);
-    --vd-shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.6);
-    --vd-shadow-xl: 0 24px 48px -8px rgba(0, 0, 0, 0.7);
+    /* Soft Neutral Structural Elevation (No colored glow blobs) */
+    --vd-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
+    --vd-shadow-sm: 0 2px 6px 0 rgba(0, 0, 0, 0.45);
+    --vd-shadow-md: 0 8px 20px -2px rgba(0, 0, 0, 0.55);
+    --vd-shadow-lg: 0 16px 32px -4px rgba(0, 0, 0, 0.65);
+    --vd-shadow-xl: 0 24px 48px -8px rgba(0, 0, 0, 0.75);
 
-    /* Radii */
+    /* 4px Spacing Grid Radii */
     --vd-radius-sm: 6px;
     --vd-radius-md: 10px;
-    --vd-radius-lg: 14px;
+    --vd-radius-lg: 16px;
     --vd-radius-xl: 20px;
     --vd-radius-full: 9999px;
 
-    /* Transitions */
-    --vd-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    /* Smooth Micro-Interactions */
+    --vd-transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
     --vd-transition-smooth: 250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -79,12 +81,13 @@ body {
     color: var(--vd-text-primary);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    font-variant-numeric: tabular-nums;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
     color: var(--vd-text-primary);
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.02em;
 }
 
@@ -122,26 +125,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .vd-btn-primary {
-    background: var(--vd-brand-600);
-    color: #ffffff;
-    box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    background: #ffffff;
+    color: #080b11;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .vd-btn-primary:hover {
-    background: var(--vd-brand-700);
+    background: #f1f5f9;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .vd-btn-secondary {
-    background: var(--vd-surface);
+    background: rgba(255, 255, 255, 0.04);
     color: var(--vd-text-primary);
-    border-color: var(--vd-border-strong);
+    border: 1px solid var(--vd-border-strong);
 }
 
 .vd-btn-secondary:hover {
-    background: var(--vd-canvas-subtle);
-    border-color: var(--vd-text-muted);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
 /* Modern Form Controls */
@@ -149,8 +153,8 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     padding: 0.65rem 0.875rem;
     border-radius: var(--vd-radius-md);
-    border: 1px solid var(--vd-border-strong);
-    background: var(--vd-surface);
+    border: 1px solid var(--vd-border-subtle);
+    background: var(--vd-surface-raised);
     color: var(--vd-text-primary);
     font-size: 0.875rem;
     font-family: inherit;
@@ -160,7 +164,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .vd-input:focus {
     border-color: var(--vd-border-focus);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
 }
 
 /* Mobile Bottom Navigation Bar */
@@ -171,7 +175,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0;
     height: calc(64px + env(safe-area-inset-bottom, 0px));
-    background: rgba(13, 18, 31, 0.92);
+    background: rgba(12, 14, 20, 0.94);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid var(--vd-border-subtle);
@@ -179,7 +183,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 0.5rem env(safe-area-inset-bottom, 0px) 0.5rem;
     align-items: center;
     justify-content: space-around;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.6);
 }
 
 .vd-bottom-nav-item {
@@ -190,7 +194,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 0.2rem;
     color: var(--vd-text-muted);
     font-size: 0.68rem;
-    font-weight: 600;
+    font-weight: 500;
     border: none;
     background: transparent;
     cursor: pointer;

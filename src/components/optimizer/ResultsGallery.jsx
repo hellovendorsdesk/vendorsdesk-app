@@ -25,21 +25,21 @@ export default function ResultsGallery({
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
             {/* Header Control Card */}
-            <div className="panel-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.25rem', width: '100%', boxSizing: 'border-box', borderRadius: '20px' }}>
+            <div className="panel-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.25rem', width: '100%', boxSizing: 'border-box', borderRadius: '14px', background: '#0f1422', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
                 <div style={{ flex: '1 1 260px', minWidth: 0 }}>
                     <div 
                         onClick={onBack} 
-                        style={{ color: '#2563eb', fontSize: '0.85rem', cursor: 'pointer', marginBottom: '0.35rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                        style={{ color: '#38bdf8', fontSize: '0.825rem', cursor: 'pointer', marginBottom: '0.35rem', fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                     >
-                        <ArrowLeft size={16} />
-                        <span>Back to Dashboard</span>
+                        <ArrowLeft size={15} />
+                        <span>Back to optimizer</span>
                     </div>
-                    <h2 style={{ fontSize: '1.4rem', fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: '#0f172a', margin: 0 }}>
-                        Optimization Results
+                    <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#f8fafc', margin: 0 }}>
+                        Optimization results
                     </h2>
-                    <p style={{ fontSize: '0.825rem', color: '#64748b', margin: '0.25rem 0 0 0' }}>
+                    <p style={{ fontSize: '0.825rem', color: '#94a3b8', margin: '0.25rem 0 0 0' }}>
                         {selectedJob ? selectedJob.category : (results[0] && results[0].category) || 'Variations'} — {successful.length} rates found
-                        {cheapestCharge != null && <> · Best rate <strong style={{ color: '#10b981' }}>₹{cheapestCharge}</strong></>}
+                        {cheapestCharge != null && <> · Best rate <strong style={{ color: '#34d399' }}>₹{cheapestCharge}</strong></>}
                     </p>
                 </div>
 
@@ -51,28 +51,30 @@ export default function ResultsGallery({
                                 disabled={isZipping}
                                 onClick={onDownloadZip}
                                 style={{
-                                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                                    padding: '0.65rem 1.25rem',
-                                    borderRadius: '10px',
-                                    fontWeight: 800,
-                                    fontSize: '0.85rem',
+                                    background: '#ffffff',
+                                    color: '#080b11',
+                                    padding: '0.6rem 1.2rem',
+                                    borderRadius: '8px',
+                                    fontWeight: 500,
+                                    fontSize: '0.825rem',
                                     whiteSpace: 'nowrap',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '0.4rem'
+                                    gap: '0.4rem',
+                                    boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.2)'
                                 }}
                             >
-                                <Download size={16} />
-                                <span>{isZipping ? 'Zipping...' : `Export All ${results.length} (.ZIP)`}</span>
+                                <Download size={15} />
+                                <span>{isZipping ? 'Zipping...' : `Export ${results.length} images (.zip)`}</span>
                             </button>
                         )}
                         <button 
-                            className="btn-action btn-action-primary" 
-                            style={{ padding: '0.65rem 1.25rem', fontWeight: 700, borderRadius: '10px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '0.35rem' }} 
+                            className="btn-action" 
+                            style={{ padding: '0.6rem 1.1rem', fontWeight: 500, borderRadius: '8px', fontSize: '0.825rem', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '0.35rem', background: '#141a29', border: '1px solid rgba(255, 255, 255, 0.08)', color: '#f8fafc' }} 
                             onClick={onOptimizeAnother}
                         >
-                            <Zap size={16} />
-                            <span>Optimize Another</span>
+                            <Zap size={15} color="#38bdf8" />
+                            <span>Optimize another</span>
                         </button>
                     </div>
                 )}
@@ -80,32 +82,32 @@ export default function ResultsGallery({
 
             {/* Live Progress Banner */}
             {isOptimizing && (
-                <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', borderRadius: '20px' }}>
+                <div className="panel-card" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', borderRadius: '14px', background: '#0f1422', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                        <span style={{ width: '18px', height: '18px', border: '2px solid rgba(37,99,235,0.25)', borderTopColor: '#2563eb', borderRadius: '50%', display: 'inline-block', animation: 'spin 1s linear infinite' }} />
-                        <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a' }}>
+                        <span style={{ width: '16px', height: '16px', border: '2px solid rgba(56, 189, 248, 0.25)', borderTopColor: '#38bdf8', borderRadius: '50%', display: 'inline-block', animation: 'spin 1s linear infinite' }} />
+                        <span style={{ fontWeight: 500, fontSize: '0.875rem', color: '#f8fafc' }}>
                             {stage === 'creating' ? 'Creating variations...' : progressText}
                         </span>
                     </div>
-                    <div style={{ height: '8px', background: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-                        <div style={{ width: `${stage === 'creating' ? 10 : pct}%`, height: '100%', background: '#2563eb', transition: 'width 0.4s' }} />
+                    <div style={{ height: '6px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '9999px', overflow: 'hidden' }}>
+                        <div style={{ width: `${stage === 'creating' ? 10 : pct}%`, height: '100%', background: '#38bdf8', transition: 'width 0.4s' }} />
                     </div>
-                    <div style={{ fontSize: '0.78rem', color: '#64748b' }}>
-                        Generating variations and checking live Meesho shipping rates in real time. Results appear below as they complete.
+                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
+                        Testing variations and checking live Meesho shipping rates in real time.
                     </div>
                 </div>
             )}
 
             {!isOptimizing && successful.length === 0 && results.length > 0 && (
-                <div className="panel-card" style={{ color: '#ef4444', fontSize: '0.9rem', background: '#fef2f2', border: '1px solid #fee2e2', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                    <AlertTriangle size={20} />
+                <div className="panel-card" style={{ color: '#f87171', fontSize: '0.85rem', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <AlertTriangle size={18} />
                     <span>No shipping rates could be retrieved. Reconnect the seller session in the admin panel if expired.</span>
                 </div>
             )}
 
             {/* Grid of Results */}
             {!isOptimizing && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '1.5rem', alignContent: 'start' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '1.25rem', alignContent: 'start' }}>
                     {sortedResults.map((v, idx) => {
                         const isCheapest = v.status === 'success' && v.shippingCharge != null && v.shippingCharge === cheapestCharge;
                         const id = v.id || v._id;
@@ -115,29 +117,26 @@ export default function ResultsGallery({
                                 className="panel-card card-hover-lift" 
                                 style={{ 
                                     padding: '0.85rem',
-                                    background: '#ffffff', 
-                                    border: isCheapest ? '2px solid #10b981' : '1px solid #cbd5e1', 
-                                    borderRadius: '20px', 
+                                    background: '#0f1422', 
+                                    border: isCheapest ? '1px solid #34d399' : '1px solid rgba(255, 255, 255, 0.08)', 
+                                    borderRadius: '14px', 
                                     overflow: 'hidden', 
                                     position: 'relative',
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    gap: '0.65rem',
-                                    boxShadow: isCheapest ? '0 10px 25px rgba(16, 185, 129, 0.15)' : '0 4px 15px rgba(15, 23, 42, 0.05)'
+                                    gap: '0.65rem'
                                 }}
                             >
                                 {isCheapest && (
                                     <span 
                                         style={{ 
-                                            position: 'absolute', top: '14px', right: '14px', 
-                                            background: '#10b981', color: '#ffffff', 
-                                            fontSize: '0.65rem', padding: '0.25rem 0.6rem', 
-                                            borderRadius: '20px', zIndex: 5, fontWeight: 800,
-                                            boxShadow: '0 4px 10px rgba(16, 185, 129, 0.3)',
-                                            letterSpacing: '0.04em'
+                                            position: 'absolute', top: '12px', right: '12px', 
+                                            background: '#34d399', color: '#090b10', 
+                                            fontSize: '0.65rem', padding: '0.2rem 0.55rem', 
+                                            borderRadius: '6px', zIndex: 5, fontWeight: 700
                                         }}
                                     >
-                                        ⚡ CHEAPEST
+                                        Lowest rate
                                     </span>
                                 )}
 
@@ -145,11 +144,11 @@ export default function ResultsGallery({
                                     style={{ 
                                         width: '100%',
                                         aspectRatio: '1 / 1', 
-                                        borderRadius: '14px', 
-                                        background: '#f8fafc', 
+                                        borderRadius: '10px', 
+                                        background: '#090b10', 
                                         overflow: 'hidden',
                                         cursor: v.imageUrl ? 'zoom-in' : 'default',
-                                        border: '1px solid #f1f5f9',
+                                        border: '1px solid rgba(255, 255, 255, 0.06)',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
@@ -164,7 +163,7 @@ export default function ResultsGallery({
                                             style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} 
                                         />
                                     ) : (
-                                        <div style={{ color: 'var(--text-secondary, #64748b)', fontSize: '0.75rem', padding: '1rem', textAlign: 'center' }}>
+                                        <div style={{ color: '#94a3b8', fontSize: '0.75rem', padding: '1rem', textAlign: 'center' }}>
                                             No image preview
                                         </div>
                                     )}
@@ -172,23 +171,23 @@ export default function ResultsGallery({
 
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginTop: 'auto' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', width: '62%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={v.label}>
+                                        <span style={{ fontSize: '0.8rem', fontWeight: 500, color: '#f8fafc', width: '62%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={v.label}>
                                             {v.label}
                                         </span>
-                                        <span style={{ fontSize: '1.1rem', fontWeight: 800, color: v.status === 'success' && v.shippingCharge != null ? '#10b981' : '#ef4444' }}>
-                                            {v.status === 'success' && v.shippingCharge != null ? `₹${v.shippingCharge}` : '❌'}
+                                        <span style={{ fontSize: '1.05rem', fontWeight: 700, color: v.status === 'success' && v.shippingCharge != null ? '#34d399' : '#f87171' }}>
+                                            {v.status === 'success' && v.shippingCharge != null ? `₹${v.shippingCharge}` : 'Failed'}
                                         </span>
                                     </div>
 
                                     {v.imageUrl && (
                                         <button 
-                                            className="btn-action btn-action-primary" 
-                                            style={{ padding: '0.55rem', borderRadius: '10px', fontSize: '0.78rem', fontWeight: 800, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }} 
+                                            className="btn-action" 
+                                            style={{ padding: '0.5rem', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 500, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', background: '#141a29', border: '1px solid rgba(255, 255, 255, 0.08)', color: '#f8fafc' }} 
                                             disabled={downloadingId === id} 
                                             onClick={() => downloadVariation(v)}
                                         >
                                             <Download size={14} />
-                                            <span>{downloadingId === id ? 'Downloading...' : 'Download HD Image'}</span>
+                                            <span>{downloadingId === id ? 'Downloading...' : 'Download HD'}</span>
                                         </button>
                                     )}
                                 </div>
@@ -203,11 +202,14 @@ export default function ResultsGallery({
                     <button 
                         className="btn-submit-form" 
                         style={{ 
-                            maxWidth: '380px', 
-                            padding: '0.85rem 1.5rem', 
-                            fontSize: '0.95rem',
-                            background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
-                            boxShadow: '0 4px 15px rgba(124, 58, 237, 0.3)',
+                            maxWidth: '360px', 
+                            padding: '0.75rem 1.4rem', 
+                            fontSize: '0.9rem',
+                            background: '#ffffff',
+                            color: '#080b11',
+                            borderRadius: '8px',
+                            fontWeight: 500,
+                            boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -215,8 +217,7 @@ export default function ResultsGallery({
                         }}
                         onClick={onGenerateMore}
                     >
-                        <Sparkles size={18} />
-                        <span>Generate More Combinations</span>
+                        <span>Generate more combinations</span>
                     </button>
                 </div>
             )}

@@ -108,39 +108,30 @@ function AppContent() {
         return (
             <div style={{
                 display: 'flex', minHeight: '100vh', width: '100vw',
-                background: 'radial-gradient(circle at 50% 50%, #1e1b4b 0%, #0f172a 60%, #020617 100%)',
+                background: '#080b11',
                 alignItems: 'center', justifyContent: 'center', color: '#ffffff',
-                fontFamily: 'Outfit, sans-serif', position: 'relative', overflow: 'hidden'
+                fontFamily: 'Inter, sans-serif'
             }}>
                 <div style={{
-                    position: 'absolute', width: '380px', height: '380px', borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(37, 99, 235, 0.35) 0%, rgba(124, 58, 237, 0) 70%)',
-                    filter: 'blur(45px)', animation: 'pulse 3s ease-in-out infinite'
-                }} />
-                <div style={{
-                    position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column',
-                    alignItems: 'center', gap: '1.5rem', background: 'rgba(255, 255, 255, 0.05)',
-                    backdropFilter: 'blur(20px)', padding: '3rem 3.5rem', borderRadius: '24px',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+                    display: 'flex', flexDirection: 'column',
+                    alignItems: 'center', gap: '1.25rem', background: '#0f1422',
+                    padding: '2.5rem 3rem', borderRadius: '16px',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)'
                 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '48px', width: 'auto' }} onError={(e) => { e.target.style.display = 'none'; }} />
-                        <span style={{ fontSize: '2.2rem', fontWeight: 800, letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #ffffff 40%, #818cf8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                        <img src="/logo-icon.png" alt="VendorsDesk Logo" style={{ height: '36px', width: 'auto' }} onError={(e) => { e.target.style.display = 'none'; }} />
+                        <span style={{ fontSize: '1.5rem', fontWeight: 600, letterSpacing: '-0.02em', color: '#ffffff', fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                             VendorsDesk
                         </span>
                     </div>
-                    <div style={{ position: 'relative', width: '56px', height: '56px' }}>
-                        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: '50%', border: '3px solid transparent', borderTopColor: '#3b82f6', borderRightColor: '#8b5cf6', animation: 'spin 1s linear infinite' }} />
-                        <div style={{ position: 'absolute', top: '6px', left: '6px', width: '44px', height: '44px', borderRadius: '50%', border: '3px solid transparent', borderBottomColor: '#ec4899', borderLeftColor: '#10b981', animation: 'spin 1.5s linear infinite reverse' }} />
-                    </div>
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.02em', color: '#f8fafc', marginBottom: '0.35rem' }}>
-                            Initializing VendorsDesk Audit Engine...
-                        </div>
-                        <div style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 500, letterSpacing: '0.05em' }}>
-                            SMART TOOLS FOR SMART SELLERS
-                        </div>
+                    <div style={{
+                        width: '28px', height: '28px',
+                        borderRadius: '50%', border: '2px solid rgba(255, 255, 255, 0.1)',
+                        borderTopColor: '#38bdf8', animation: 'spin 0.8s linear infinite'
+                    }} />
+                    <div style={{ fontSize: '0.85rem', color: '#94a3b8' }}>
+                        Loading seller workspace...
                     </div>
                 </div>
             </div>

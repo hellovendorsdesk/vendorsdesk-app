@@ -172,7 +172,7 @@ export default function PnLCalculatorTab() {
     const filteredSkus = getFilteredSkus();
 
     return (
-        <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', color: '#0f172a' }}>
+        <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', color: '#f8fafc' }}>
             {/* Header & Controls */}
             <PnLHeaderZone 
                 selectedFile={selectedFile}
@@ -204,28 +204,27 @@ export default function PnLCalculatorTab() {
                     <PnLMatrixTable dataSum={dashboardData.data_sum} />
 
                     {/* Search & Sort Controls */}
-                    <div className="panel-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                    <div className="panel-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', background: '#0f1422', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '1rem 1.25rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexGrow: 1, maxWidth: '450px' }}>
-                            <span style={{ fontSize: '1.2rem' }}>🔍</span>
                             <input 
                                 type="text" 
                                 placeholder="Search SKU name..." 
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                style={{ width: '100%', padding: '0.6rem 1rem', fontSize: '0.85rem', borderRadius: '10px', border: '1px solid #cbd5e1' }}
+                                style={{ width: '100%', padding: '0.6rem 1rem', fontSize: '0.85rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.12)', background: '#080b11', color: '#ffffff' }}
                             />
                         </div>
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#475569' }}>Sort By:</span>
+                            <span style={{ fontSize: '0.8rem', fontWeight: 500, color: '#94a3b8' }}>Sort by:</span>
                             <select 
                                 value={sortBy} 
                                 onChange={(e) => setSortBy(e.target.value)}
-                                style={{ padding: '0.6rem 1rem', fontSize: '0.85rem', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 600 }}
+                                style={{ padding: '0.55rem 0.9rem', fontSize: '0.825rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.12)', background: '#080b11', color: '#ffffff', fontWeight: 500 }}
                             >
-                                <option value="profit_high">Net Profit: High to Low</option>
-                                <option value="profit_low">Net Profit: Low to High</option>
-                                <option value="alpha">SKU Name (A-Z)</option>
+                                <option value="profit_high">Net profit: High to low</option>
+                                <option value="profit_low">Net profit: Low to high</option>
+                                <option value="alpha">SKU name (A-Z)</option>
                             </select>
                         </div>
                     </div>

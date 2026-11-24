@@ -191,40 +191,39 @@ export default function DashboardShell({ activePage, setActivePage, navigateToPa
                     {/* Top 0-Credits Banner Notice */}
                     {currentUser && currentUser.credits <= 0 && currentUser.tier !== 'enterprise' && activePage !== 'billing' && activePage !== 'website' && (
                         <div style={{
-                            background: 'linear-gradient(90deg, #eff6ff 0%, #dbeafe 100%)',
-                            border: '1px solid #bfdbfe',
-                            borderRadius: '14px',
-                            padding: '0.9rem 1.25rem',
-                            marginBottom: '1.75rem',
+                            background: '#0f1422',
+                            border: '1px solid rgba(255, 255, 255, 0.08)',
+                            borderRadius: '12px',
+                            padding: '0.85rem 1.25rem',
+                            marginBottom: '1.5rem',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            gap: '1rem',
-                            boxShadow: '0 4px 15px rgba(37, 99, 235, 0.08)'
+                            gap: '1rem'
                         }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                <span style={{ fontSize: '1.4rem' }}>⚠️</span>
+                                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#38bdf8', display: 'inline-block', flexShrink: 0 }} />
                                 <div>
-                                    <strong style={{ fontSize: '0.9rem', color: '#1e40af', display: 'block' }}>You have 0 Shipping Rate Audit Credits remaining!</strong>
-                                    <span style={{ fontSize: '0.8rem', color: '#3b82f6' }}>Meesho Image Studio is 100% free, but checking live Meesho shipping rates requires active credits. Please recharge your plan to check rates.</span>
+                                    <span style={{ fontSize: '0.875rem', color: '#f8fafc', fontWeight: 500, display: 'block' }}>0 credits remaining</span>
+                                    <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Upgrade your plan to generate product images and export shipping labels.</span>
                                 </div>
                             </div>
                             <button 
                                 style={{
-                                    background: 'linear-gradient(135deg, #2563eb, #7c3aed)',
-                                    color: '#ffffff',
+                                    background: '#ffffff',
+                                    color: '#080b11',
                                     border: 'none',
-                                    padding: '0.65rem 1.25rem',
-                                    borderRadius: '10px',
-                                    fontSize: '0.85rem',
-                                    fontWeight: 700,
+                                    padding: '0.55rem 1.1rem',
+                                    borderRadius: '8px',
+                                    fontSize: '0.825rem',
+                                    fontWeight: 500,
                                     cursor: 'pointer',
                                     whiteSpace: 'nowrap',
-                                    boxShadow: '0 4px 14px rgba(37, 99, 235, 0.25)'
+                                    boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.2)'
                                 }}
                                 onClick={() => setActivePage('billing')}
                             >
-                                💳 Purchase Plan Now
+                                Upgrade plan
                             </button>
                         </div>
                     )}
