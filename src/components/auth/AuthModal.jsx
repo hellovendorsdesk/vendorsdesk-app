@@ -42,7 +42,7 @@ export default function AuthModal() {
                         });
                         window.google.accounts.id.renderButton(
                             btnContainer,
-                            { theme: "outline", size: "large", width: 340 }
+                            { theme: "outline", size: "large", width: Math.min(280, Math.max(200, window.innerWidth - 64)) }
                         );
                     } else if (isLocalhost && btnContainer) {
                         btnContainer.innerHTML = '<div style="font-size:0.75rem; color:#94a3b8; background:#090b10; padding:0.45rem 0.85rem; border-radius:8px; border:1px solid rgba(255,255,255,0.08); font-weight:500; text-align:center;">Google 1-click login enabled on live domain (vendorsdesk.in)</div>';
@@ -88,7 +88,9 @@ export default function AuthModal() {
                 background: '#0d121f',
                 border: '1px solid rgba(255, 255, 255, 0.12)',
                 borderRadius: '24px',
-                padding: '2.25rem 2rem',
+                padding: '2rem 1.25rem',
+                boxSizing: 'border-box',
+                maxWidth: 'min(400px, calc(100vw - 32px))',
                 boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 40px rgba(56, 189, 248, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
                 display: 'flex',
                 flexDirection: 'column',
@@ -264,7 +266,7 @@ export default function AuthModal() {
 
                 {/* Google Sign In Wrapper */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', alignItems: 'center' }}>
-                    <div id="google-signin-btn"></div>
+                    <div id="google-signin-btn" style={{ maxWidth: "100%", overflow: "hidden", display: "flex", justifyContent: "center" }}></div>
                 </div>
             </div>
         </div>
