@@ -92,6 +92,7 @@ export function AuthProvider({ children }) {
 
     const handleLogout = () => {
         localStorage.removeItem('vendorsdesk_token');
+        window.postMessage({ type: 'VENDORSDESK_LOGOUT_EXTENSION' }, '*');
         setCurrentUser(null);
         if (isAppDomain && window.location.hostname.includes('vendorsdesk.in')) {
             window.location.href = 'https://vendorsdesk.in';

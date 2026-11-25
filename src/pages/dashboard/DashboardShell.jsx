@@ -31,7 +31,7 @@ export default function DashboardShell({ activePage, setActivePage, navigateToPa
                 type: 'VENDORSDESK_SYNC_AUTH',
                 token,
                 user: currentUser,
-                apiBase: window.location.hostname.includes('vendorsdesk.in') ? 'https://backend.vendorsdesk.in' : window.location.origin
+                apiBase: (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : 'https://backend.vendorsdesk.in'
             }, '*');
         }
     }, [currentUser]);

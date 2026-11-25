@@ -2,7 +2,9 @@ import CryptoJS from 'crypto-js';
 
 const ENCRYPTION_KEY = 'vendorsdesk-secure-payload-key-2026';
 
-const API_BASE = import.meta.env.VITE_BACKEND_URL || (window.location.hostname.includes('vendorsdesk.in') ? 'https://backend.vendorsdesk.in' : '');
+const host = typeof window !== 'undefined' ? window.location.hostname : '';
+const isLocal = host === 'localhost' || host === '127.0.0.1';
+const API_BASE = import.meta.env.VITE_BACKEND_URL || (!isLocal ? 'https://backend.vendorsdesk.in' : '');
 
 export function fileToBase64(file) {
     return new Promise((resolve, reject) => {

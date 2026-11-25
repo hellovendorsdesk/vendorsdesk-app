@@ -253,8 +253,8 @@ export default function ListingTemplatesTab() {
                     </div>
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ fontWeight: 800, fontSize: '1.05rem', color: '#f8fafc' }}>
-                                VendorsDesk Chrome Extension
+                            <span style={{ fontWeight: 800, fontSize: '1.05rem', color: '#0f172a' }}>
+                                Auto List Chrome Extension
                             </span>
                             <span style={{
                                 fontSize: '0.75rem',
@@ -267,10 +267,10 @@ export default function ListingTemplatesTab() {
                                 {extensionInstalled ? 'ACTIVE & SYNCED' : 'READY TO INSTALL'}
                             </span>
                         </div>
-                        <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: '#94a3b8' }}>
+                        <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: '#334155' }}>
                             {extensionInstalled 
-                                ? 'Autofill is enabled. When you open Meesho or Flipkart listing forms, the VendorsDesk floating widget will appear automatically.'
-                                : 'Install the VendorsDesk Extension to autofill product listings directly on Meesho Supplier Panel and Flipkart Seller Hub.'}
+                                ? 'Autofill is enabled. Open Meesho, Flipkart, or Amazon listing forms and the Auto List pill will appear automatically.'
+                                : 'Install the Auto List Extension to autofill product listings directly on Meesho Supplier Panel and Flipkart Seller Hub.'}
                         </p>
                     </div>
                 </div>
@@ -476,6 +476,11 @@ export default function ListingTemplatesTab() {
                                     {tpl.sku && (
                                         <span style={{ fontSize: '0.75rem', background: '#141a29', color: '#94a3b8', padding: '2px 6px', borderRadius: '4px' }}>
                                             SKU: {tpl.sku}
+                                        </span>
+                                    )}
+                                    {Array.isArray(tpl.fields?._controls) && tpl.fields._controls.length > 0 && (
+                                        <span style={{ fontSize: '0.75rem', background: 'rgba(16, 185, 129, 0.14)', color: '#34d399', padding: '2px 6px', borderRadius: '4px', fontWeight: 600 }}>
+                                            ⚡ {tpl.fields._controls.length} fields
                                         </span>
                                     )}
                                 </div>
@@ -993,7 +998,7 @@ export default function ListingTemplatesTab() {
                     }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#f8fafc', margin: 0 }}>
-                                📦 Install VendorsDesk Chrome Extension
+                                📦 Install Auto List Chrome Extension
                             </h2>
                             <button
                                 onClick={() => setShowInstallModal(false)}
@@ -1004,34 +1009,34 @@ export default function ListingTemplatesTab() {
                         </div>
 
                         <p style={{ fontSize: '0.9rem', color: '#94a3b8', margin: 0 }}>
-                            Follow these simple 3 steps to install the VendorsDesk Assistant in Google Chrome:
+                            Follow these simple 3 steps to install Auto List in Google Chrome:
                         </p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
                             <div style={{ display: 'flex', gap: '0.8rem', background: '#141a29', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#ffffff', color: '#080b11', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
+                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2563eb', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
                                     1
                                 </span>
-                                <div style={{ fontSize: '0.88rem' }}>
+                                <div style={{ fontSize: '0.88rem', color: '#e2e8f0' }}>
                                     Open Chrome and navigate to <strong>chrome://extensions</strong> in the address bar.
                                 </div>
                             </div>
 
                             <div style={{ display: 'flex', gap: '0.8rem', background: '#141a29', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#ffffff', color: '#080b11', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
+                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2563eb', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
                                     2
                                 </span>
-                                <div style={{ fontSize: '0.88rem' }}>
+                                <div style={{ fontSize: '0.88rem', color: '#e2e8f0' }}>
                                     Toggle ON <strong>Developer mode</strong> in the top-right corner of the Extensions page.
                                 </div>
                             </div>
 
                             <div style={{ display: 'flex', gap: '0.8rem', background: '#141a29', padding: '0.85rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#ffffff', color: '#080b11', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
+                                <span style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2563eb', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
                                     3
                                 </span>
-                                <div style={{ fontSize: '0.88rem' }}>
-                                    Click <strong>Load unpacked</strong> button and select the <code>chrome-extension</code> folder inside your VendorsDesk directory.
+                                <div style={{ fontSize: '0.88rem', color: '#e2e8f0' }}>
+                                    Click <strong>Load unpacked</strong> and select the extracted <strong>Auto List</strong> extension folder.
                                 </div>
                             </div>
                         </div>

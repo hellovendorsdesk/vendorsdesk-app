@@ -13,19 +13,20 @@ export function useTemplates(currentUser) {
     const syncTokenToExtension = useCallback(() => {
         const token = localStorage.getItem('vendorsdesk_token') || localStorage.getItem('token');
         if (token) {
+            const host = window.location.hostname;
+            const isLocal = host === 'localhost' || host === '127.0.0.1';
+            const apiBase = import.meta.env.VITE_BACKEND_URL || (!isLocal ? 'https://backend.vendorsdesk.in' : 'http://localhost:5000');
             window.postMessage({
                 type: 'VENDORSDESK_SYNC_AUTH',
                 token,
                 user: currentUser,
-                apiBase: window.location.hostname.includes('vendorsdesk.in')
-                    ? 'https://backend.vendorsdesk.in'
-                    : window.location.origin
+                apiBase
             }, '*');
         }
     }, [currentUser]);
 
     const checkExtension = useCallback(() => {
-        if (window.__VENDORS_DESK_EXTENSION_INSTALLED__) {
+        if (window.__VENDORS_DESK_EXTENSION_INSTALLED__ || window.__AUTOLIST_EXTENSION_INSTALLED__) {
             setExtensionInstalled(true);
         } else {
             window.postMessage({ type: 'VENDORSDESK_PING_EXTENSION' }, '*');
